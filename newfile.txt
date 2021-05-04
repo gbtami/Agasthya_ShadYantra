@@ -1,0 +1,535 @@
+
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = c
+Get Piece Symbol =c
+**** Else Piece is Found Now ****
+ String Value Now = 1c
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = i
+Get Piece Symbol =i
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 2 $string = 1c
+if ( $empty_squares ) =0;
+ String Value Now = 1c2i
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = a
+Get Piece Symbol =a
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = c
+Get Piece Symbol =c
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 2 $string = 1c2ia
+if ( $empty_squares ) =0;
+ String Value Now = 1c2ia2c
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+else if($file ==9) Ended empty_l = 0 $string = 1c2ia2c1 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = c
+Get Piece Symbol =c
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/c
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = r
+Get Piece Symbol =r
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/cr
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = n
+Get Piece Symbol =n
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crn
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = e
+Get Piece Symbol =e
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crne
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = s
+Get Piece Symbol =s
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnes
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = g
+Get Piece Symbol =g
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesg
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = e
+Get Piece Symbol =e
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesge
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = n
+Get Piece Symbol =n
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgen
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = r
+Get Piece Symbol =r
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenr
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = c
+Get Piece Symbol =c
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = c
+Get Piece Symbol =c
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/c
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = p
+Get Piece Symbol =p
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = p
+Get Piece Symbol =p
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cpp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = p
+Get Piece Symbol =p
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = p
+Get Piece Symbol =p
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cpppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = p
+Get Piece Symbol =p
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = p
+Get Piece Symbol =p
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cpppppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = p
+Get Piece Symbol =p
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = p
+Get Piece Symbol =p
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cpppppppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = c
+Get Piece Symbol =c
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 3
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 4
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 5
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 6
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 7
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 8
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+if($file ==0) empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/18
+else if($file ==9) Ended empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 3
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 4
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 5
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 6
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 7
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 8
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+if($file ==0) empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/18
+else if($file ==9) Ended empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 3
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 4
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 5
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 6
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 7
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 8
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+if($file ==0) empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/18
+else if($file ==9) Ended empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 3
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 4
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 5
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 6
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 7
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 8
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+if($file ==0) empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/18
+else if($file ==9) Ended empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = C
+Get Piece Symbol =C
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/C
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = P
+Get Piece Symbol =P
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = P
+Get Piece Symbol =P
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = P
+Get Piece Symbol =P
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = P
+Get Piece Symbol =P
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = P
+Get Piece Symbol =P
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = P
+Get Piece Symbol =P
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = P
+Get Piece Symbol =P
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = P
+Get Piece Symbol =P
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = C
+Get Piece Symbol =C
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = C
+Get Piece Symbol =C
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/C
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = R
+Get Piece Symbol =R
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CR
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = N
+Get Piece Symbol =N
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRN
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = E
+Get Piece Symbol =E
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNE
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = S
+Get Piece Symbol =S
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNES
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = G
+Get Piece Symbol =G
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESG
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = E
+Get Piece Symbol =E
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGE
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = N
+Get Piece Symbol =N
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGEN
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = R
+Get Piece Symbol =R
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENR
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = C
+Get Piece Symbol =C
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = C
+Get Piece Symbol =C
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC/1C
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = A
+Get Piece Symbol =A
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 2 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC/1C
+if ( $empty_squares ) =0;
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC/1C2A
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = I
+Get Piece Symbol =I
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC/1C2AI
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+symbolname = C
+Get Piece Symbol =C
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 2 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC/1C2AI
+if ( $empty_squares ) =0;
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC/1C2AI2C
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+else if($file ==9) Ended empty_l = 0 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC/1C2AI2C1 $empty_r = 1

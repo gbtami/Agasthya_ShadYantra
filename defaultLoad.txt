@@ -1,0 +1,442 @@
+
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 2 $string = 1c
+if ( $empty_squares ) =0;
+ String Value Now = 1c2i
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 2 $string = 1c2ia
+if ( $empty_squares ) =0;
+ String Value Now = 1c2ia2c
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+else if($file ==9) Ended empty_l = 0 $string = 1c2ia2c1 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/c
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/cr
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crn
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crne
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnes
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesg
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesge
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgen
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenr
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/c
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cpp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cpppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cpppppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cpppppppp
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 3
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 4
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 5
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 6
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 7
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 8
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+if($file ==0) empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/18
+else if($file ==9) Ended empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 3
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 4
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 5
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 6
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 7
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 8
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+if($file ==0) empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/18
+else if($file ==9) Ended empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 3
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 4
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 5
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 6
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 7
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 8
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+if($file ==0) empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/18
+else if($file ==9) Ended empty_l = 8 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 3
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 4
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 5
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 6
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 7
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 7 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/1
+if ( $empty_squares ) =0;
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+else if($file ==9) Ended empty_l = 0 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1 $empty_r = 1
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/C
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP
+if ( $empty_squares ) =0;
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/C
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CR
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRN
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNE
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNES
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESG
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGE
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGEN
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENR
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENRC
+
+for ( $rank = 9; $rank >= 0; $rank-- )
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+if($file ==0) empty_l = 1 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENRC/1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENRC/1C
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 2 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENRC/1C
+if ( $empty_squares ) =0;
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENRC/1C2A
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENRC/1C2AI
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 1
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else empty_l = 2
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+**** Else Piece is Found Now ****
+if ( $empty_squares ) $empty_l = 2 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENRC/1C2AI
+if ( $empty_squares ) =0;
+ String Value Now = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENRC/1C2AI2C
+
+Inside for ( $file = 0; $file <= 9; $file++ )
+Inside if ( ! $piece )
+else if($file ==9)
+else if($file ==9) Ended empty_l = 0 $string = 1c2ia2c1/crnesgenrc/cppppppppc/181/181/181/17P1/CPPPPPPP1C/CRNESGENRC/1C2AI2C1 $empty_r = 1

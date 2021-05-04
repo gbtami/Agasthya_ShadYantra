@@ -1,0 +1,169 @@
+
+body {
+	font-family:sans-serif;
+}
+
+input[name="fen"] {
+	width: 550px;
+}
+
+#playerta #opponentta{
+  border:1px solid black;
+  padding:10px;
+  width:95%;
+  height:200px;
+  margin:20px auto;    
+}
+
+input[type="submit"],
+input[type="button"] {
+	font-size: 12pt;
+}
+
+textarea[name="pgn"] {
+	width: 500px;
+	font-family: sans-serif;
+}
+
+select[name="winninggamemove"] {
+	width: 10em;
+}
+select[name="move"] {
+	width: 10em;
+}
+
+select[name="endgamemove"] {
+	width: 10em;
+}
+select[name="surrendermove"] {
+	width: 10em;
+}
+select[name="moves"] {
+	width: 10em;
+}
+
+
+.KingMoves {
+	display: flex;
+	width: 100%;
+}
+
+.KingMoves>div:nth-child(1) {
+	flex: 30%;
+}
+
+.KingMoves>div:nth-child(2) {
+	flex: 20%;
+}
+
+
+.two_columns {
+	display: flex;
+	width: 95%;
+}
+.two_columns>div:nth-child(1) {
+	flex: 10%;
+}
+
+.two_columns>div:nth-child(2) {
+	flex: 20%;
+}
+
+#graphical_board {
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+#graphical_board td {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 30px;
+	font-weight: bold;
+	font-family: "Arial Unicode MS", "Lucida Console", Courier, monospace;
+	cursor: move;
+}
+
+.naaglok {
+	background-color: Orange;
+}
+
+
+.blacktruce {
+	background-color: hotpink;
+}
+
+.blackcastle {
+	background-color: Yellow;
+}
+
+.whitetruce {
+	background-color: lightpink;
+}
+.whitecastle {
+	background-color: #ffff66;
+}
+
+.black {
+	background-color: #769656;
+}
+
+.white {
+	background-color: #EEEED2;
+}
+
+.status_box {
+	background-color: #F0F0F0;
+	border: 1px solid black;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 4px;
+	padding-right: 4px;
+	width: 310px;
+	margin-bottom: 5px;
+}
+
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+td, th {
+	border: 1px solid black;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+.octagonWrap{
+
+	position: relative;
+	}
+.octagonC {
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	overflow: hidden;
+	}
+.octagonT {
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	overflow: hidden;
+	}	
+.octagonC:before {
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	transform: rotate(45deg);
+	background: rgba(133, 191, 91, 0.3);
+	content: '';
+	border: 3px solid red;
+	}
+.octagonT:before {
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	transform: rotate(45deg);
+	background: rgba(133, 191, 91, 0.3);
+	content: '';
+	border: 3px solid white;
+	}

@@ -1,0 +1,19 @@
+http://localhost/pc/?move=1c2ia2c1%2Fcrne1g2rc%2Fcppppppe1c%2F13s3p1%2F11N61%2F17n1%2F14PS21%2FCPPPPEPPPC%2FCR1E1G1NRC%2F1C2AI2C1+w+vZ+-+6+7
+http://localhost/pc/?move=1c2ia2c1%2Fcrne1g2rc%2Fcppppppe1c%2F13s3p1%2F11N61%2F17n1%2F14PS21%2FCPPPPEPPPC%2FCR1E1G1NRC%2F1C2AI2C1+w+vZ+-+6+7
+Fen Value = 1cs2a2c1/crneigenrc/cppppppppc/181/181/181/13S41/CPPPPPPPPC/CRNE1GENRC/1C1IA3C1 w - - 4 3
+
+too much time:
+http://localhost/pc/?move=1c2ia2c1%2Fcrne1genrc%2Fcppp2p21%2F14p1pp1%2F181%2F12PP1P21%2F1PPIps31%2FC5P1PC%2FCRNESGENRC%2F1C2A3C1+w+-+-+2+13
+
+Fen Value = 1c2ia2c1/crne1genrc/cppp2p21/14p1pp1/181/12PP1P21/1PPIps31/C5P1PC/CRNESGENRC/1C2A3C1 w - - 2 13
+
+to
+http://localhost/pc/?move=1c2ia2c1%2Fcrne1genrc%2Fcppp2p21%2F14p1pp1%2F181%2F12PP41%2F1PPIps2P1%2FC5P2C%2FCRNESGENRC%2F1C2A3C1+b+-+-+0+13
+Fen Value = 1c2ia2c1/crne1genrc/cppp2p21/14p1pp1/181/12PP41/1PPIps2P1/C5P2C/CRNESGENRC/1C2A3C1 b - - 0 13
+http://localhost/pc/?move=13i41/181/181/181/181/181/181/181/181/13I%C3%8131%20w%20VZvz%20-%200%201
+
+ta)
+1
+1c2iá2c1/crnesgenrc/cppppppppc/181/181/181/181/CPPPPPPPPC/CRNESGENRC/1C2ÁI2C1 w VZvz - 0 1
+1c3á31/crnesgenrc/cppipcpppc/11p2p31/181/181/12P2P21/CPPP2PPPC/CRNEGSENRC/1C2IÁ1C11 w - - 2 7	
+		

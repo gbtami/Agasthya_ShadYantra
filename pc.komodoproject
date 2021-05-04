@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Komodo Project File - DO NOT EDIT -->
+<project id="676e07b6-02eb-4481-b6b5-10f3c780152c" kpf_version="5" name="pc.komodoproject">
+<preference-set idref="676e07b6-02eb-4481-b6b5-10f3c780152c" id="project" preftype="project">
+<preference-set id="Invocations">
+<preference-set id="Project">
+  <string id="cookieparams"></string>
+  <string relative="path" id="cwd"></string>
+  <string id="documentRoot"></string>
+  <string id="executable-params"></string>
+  <string id="filename"></string>
+  <string id="getparams"></string>
+  <string id="language">PHP</string>
+  <string id="mpostparams"></string>
+  <string id="params"></string>
+  <string id="postparams"></string>
+  <string id="posttype">application/x-www-form-urlencoded</string>
+  <string id="request-method">GET</string>
+  <boolean id="show-dialog">1</boolean>
+  <boolean id="sim-cgi">0</boolean>
+  <boolean id="use-console">0</boolean>
+  <string id="userCGIEnvironment"></string>
+  <string id="userEnvironment"></string>
+</preference-set>
+</preference-set>
+  <string id="bowerDefaultInterpreter"></string>
+  <string id="cordovaInterpreter"></string>
+  <string id="currentInvocationLanguage">PHP</string>
+  <string id="dockerBinary"></string>
+  <string id="language">PHP</string>
+  <string id="lastInvocation">Project</string>
+  <string id="phonegapInterpreter"></string>
+  <string id="phpConfigFile">C:\Users\sshukla\Desktop\wamp\bin\php\php7.4.9\php.ini</string>
+  <string id="phpDefaultInterpreter">C:\Users\sshukla\Desktop\wamp\bin\php\php7.4.9\php.exe</string>
+  <string id="phpExtraPaths">C:\Users\sshukla\Desktop\wamp\bin\php\php7.4.9</string>
+  <long id="prefs_version">1</long>
+  <string id="vagrantBinary"></string>
+</preference-set>
+</project>
