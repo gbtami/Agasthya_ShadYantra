@@ -135,19 +135,19 @@ if (! defined('VIEWER')) {
 			<div style="float:left;width:25%;">
 				<form id="make_move" name="make_move" hidden disabled readonly style="display:none;"  method="POST">	Normal Moves :<br/>	(Selected Piece) <br/>
 					<select id="move" name="move" size="10"></select>	
-					<br><span id="move_count"></span> 	Moves Count: <br>					
+					<br><span id="move_count"></span> 	Moves Count: <br>
 					<input id="submitmove" type="submit" value="Make Move">
 				</form>
 			</div>
 
-				<div style="margin:0 auto;width:25%;">
+				<div style="float:left;width:22%;">
 					<form id="king_endgame" name="king_endgame" hidden disabled readonly style="display:none;"> Suggest Sandhi<br>
 						<select id="endgamemove" name="move" size="10"></select>
 							<br><span id="endgamemove_count"></span>Moves Count: <br>
 						<input id="submitendgamemove" type="submit" value="Make Move">
 					</form>
 				</div>
-				<div style="margin:0 auto;width:25%;">
+				<div style="float:left;width:25%;">
 					<form id="winninggame" name="winninggame" hidden disabled readonly> Winning Moves <br>
 						<select id="winninggamemove" name="move" size="10"></select>
 							<br><span id="winninggamemove_count"></span>Moves Count: <br>
@@ -155,7 +155,7 @@ if (! defined('VIEWER')) {
 					</form>
 				</div>
 				
-				<div style="float:right;width:25%;;padding-right:15px;">
+				<div style="float:right;width:22%;;padding-right:10px;">
 					<form id="king_surrender" name="king_surrender" hidden disabled readonly style="display:none;"> Surrender <br/>
 						<select id="surrendermove" name="move" size="10"></select>
 							<br><span id="surrendermove_count"></span>Moves Count: <br>	
@@ -166,8 +166,34 @@ if (! defined('VIEWER')) {
 			</div>
 			</div>	
 			</div>
+			<div >
 			<div>
-				<form id="all_moves" name="all_moves" hidden disabled readonly style="display:none;"  method="POST"> 	All Legal Moves:<br>
+			<div id="textAreasRules"> 
+				<div style="position: relative" class = "container_row"> 
+					<div id="player1" class="layer1" style="position: relative;top:10px;padding:10px;"> 
+					<label> Self Rule </label>
+						<div>
+							<textarea style="top:0; left:0; z-index: 2;" disabled readonly id="player1ta" rows = "12" cols="50	"> </textarea> 
+						</div>	
+					</div>
+					<div id="player2" class="layer2" style="position: relative;top:30px;padding:10px;">
+					<label> Common Rule </label>
+						<div>
+							<textarea style="top:0; left:0; z-index: 1;" disabled readonly id="player2ta" rows = "12" cols = "50"> </textarea> 
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			</div>
+			</div>
+			<div style="display:none;">
+				<div id="history_move" name="history_move" style="display:none;"> 	Historical Moves:<br>
+					<input id="history" name="history" size="19"></input>
+					<br><span id="steps_count"></span> Moves Count: <br>
+				</div>
+				<form id="all_moves" name="all_moves" hidden disabled readonly style="display:none;" > 	All Legal Moves:<br>
 					<select id="moves" name="move" size="19">
 						<?php foreach ( $legal_moves as $key => $move ): ?>							
 							<option
@@ -180,7 +206,7 @@ if (! defined('VIEWER')) {
 
 					</select><br>
 					Move Count: <?php echo count($legal_moves); ?><br>
-					<input type="submit" display='none' hidden value="Make Move">
+					<!--input type="submit" display='none' hidden value="Make Move"-->
 					
 					<?php
 					
@@ -194,14 +220,7 @@ if (! defined('VIEWER')) {
 					?>
 					
 					Load Time: <?php echo $total_time; ?> ms<br>
-				</form>
-			</div>
-
-			<div style="display:none;">
-				<form id="history_move" name="history_move" style="display:none;"> 	Historical Moves:<br>
-					<input id="history" name="history" size="19"></input>
-					<br><span id="steps_count"></span> Moves Count: <br>
-				</form>
+				</form>				
 			</div>
 		</div>
 		

@@ -303,6 +303,7 @@ $(document).ready(function(){
 			if((txt.substr(0,1)==p1name)&&(p2name==tname)){
 
 				//ArthShastri is in CASTLE or opponent CASTLE. If General is in Truce then it means Army will have to retreat. If King or Arsthshastri is in War then retreat will not happen.
+				if(kingmove==true)
 				debugger
 
 				if((arthshastrimove==true)&& (/[a-h09]{2,2}/.test(dname))){
@@ -342,7 +343,7 @@ $(document).ready(function(){
 						}
 					}
 				//Truce to Truce	
-				else if((kingmove==true)&& ((/[xy09]{2,2}/.test(p2name)) &&(/[xy09]{2,2}/.test(dname)))){
+				else if((kingmove==true)&& ((/[xy0-8]{2,2}/.test(p2name)) &&(/[xy0-8]{2,2}/.test(dname)))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#king_surrender').show();
@@ -353,7 +354,7 @@ $(document).ready(function(){
 						}
 					}
 				//TRUCE to WAR
-				else if((kingmove==true)&& ((/[xy09]{2,2}/.test(p2name)) &&(/[a-h1-8]{2,2}/.test(dname)))){
+				else if((kingmove==true)&& ((/[xy0-8]{2,2}/.test(p2name)) &&(/[a-h1-8]{2,2}/.test(dname)))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#king_endgame').show();
@@ -361,6 +362,23 @@ $(document).ready(function(){
 					else
 					if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=") >= -1)){
 						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						}
+					}
+				//TRUCE to CASTLE	
+				else if((kingmove==true)&& ((((/[x0]{2,2}/.test(p2name))||(/[y0]{2,2}/.test(p2name)))&&(/[ah0]{2,2}/.test(dname)))|| (((/[x9]{2,2}/.test(p2name))||(/[y9]{2,2}/.test(p2name)))&&(/[ah0]{2,2}/.test(dname))))){
+					//No Inversion in TRUCE
+					if ((txt.indexOf("=Y") >= 0)){
+						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						$('form#king_surrender').show();
+						}
+					else
+					if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=") >= -1)){
+						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						}
+					else	
+					if ((txt.indexOf("=V") >= 0)||(txt.indexOf("#") >= 0)){
+						$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						$('form#winninggame').show();
 						}
 					}
 				//War to Truce	
@@ -493,6 +511,108 @@ $(document).ready(function(){
 		i=i+1;
 		
 	});
+
+
+
+
+
+$("textarea#player1ta").val("");
+$("textarea#player2ta").val("");
+
+	if(color_to_move!=''){
+		if(kingmove==true){
+			$("div#player1 label").html("Rules for King (#I Means Indra or King)");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"* 'I' can move only 1 step at a time. 'I' can kill. #I01#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' can move 1 or 2 steps like Knights in his own CASTLE. Castle itself is Royal and 'I' is aware of every area. #I02# #I03#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' can move n number or Times 'To and From' any Zones with the help of Royal or Semi-Royal members only. #I04# ");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can declare war at his side by leaving the Scepter. Declaration of war helps the Army Officers to Strike the opponent; Otherwise Army cannot strike but only move. #I05");			
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' can promote any surrounding Military members on the move or even as a simple promotion without moves. #I06# ");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' when enters the opponent CASTLE becomes the Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Army when enters the opponent CASTLE makes the 'I' Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'A' when enters the opponent CASTLE makes the 'I' Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can suggest 'Army-Recall' by getting into Truce Zone.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can suggest 'Truce and Army-Recall' by getting into Truce Zone's special Boundary Area.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can suggest 'Sandhi' even in the WAR-Zone.");						
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can Accept his Defeat in CASTLE. No Sandhi is allowed in CASTLE.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can Accept his Defeat in TRUCE. No Sandhi is allowed in TRUCE.");						
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can Accept his Defeat in No Mans Land. No Sandhi is allowed in TRUCE.");						
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can Accept his Defeat in No Mans Land. No Sandhi is allowed in TRUCE.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* In Order to make Army to move to Full strength in any Specific Zone any of the Royal or Semi-Royal should be present in that Zone.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' gets permanantly hidden in Naag-Lok or No-Mans land. War still goes on.");
+	
+			$("div#player2 label").html("Exceptions in Rules for King");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"#I01# If Royal is surrounded with Royal or Semi-Royal in same zone then these Royal or Semi-Royal can move like Knight.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I02# King require help 'To move-in or move-out' of his own Compromised CASTLE.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I03# Kings own Compromised CASTLE becomes Secondary War-Zone.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I04# King doesn't need any help 'To move-in or move-out' of Opponent's Compromised CASTLE.");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I05# Army can Strike only of 'I' and 'A' both are not idle. (Still has defects to be fixed)");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I06# Parity of Ranks are maintained. Only 1 General, 2 Knights, 2 Gajarohi, 2 MahaRathis allowed.");	
+			
+	}
+	
+		if(spymove==true){
+			$("div#player1 label").html("Rules for Chaaran (#C Means Chaaran or Spy)");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"* 'C' can move only 1 step at a time.  'S' CANNOT kill. #S01#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can move 1 or 2 steps like Knights in his own CASTLE. Castle itself is Royal and 'C' is aware of every area. #S02# #S03#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can move n number or Times 'To and From' any Zones with the help of Royal or Semi-Royal members only. #S04# ");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can promote any surrounding Military members on the move or even as a simple promotion without moves. #S05# ");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can promote himself as optional in Opponent CASTLE without any help. This is exceptional honor");
+			
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* In Order to make Army to move to Full strength in any Specific Zone any of the Royal or Semi-Royal should be present in that Zone.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' gets permanantly hidden in Naag-Lok or No-Mans land. War still goes on.");
+			
+			$("div#player2 label").html("Exceptions in Rules for 'C'");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"#S01# If Royal is surrounded with Royal or Semi-Royal in same zone then these Royal or Semi-Royal can move like Knight.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#S02# 'C' require help 'To move-in or move-out' of his own Compromised CASTLE.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#S03# 'C's own Compromised CASTLE becomes Secondary War-Zone.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#S04# 'C' doesn't need any help 'To move-in or move-out' of Opponent's Compromised CASTLE.");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#S05# Parity of Ranks are maintained. Only 1 General, 2 Knights, 2 Gajarohi, 2 MahaRathis allowed.");	
+			
+	}
+
+		if(arthshastrimove==true){
+			$("div#player1 label").html("Rules for ArthShastri (#A Means ArthShastri or Prime Minister)");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"*'A' can move only 1 step at a time. 'A' CANNOT kill. #A01#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' can move 1 or 2 steps like Knights in his own CASTLE. Castle itself is Royal and 'A' is aware of every area. #A02# #A03#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' can move n number or Times 'To and From' any Zones with the help of Royal or Semi-Royal members only. #A04# ");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' can promote any surrounding Military members on the move or even as a simple promotion without moves. #A05# ");
+			
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*In Order to make Army to move to Full strength in any Specific Zone any of the Royal or Semi-Royal should be present in that Zone.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' gets permanantly hidden in Naag-Lok or No-Mans land. War still goes on.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*King when enters the opponent CASTLE becomes the Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*Army when enters the opponent CASTLE also makes the King Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' when enters the opponent CASTLE also makes the King Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' if is idle then make the Soldiers and Army Strikeless. #A06#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' if dies then make the Soldiers and Army and permanently Strikeless. #A06#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\nArmy can Strike only of 'I' and 'A' both are not idle. (Still has defects to be fixed)");	
+			
+			$("div#player2 label").html("Exceptions in Rules for ArthShastri (ArthShashtri Code has to many bugs");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"#A01# If Royal is surrounded with Royal or Semi-Royal in same zone then these Royal or Semi-Royal can move like Knight.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A02# 'A' require help 'To move-in or move-out' of his own Compromised CASTLE.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A03# 'A' own Compromised CASTLE becomes Secondary War-Zone.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A04# 'A' doesn't need any help 'To move-in or move-out' of Opponent's Compromised CASTLE.");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A05# Parity of Ranks are maintained. Only 1 General, 2 Knights, 2 Gajarohi, 2 MahaRathis allowed.");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A06# Kautilya Modified this rule and made Army Units as Autonomous and Self-Sustaining.");
+			
+	}		
+	
+	}
+	
+
+
+
+
+
+
+
+
+
 	
 	//debugger
 		if ($('select#winninggamemove option').length > 0) {
@@ -502,13 +622,13 @@ $(document).ready(function(){
 
 
 		if ($('select#endgamemove option').length > 0) {
-			$('form#king_endgame').show();
-		}	else $('form#king_endgame').hide();
+			$('form#Iing_endgame').show();
+		}	else $('form#Iing_endgame').hide();
 
 		
 		if ($('select#surrendermove option').length > 0) {
-			$('form#king_surrender').show();	
-		}	else $('form#king_surrender').hide();
+			$('form#Iing_surrender').show();	
+		}	else $('form#Iing_surrender').hide();
 		
 		if ($('select#move option').length > 0) {
 			$('form#make_move').show();	
@@ -537,13 +657,13 @@ $(document).ready(function(){
 		$("#moves option").each(function() {
 			var piece=''; piece=$(this).html().trim();
 			if(((p1name.toLowerCase()=='i')||(p1name.toLowerCase()=='j')||(p1name.toLowerCase()=='u')||(p1name.toLowerCase()=='y')) &&((piece.substr(0,1)==p1name)) ){
-				$('form#king_endgame').show(); $('form#king_surrender').show();	kingmove=true;	}	
+				$('form#Iing_endgame').show(); $('form#Iing_surrender').show();	kingmove=true;	}	
 				
 			if((piece.substr(0,1)==p1name)){ $("#move").empty(); $('form#make_move').show(); }			
 			});
 			
-		if ($('select#endgamemove option').length == 0) { $('form#king_endgame').hide();  }
-		if ($('select#surrendermove option').length == 0) { $('form#king_surrender').hide(); }	
+		if ($('select#endgamemove option').length == 0) { $('form#Iing_endgame').hide();  }
+		if ($('select#surrendermove option').length == 0) { $('form#Iing_surrender').hide(); }	
 
 		$("#move").empty();
 		$("#moves option").each(function() {
@@ -572,17 +692,17 @@ $(document).ready(function(){
 
 		$("#move_count").html(tempi);
 	*/	
-		$('form#king_endgame').hide(); $('form#king_surrender').hide();	kingmove=false;	$('form#make_move').hide();
+		$('form#Iing_endgame').hide(); $('form#Iing_surrender').hide();	kingmove=false;	$('form#make_move').hide();
 		$("#moves option").each(function() {
 			var piece=''; piece=$(this).html().trim();
 			if(((p1name.toLowerCase()=='i')||(p1name.toLowerCase()=='j')||(p1name.toLowerCase()=='u')||(p1name.toLowerCase()=='y')) &&((piece.substr(0,1)==p1name)) ){
-				$('form#king_endgame').show(); $('form#king_surrender').show();	kingmove=true; }	
+				$('form#Iing_endgame').show(); $('form#Iing_surrender').show();	kingmove=true; }	
 				
 			if((piece.substr(0,1)==p1name)){ $("#move").empty();	$('form#make_move').show();	}
 			});
 			
-		if ($('select#endgamemove option').length == 0) { $('form#king_endgame').hide(); }
-		if ($('select#surrendermove option').length == 0) { $('form#king_surrender').hide(); }		
+		if ($('select#endgamemove option').length == 0) { $('form#Iing_endgame').hide(); }
+		if ($('select#surrendermove option').length == 0) { $('form#Iing_surrender').hide(); }		
 		
 		var dt = event.originalEvent.dataTransfer; dt.setData('Text', $(this).closest('td').attr('id'));
 		p1name = $(this).attr('name');
@@ -606,7 +726,7 @@ $(document).ready(function(){
 					//No Draw in CASTLE
 					if ((txt.indexOf("=Y") >= 0)||(txt.indexOf("=J") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-						$('form#king_surrender').show();
+						$('form#Iing_surrender').show();
 						}
 					else
 					if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=I") >= 0)||(txt.indexOf("=") >= -1)){
@@ -623,7 +743,7 @@ $(document).ready(function(){
 					//No Draw in CASTLE
 						if ((txt.indexOf("=Y") >= 0)||(txt.indexOf("=J") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-						$('form#king_surrender').show();
+						$('form#Iing_surrender').show();
 						}
 					else
 					if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=I") >= 0)||(txt.indexOf("=") >= -1)){
@@ -635,7 +755,7 @@ $(document).ready(function(){
 					//CASTLE to WAR
 						if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-									$('form#king_endgame').show();
+									$('form#Iing_endgame').show();
 						}
 					else
 					if ((txt.indexOf("=U") >= 0)){
@@ -651,7 +771,7 @@ $(document).ready(function(){
 					//debugger					
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-							$('form#king_endgame').show();
+							$('form#Iing_endgame').show();
 						}
 					else
 					if ((txt.indexOf("=U") >= 0)){
@@ -666,12 +786,12 @@ $(document).ready(function(){
 					//CASTLE to TRUCE
 						if ((txt.indexOf("=Y") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-							$('form#king_surrender').show();
+							$('form#Iing_surrender').show();
 						}
 					else
 					if ((txt.indexOf("=U") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-							$('form#king_endgame').show();
+							$('form#Iing_endgame').show();
 						}
 					}
 				else				
@@ -679,7 +799,7 @@ $(document).ready(function(){
 				//(p2name.indexOf('1')||(p2name.indexOf('2')>=0)||(p2name.indexOf('3')>=0)||(p2name.indexOf('4')>=0)||(p2name.indexOf('5')>=0)||(p2name.indexOf('6')>=0)||(p2name.indexOf('7')>=0)||(p2name.indexOf('8')>=0))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-							$('form#king_endgame').show();
+							$('form#Iing_endgame').show();
 						}
 					else{
 						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));

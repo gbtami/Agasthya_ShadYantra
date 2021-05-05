@@ -1729,7 +1729,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 				}				
 
 				//War to CASTLE with royal touch
-				if((strpos($piece->group,"ROYAL")!==FALSE) && ($royalp)&&($piece->square->rank>9)&&($piece->square->rank<9)&&(($ending_square->file>0)&&($ending_square->file<9)&&(($ending_square->rank==0)||($ending_square->rank==9)))) {
+				if((strpos($piece->group,"ROYAL")!==FALSE) && ($royalp)&&($piece->square->rank>1)&&($piece->square->rank<9)&&(($ending_square->file>0)&&($ending_square->file<9)&&(($ending_square->rank==0)||($ending_square->rank==9)))) {
 						if ( $board->board[$ending_square->rank][$ending_square->file] ==null) {
 							if(($piece->type == ChessPiece::SPY)||($piece->type == ChessPiece::ANGRYARTHSHASTRI)||($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::ANGRYKING)||( $piece->type == ChessPiece::ANGRYINVERTEDKING)){
 								if(($ending_square->rank==0)||($ending_square->rank==9)){

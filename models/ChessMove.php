@@ -293,10 +293,10 @@ function set_killed_king($killedKing):void{
 			(( $this->color=='2')&&(($this->ending_square->get_alphanumeric()=='d0')||($this->ending_square->get_alphanumeric()=='e0'))))){
 				$string .= 'Ö';
 			}
-			elseif ((($this->promotion_piece_type == ChessPiece::BISHOP)||( $this->promotion_piece_type == ChessPiece::ROOK))&&($this->piece_type==ChessPiece::SPY)&&(($this->ending_square->get_alphanumeric()=='d9')||($this->ending_square->get_alphanumeric()=='e9')||($this->ending_square->get_alphanumeric()=='d0')||($this->ending_square->get_alphanumeric()=='e0'))) {
+			elseif ((($this->promotion_piece_type == ChessPiece::BISHOP)||( $this->promotion_piece_type == ChessPiece::KNIGHT))&&($this->piece_type==ChessPiece::SPY)&&(($this->ending_square->get_alphanumeric()=='d9')||($this->ending_square->get_alphanumeric()=='e9')||($this->ending_square->get_alphanumeric()=='d0')||($this->ending_square->get_alphanumeric()=='e0'))) {
 				$string .= 'Ö';
 			}
-			elseif ((($this->promotion_piece_type == ChessPiece::BISHOP)||($this->promotion_piece_type == ChessPiece::GENERAL)||( $this->promotion_piece_type == ChessPiece::ROOK))&&(($this->ending_square->get_alphanumeric()=='d9')||($this->ending_square->get_alphanumeric()=='e9')||($this->ending_square->get_alphanumeric()=='d0')||($this->ending_square->get_alphanumeric()=='e0'))) {
+			elseif ((($this->promotion_piece_type == ChessPiece::BISHOP)||( $this->promotion_piece_type == ChessPiece::KNIGHT)||($this->promotion_piece_type == ChessPiece::GENERAL)||( $this->promotion_piece_type == ChessPiece::ROOK))&&(($this->ending_square->get_alphanumeric()=='d9')||($this->ending_square->get_alphanumeric()=='e9')||($this->ending_square->get_alphanumeric()=='d0')||($this->ending_square->get_alphanumeric()=='e0'))) {
 				$string .= 'Ö';
 			}
 			//if(( $this->piece_type == ChessPiece::KNIGHT)&&($this->ending_square->rank==5)&&($this->ending_square->file==4)){
