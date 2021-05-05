@@ -121,7 +121,7 @@ function set_killed_king($killedKing):void{
 		$pcolor = NULL;
 		$string = '';
 		$char = self::PIECE_LETTERS[$this->piece_type];
-
+		$kingsquare = NULL;
 		if(((preg_match('/[çúýåá]/', $char)) &&($this->color == ChessPiece::BLACK))){
 			$pcolor = $char	;
 		}
@@ -213,6 +213,19 @@ function set_killed_king($killedKing):void{
 
 			//self::CAPTUREDSCEPTRE => 'Ö',
 
+			if($this->color==1)
+			$kingsquare=$this->board->bkingsquare;//opponent square
+			if($this->color==2)
+			$kingsquare=$this->board->wkingsquare;//
+			
+			
+			if($kingsquare!=null){
+				if ($this->board->board[$kingsquare->rank][$kingsquare->file]!=null) {
+					if (($this->ending_square->rank == $kingsquare->rank )&&($this->ending_square->file == $kingsquare->file )) {
+						$string .= '#';
+					}
+				}
+			}
 
 			if ( $this->promotion_piece_type == ChessPiece::GENERAL ) {
 				$string .= '=S';
@@ -232,7 +245,16 @@ function set_killed_king($killedKing):void{
 			} elseif ( $this->promotion_piece_type == ChessPiece::ANGRYKING ) {
 				$string .= '=U';
 			} elseif ( $this->promotion_piece_type == ChessPiece::ANGRYINVERTEDKING ) {
-				$string .= '=Y';
+
+				if($kingsquare!=null){
+					if ($this->board->board[$kingsquare->rank][$kingsquare->file]!=null) {
+						if (($this->ending_square->rank == $kingsquare->rank )&&($this->ending_square->file == $kingsquare->file )) {
+							}
+					else		
+						$string .= '=Y';	
+					}
+				}
+
 		 	} elseif ( $this->promotion_piece_type == ChessPiece::VIKRAMADITYA) {
 				$string .= '=V';
 			} elseif ( $this->promotion_piece_type == ChessPiece::RAJYAPAALARTHSHASTRI) {
@@ -243,6 +265,8 @@ function set_killed_king($killedKing):void{
 				$string .= '=A';
 			}
 	
+
+
 
 			if ( $this->demotion_piece_type == ChessPiece::KING ) {
 				$string .= '=I';

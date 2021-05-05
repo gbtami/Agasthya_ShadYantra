@@ -131,14 +131,23 @@ if (! defined('VIEWER')) {
 			</div>
 			<div  style="display:block;position: relative;top:40px">
 			<div id="KingMoves" class="container" class="KingMoves">
-				<div style="float:left;width:33%;">
+				
+			<div style="float:left;width:25%;">
+				<form id="make_move" name="make_move" hidden disabled readonly style="display:none;"  method="POST">	Normal Moves :<br/>	(Selected Piece) <br/>
+					<select id="move" name="move" size="10"></select>	
+					<br><span id="move_count"></span> 	Moves Count: <br>					
+					<input id="submitmove" type="submit" value="Make Move">
+				</form>
+			</div>
+
+				<div style="margin:0 auto;width:25%;">
 					<form id="king_endgame" name="king_endgame" hidden disabled readonly style="display:none;"> Suggest Sandhi<br>
 						<select id="endgamemove" name="move" size="10"></select>
 							<br><span id="endgamemove_count"></span>Moves Count: <br>
 						<input id="submitendgamemove" type="submit" value="Make Move">
 					</form>
 				</div>
-				<div style="margin:0 auto;width:33%;">
+				<div style="margin:0 auto;width:25%;">
 					<form id="winninggame" name="winninggame" hidden disabled readonly> Winning Moves <br>
 						<select id="winninggamemove" name="move" size="10"></select>
 							<br><span id="winninggamemove_count"></span>Moves Count: <br>
@@ -146,7 +155,7 @@ if (! defined('VIEWER')) {
 					</form>
 				</div>
 				
-				<div style="float:right;width:33%;;padding-right:15px;">
+				<div style="float:right;width:25%;;padding-right:15px;">
 					<form id="king_surrender" name="king_surrender" hidden disabled readonly style="display:none;"> Surrender <br/>
 						<select id="surrendermove" name="move" size="10"></select>
 							<br><span id="surrendermove_count"></span>Moves Count: <br>	
@@ -188,13 +197,6 @@ if (! defined('VIEWER')) {
 				</form>
 			</div>
 
-			<div>
-				<form id="make_move" name="make_move" hidden disabled readonly style="display:none;"  method="POST">	Normal Moves :<br/>	(Selected Piece) <br/>
-					<select id="move" name="move" size="19"></select>	
-					<br><span id="move_count"></span> 	Moves Count: <br>					
-					<input id="submitmove" type="submit" value="Make Move">
-				</form>
-			</div>
 			<div style="display:none;">
 				<form id="history_move" name="history_move" style="display:none;"> 	Historical Moves:<br>
 					<input id="history" name="history" size="19"></input>

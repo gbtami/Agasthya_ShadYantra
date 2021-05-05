@@ -53,6 +53,8 @@ class ChessBoard {
 	public $Winners=0;
 	public $DefaultParityOfficers = '1S2M2H2G';
 	public $blackcankill = 1;
+	public $bkingsquare;
+	public $wkingsquare;
 	public $whitecankill = 1;
 	public $blackcanfullmove = 0;
 	public $whitecanfullmove = 0;
@@ -599,12 +601,16 @@ class ChessBoard {
 
 	 function checkwinner():void{
 		 $winners=0;
-		 $bkingsquare=$this->get_king_square(2);//
-		 $wkingsquare=$this->get_king_square(1);//
+		 $this->bkingsquare=$this->get_king_square(2);//
+		 $this->wkingsquare=$this->get_king_square(1);//
+
+		 $bkingsquare=$this->bkingsquare;//
+		 $wkingsquare=$this->wkingsquare;//
+		 
 		 $bking=''; $wking='';
 
 		 //TRUCE or WAR KINGs are offering draws
-		 if($bkingsquare->rank!=null)
+		 if(($bkingsquare!=null)&&($bkingsquare->rank!=null))
 		 {
 		 	if ($this->board[$bkingsquare->rank][$bkingsquare->file]!=null){
 		        if((($bkingsquare->rank>0) &&($bkingsquare->rank<9)&&(($bkingsquare->file==0) ||($bkingsquare->file==9))) 
@@ -619,7 +625,7 @@ class ChessBoard {
 		}
 
 		//TRUCE or WAR KINGs are offering draws
-		if($wkingsquare->rank!=null)
+		if(($wkingsquare!=null)&&($wkingsquare->rank!=null))
 		{
 			if ($this->board[$wkingsquare->rank][$wkingsquare->file]!=null){
 			   if((($wkingsquare->rank>0) &&($wkingsquare->rank<9)&&(($wkingsquare->file==0) ||($wkingsquare->file==9))) 
@@ -827,7 +833,8 @@ class ChessBoard {
         $string .= " " . $this->halfmove_clock . ' ' . $this->fullmove_number;
 
         //Change positions of winning empereror and arthshastri if present
-		
+
+
         if ($this->board[9][4]!=null) {
             if (($this->board[9][4]!=null)&&($this->board[9][4]->color==1)&&(($this->board[9][4]->group=='OFFICER')||($this->board[9][4]->group=='SEMIROYAL')||($this->board[9][4]->group=='SOLDIER'))) {
 				$string = self::promoteking(1,$string);//Promote White
@@ -1149,8 +1156,10 @@ class ChessBoard {
 				if ( $piece ) {
 					////echo ' Actual = '.$piece->type.' Expected = '.ChessPiece::KING;
 
-					if ((($piece->type == ChessPiece::SIMPLEKING)||($piece->type == ChessPiece::VIKRAMADITYA)||($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::INVERTEDKING)||($piece->type == ChessPiece::ANGRYKING)||($piece->type == ChessPiece::ANGRYINVERTEDKING)) && ($piece->color == $color )) {
-						return $piece->square;
+					if($piece->group=='ROYAL'){
+						if ((($piece->type == ChessPiece::SIMPLEKING)||($piece->type == ChessPiece::VIKRAMADITYA)||($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::INVERTEDKING)||($piece->type == ChessPiece::ANGRYKING)||($piece->type == ChessPiece::ANGRYINVERTEDKING)) && ($piece->color == $color )) {
+							return $piece->square;
+						}
 					}
 				}
 			}

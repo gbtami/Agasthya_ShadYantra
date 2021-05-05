@@ -304,6 +304,7 @@ $(document).ready(function(){
 
 				//ArthShastri is in CASTLE or opponent CASTLE. If General is in Truce then it means Army will have to retreat. If King or Arsthshastri is in War then retreat will not happen.
 				debugger
+
 				if((arthshastrimove==true)&& (/[a-h09]{2,2}/.test(dname))){
 					if ((txt.indexOf("=Ä") >= 0)){
 						$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
@@ -311,12 +312,11 @@ $(document).ready(function(){
 						}
 					else{
 						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-						$('form#winninggame').show();
 						}						
 					}
 				//Officers	winning the scepters
 				else if(((spymove==true)||(officermove==true)||(soldiermove==true))&& (/[a-h09]{2,2}/.test(dname))){
-					if ((txt.indexOf("Ö") >= 0)){
+					if ((txt.indexOf("Ö")>=0)||(txt.indexOf("#") >= 0)){
 						$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#winninggame').show();
 						}
@@ -336,14 +336,13 @@ $(document).ready(function(){
 						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
 					else	
-					if ((txt.indexOf("=V") >= 0)){
+					if ((txt.indexOf("=V") >= 0)||(txt.indexOf("#") >= 0)){
 						$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#winninggame').show();
 						}
 					}
 				//Truce to Truce	
-				else
-				if((kingmove==true)&& ((/[xy09]{2,2}/.test(p2name)) &&(/[xy09]{2,2}/.test(dname)))){
+				else if((kingmove==true)&& ((/[xy09]{2,2}/.test(p2name)) &&(/[xy09]{2,2}/.test(dname)))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#king_surrender').show();
@@ -354,8 +353,7 @@ $(document).ready(function(){
 						}
 					}
 				//TRUCE to WAR
-				else
-				if((kingmove==true)&& ((/[xy09]{2,2}/.test(p2name)) &&(/[a-h1-8]{2,2}/.test(dname)))){
+				else if((kingmove==true)&& ((/[xy09]{2,2}/.test(p2name)) &&(/[a-h1-8]{2,2}/.test(dname)))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#king_endgame').show();
@@ -366,8 +364,7 @@ $(document).ready(function(){
 						}
 					}
 				//War to Truce	
-				else
-				if((kingmove==true)&& ((/[xy09]{2,2}/.test(dname)) &&(/[a-h1-8]{2,2}/.test(p2name)))){
+				else if((kingmove==true)&& ((/[xy09]{2,2}/.test(dname)) &&(/[a-h1-8]{2,2}/.test(p2name)))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#king_surrender').show();
@@ -379,8 +376,7 @@ $(document).ready(function(){
 						}
 					}
 				// Within CASTLE Scepter
-				else
-				if((kingmove==true)&& (((/[a-h9]{2,2}/.test(p2name))&&(/[d-e9]{2,2}/.test(dname)))|| ((/[a-h0]{2,2}/.test(p2name)&&(/[d-e0]{2,2}/.test(dname)))))){
+				else if((kingmove==true)&& (((/[a-h9]{2,2}/.test(p2name))&&(/[d-e9]{2,2}/.test(dname)))|| ((/[a-h0]{2,2}/.test(p2name)&&(/[d-e0]{2,2}/.test(dname)))))){
 					//No Draw in CASTLE
 					if ((txt.indexOf("=Y") >= 0)||(txt.indexOf("=J") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
@@ -391,26 +387,24 @@ $(document).ready(function(){
 						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
 					else	
-					if ((txt.indexOf("=V") >= 0)){
+					if ((txt.indexOf("=V") >= 0)||(txt.indexOf("#")>=0)){
 						$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#winninggame').show();
 						}
 					}
 				//Within CASTLE
-				else
-				if((kingmove==true)&& (((/[a-h9]{2,2}/.test(p2name))&&(/[a-h9]{2,2}/.test(dname)))|| ((/[a-h0]{2,2}/.test(p2name))&&(/[a-h0]{2,2}/.test(dname))))){
+				else if((kingmove==true)&& (((/[a-h9]{2,2}/.test(p2name))&&(/[a-h9]{2,2}/.test(dname)))|| ((/[a-h0]{2,2}/.test(p2name))&&(/[a-h0]{2,2}/.test(dname))))){
 					if ((txt.indexOf("=Y") >= 0)||(txt.indexOf("=J") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#king_surrender').show();
 						}
 					else
-					if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=I") >= 0)||(txt.indexOf("=V")>=0)||(txt.indexOf("=") >= -1)){
+					if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=I") >= 0)||(txt.indexOf("=V")>=0)||(txt.indexOf("#")>=0)||(txt.indexOf("=") >= -1)){
 						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
 					}
 				//CASTLE to WAR
-				else
-				if((kingmove==true)&& ((/[a-h1-8]{2,2}/.test(dname))&&(/[a-h09]{2,2}/.test(p2name)))){
+				else if((kingmove==true)&& ((/[a-h1-8]{2,2}/.test(dname))&&(/[a-h09]{2,2}/.test(p2name)))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 									$('form#king_endgame').show();
@@ -421,8 +415,7 @@ $(document).ready(function(){
 						}
 					}
 				//WAR to CASTLE
-				else
-				if((kingmove==true)&& ((/[a-h09]{2,2}/.test(dname)&&(/[a-h1-8]{2,2}/.test(p2name))))){
+				else if((kingmove==true)&& ((/[a-h09]{2,2}/.test(dname)&&(/[a-h1-8]{2,2}/.test(p2name))))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 									$('form#king_surrender').show();
@@ -433,8 +426,7 @@ $(document).ready(function(){
 						}
 					}
 				//WAR to WAR
-				else
-				if((kingmove==true)&& ((/[a-h1-8]{2,2}/.test(dname)&&(/[a-h1-8]{2,2}/.test(p2name))))){
+				else if((kingmove==true)&& ((/[a-h1-8]{2,2}/.test(dname)&&(/[a-h1-8]{2,2}/.test(p2name))))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 									$('form#king_endgame').show();
@@ -445,8 +437,7 @@ $(document).ready(function(){
 						}
 					}
 				//CASTLE to No Mans
-				else
-				if((kingmove==true)&& ((((/[x]{2,2}/.test(dname)))&&(((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname)))|| ((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname))))) ||(((/[y]{2,2}/.test(dname)))&&(((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname)))|| ((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname))))))){
+				else if((kingmove==true)&& ((((/[x]{2,2}/.test(dname)))&&(((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname)))|| ((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname))))) ||(((/[y]{2,2}/.test(dname)))&&(((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname)))|| ((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname))))))){
 					//debugger					
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
@@ -462,8 +453,7 @@ $(document).ready(function(){
 						}						
 					}
 				//CASTLE to TRUCE
-				else				
-				if((kingmove==true)&& ((((/[x]{2,2}/.test(dname)))&&(((/[9]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))|| ((/[0]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))))||(((/[y]{2,2}/.test(dname)))&&(((/[9]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))|| ((/[0]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname))))))){
+				else if((kingmove==true)&& ((((/[x]{2,2}/.test(dname)))&&(((/[9]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))|| ((/[0]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))))||(((/[y]{2,2}/.test(dname)))&&(((/[9]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))|| ((/[0]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname))))))){
 
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#surrendermove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
@@ -476,8 +466,7 @@ $(document).ready(function(){
 
 						}
 					}
-				else				
-				if((kingmove==true)&& (/[1-8]{2,2}/.test(p2name))){
+				else if((kingmove==true)&& (/[1-8]{2,2}/.test(p2name))){
 				//(p2name.indexOf('1')||(p2name.indexOf('2')>=0)||(p2name.indexOf('3')>=0)||(p2name.indexOf('4')>=0)||(p2name.indexOf('5')>=0)||(p2name.indexOf('6')>=0)||(p2name.indexOf('7')>=0)||(p2name.indexOf('8')>=0))){
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
@@ -486,6 +475,15 @@ $(document).ready(function(){
 					else{
 						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
+					}
+				else if((/[a-h0-9]{2,2}/.test(dname))){
+					if ((txt.indexOf("#") >= 0)){
+						$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						$('form#winninggame').show();
+						}
+					else{
+						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						}						
 					}					
 				else{
 					$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
@@ -615,7 +613,7 @@ $(document).ready(function(){
 						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
 					else	
-					if ((txt.indexOf("=V") >= 0)){
+					if ((txt.indexOf("=V") >= 0)||(txt.indexOf("#")>=0)){
 						$("#wininggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						$('form#winninggame').show();
 						}

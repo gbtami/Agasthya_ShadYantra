@@ -1616,7 +1616,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 			//movement within the opponent castle
 
 
-					if(($piece->group=="SEMIROYAL") &&(($piece->square->rank==$ending_square->rank))&&(($ending_square->rank==0)||($ending_square->rank==9))&&(
+					if(($piece->group=="SEMIROYAL") &&(($piece->square->rank==$ending_square->rank))&&((($ending_square->rank==0) &&($color_to_move==2))||(($ending_square->rank==9)&&($color_to_move==1)))&&(
 						(($ending_square->file>0)&&($ending_square->file<9))
 						)){ // Check of promotion can happen
 
@@ -1669,10 +1669,9 @@ static function get_corrected_Retreating_Knight_General_directions(
 								$moves[] = $move1;									
 								continue;											
 								}
-
 					}
 				
-				//movement within foe castle	
+				//Duplcate of above movement within foe castle	
 				if(($piece->group=="SEMIROYAL")&&((($piece->square->rank==9)&&($ending_square->rank==9)&&($ending_square->file>0)&&($ending_square->file<9)&&($color_to_move==1))||
 				(($piece->square->rank==0)&&($ending_square->rank==0)&&($ending_square->file>0)&&($ending_square->file<9)&&($color_to_move==2))))
 				{
@@ -1729,13 +1728,12 @@ static function get_corrected_Retreating_Knight_General_directions(
 
 				}				
 
-				//War to CASTLE
-				if((strpos($piece->group,"ROYAL")!==FALSE) && ($royalp)&&(($ending_square->file>0)&&($ending_square->file<9)&&(($ending_square->rank==0)||($ending_square->rank==9)))) {
+				//War to CASTLE with royal touch
+				if((strpos($piece->group,"ROYAL")!==FALSE) && ($royalp)&&($piece->square->rank>9)&&($piece->square->rank<9)&&(($ending_square->file>0)&&($ending_square->file<9)&&(($ending_square->rank==0)||($ending_square->rank==9)))) {
 						if ( $board->board[$ending_square->rank][$ending_square->file] ==null) {
 							if(($piece->type == ChessPiece::SPY)||($piece->type == ChessPiece::ANGRYARTHSHASTRI)||($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::ANGRYKING)||( $piece->type == ChessPiece::ANGRYINVERTEDKING)){
 								if(($ending_square->rank==0)||($ending_square->rank==9)){
-									if(/*($foebrokencastle==true)&&*/($piece->square->rank<=9)&&($color_to_move==1))
-										{
+
 										$new_move = new ChessMove(
 										$piece->square,
 										$ending_square,
@@ -1748,12 +1746,9 @@ static function get_corrected_Retreating_Knight_General_directions(
 										FALSE
 										);
 	
-										if(($ending_square->rank==0)&&($color_to_move==1)){ /*Movement within own CASTLE*/
-
-										}
-										else
-										if($piece->group=="SEMIROYAL"){
-
+									if($piece->group=="SEMIROYAL"){
+										//Trying to enter the Opponent CASTLE
+										if((($ending_square->rank==9)&&($color_to_move==1))||(($ending_square->rank==0)&&($color_to_move==2))){
 											$move1 = clone $new_move;
 											$canpromote=false;	
 											$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,12);
@@ -1764,9 +1759,10 @@ static function get_corrected_Retreating_Knight_General_directions(
 											if($canpromote==TRUE){
 												$move2 = clone $new_move;
 												$move2-> set_promotion_piece(12);
-												//check if the king is killed
-												if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-													$move2->set_killed_king(TRUE);													
+												//check if the king is killed.. Not possible from War to CASTLE.
+
+												//if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
+													//$move2->set_killed_king(TRUE);													
 												$moves[] = $move2;
 												}
 										
@@ -1775,115 +1771,37 @@ static function get_corrected_Retreating_Knight_General_directions(
 			
 											if($canpromote==TRUE){
 												$move3 = clone $new_move;
-												$move3 = clone $new_move;
 												$move3-> set_promotion_piece(11);
 												//check if the king is killed
-												if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-													$move3->set_killed_king(TRUE);													
+												//if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
+													//$move3->set_killed_king(TRUE);
 												$moves[] = $move3;
 												}
 			
-											if((($foebrokencastle==true)&&((($ending_square->rank==9)&&($color_to_move==1))||(($ending_square->rank==0)&&($color_to_move==2)))) &&(($ending_square->file==4)||($ending_square->file==5)))
-												{ 
-												continue;
-												}									
+											//if((($foebrokencastle==true)&&((($ending_square->rank==9)&&($color_to_move==1))||(($ending_square->rank==0)&&($color_to_move==2)))) &&(($ending_square->file==4)||($ending_square->file==5)))
+												//{ 
+												//continue;
+												//}
+											}	
 											$move1 = clone $new_move;
 											//check if the king is killed
-											if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-												$move1->set_killed_king(TRUE);												
+											//if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
+												//$move1->set_killed_king(TRUE);												
 											$moves[] = $move1;									
 											continue;											
 											}
-										else if(($ending_square->rank==9)&&($color_to_move==1)){
+										//If royals are entering	
+										else if(($piece->group=="ROYAL")&&((($ending_square->rank==9)&&($color_to_move==1))||(($ending_square->rank==0)&&($color_to_move==2)))){
 											$move2 = clone $new_move;
 											if(($piece->type == ChessPiece::ANGRYARTHSHASTRI)||($piece->type == ChessPiece::ARTHSHASTRI))
 												$move2-> set_promotion_piece(50);
 											else
 												$move2-> set_promotion_piece(100);
-	
+												
 											$moves[] = $move2;
 											//return $moves; Dont Return but add more moves
 											continue;
 											}
-										}
-									else
-									if(	/*($foebrokencastle==true)&&*/($piece->square->rank>=0)&&($color_to_move==2))
-										{ /*
-										* CASTLE has become warzone
-										*/
-										//if($canpromote==TRUE)
-								
-												$new_move = new ChessMove(
-													$piece->square,
-													$ending_square,
-													0,					
-													$piece->color,
-													$piece->type,
-													$capture,
-													$board,
-													$store_board_in_moves,
-													FALSE
-												);
-												if(($ending_square->rank==9)&&($color_to_move==2)){ /*Movement within own CASTLE*/
-
-												}
-												elseif($piece->group=="SEMIROYAL"){
-		
-														$move1 = clone $new_move;
-														$canpromote=false;	
-														$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,12);
-						
-														$canpromote=false;	
-														$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,12);
-						
-														if($canpromote==TRUE){
-															$move2 = clone $new_move;
-															$move2-> set_promotion_piece(12);
-															//check if the king is killed
-															if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-																	$move2->set_killed_king(TRUE);																
-															$moves[] = $move2;
-															}
-													
-														$canpromote=false;	
-														$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,11);
-						
-														if($canpromote==TRUE){
-															$move3 = clone $new_move;
-															$move3 = clone $new_move;
-															//check if the king is killed
-															if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-																	$move3->set_killed_king(TRUE);																
-															$move3-> set_promotion_piece(11);
-															$moves[] = $move3;
-															}
-						
-														if((($foebrokencastle==true)&&((($ending_square->rank==9)&&($color_to_move==1))||(($ending_square->rank==0)&&($color_to_move==2)))) &&(($ending_square->file==4)||($ending_square->file==5)))
-															{ 
-															continue;
-															}									
-														$move1 = clone $new_move;
-														//check if the king is killed
-														if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-															$move1->set_killed_king(TRUE);															
-														$moves[] = $move1;
-														continue;
-														}
-						
-											else if(($ending_square->rank==0)&&($color_to_move==2)){
-													$move2 = clone $new_move;
-													if(($piece->type == ChessPiece::ANGRYARTHSHASTRI)||($piece->type == ChessPiece::ARTHSHASTRI))
-														$move2-> set_promotion_piece(50);
-													else
-														$move2-> set_promotion_piece(100);
-													//check if the king is killed
-													if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-														$move2->set_killed_king(TRUE);				
-													$moves[] = $move2;
-													//return $moves; Dont Return but add more moves
-													continue;
-													}
-										}
 									else 
 										continue; /** Cannot get inside CASTLE piece */
 									}
@@ -1932,13 +1850,15 @@ static function get_corrected_Retreating_Knight_General_directions(
 					$piece->group;//Stop counting moves as royal is alone in truce and cannot move to war
 					continue;
 				}
-				//single Royal in WAR trying to enter to WAR or to CASTLE
+				//single Royal in WAR trying to enter to CASTLE or no mans
 				else if((strpos($piece->group,"ROYAL")!==FALSE)&&($royalp==false)&&
 					($piece->square->rank>0)&&($piece->square->rank<9)&&($piece->square->file>0)&&($piece->square->file<9)&&
-					(($ending_square->rank==0)||($ending_square->rank==9)||($ending_square->file==0)||($ending_square->file==9)))
+					((($ending_square->rank==0) &&($selfbrokencastle==false)&&($color_to_move==1))||(($ending_square->rank==9) &&($foebrokencastle==false)&&($color_to_move==1))||
+					(($ending_square->rank==9) &&($selfbrokencastle==false)&&($color_to_move==2))||(($ending_square->rank==0) &&($foebrokencastle==false)&&($color_to_move==2))
+					||($ending_square->file==0)||($ending_square->file==9)))
 					{
 					continue;
-				}				
+				}
 
 				if($royalp==TRUE){ /*We can also add the promotion logic*/
 					if((($board->board[$piece->square->rank][$piece->square->file]->group=='ROYAL')||($board->board[$piece->square->rank][$piece->square->file]->group=='SEMIROYAL'))&&
@@ -2117,7 +2037,149 @@ static function get_corrected_Retreating_Knight_General_directions(
 							continue;
 							}
 					}
+
+					
+
+			//***  Compromised CASTLE Penetration or Normal CASTLE movement in and out without Royal */	No-mans is neither promotion nor demotion zone.
+			if(($piece->group=="SEMIROYAL")&&($royalp==false)&&($foebrokencastle==TRUE)&&((($ending_square->rank>=8)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==1))||
+			(($ending_square->rank<=1)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==2))
+			))
+			{
+				$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,12);
+				if((($ending_square->rank==1)&&($color_to_move==2))||(($ending_square->rank==8)&&($color_to_move==1))||(($ending_square->rank==9)&&($color_to_move==1))||(($ending_square->rank==0)&&($color_to_move==2))){
+					if(($canpromote==TRUE)){// then update the parity with new ptomoted values
+						//Force Promotion to add in movelist	
+						$new_move1 = new ChessMove(
+							$piece->square,
+							$ending_square,
+							0,
+							$piece->color,
+							$piece->type,
+							$capture,
+							$board,
+							$store_board_in_moves,
+							FALSE
+							);
+
+					$move3 = clone $new_move1;			
+					$move3-> set_promotion_piece(12);
+					$moves[] = $move3;
+					}
+				}
+
+				if((($ending_square->rank==0)&&($color_to_move==2))||(($ending_square->rank==9)&&($color_to_move==1))){
+
+					$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,11);
+
+					if(($canpromote==TRUE)){// then update the parity with new ptomoted values
+						//Force Promotion to add in movelist	
+						$new_move1 = new ChessMove(
+							$piece->square,
+							$ending_square,
+							0,					
+							$piece->color,
+							$piece->type,
+							$capture,
+							$board,
+							$store_board_in_moves,
+							FALSE
+							);
+
+						$move3 = clone $new_move1;
+						$move3-> set_promotion_piece(11);
+						$moves[] = $move3;
+					}
+				}
+				continue;
+			}
 				
+			//***  Self Compromised CASTLE movement in and out without Royal */	
+			if((($piece->group=="SEMIROYAL")||($piece->group=="ROYAL"))&&($royalp==false)&&($selfbrokencastle==TRUE)&&((($ending_square->rank>=8)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==2))||
+			(($ending_square->rank<=1)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==1))
+			))
+			{
+
+						$new_move1 = new ChessMove(
+							$piece->square,
+							$ending_square,
+							0,
+							$piece->color,
+							$piece->type,
+							$capture,
+							$board,
+							$store_board_in_moves,
+							FALSE
+							);
+
+					$move3 = clone $new_move1;			
+					$move3-> set_promotion_piece(12);
+					$moves[] = $move3;
+
+				continue;
+			}
+
+			/*
+			if(($piece->group=="SEMIROYAL")&&((($ending_square->rank>=8)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==1))||
+			(($ending_square->rank<=1)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==2))
+			))
+			{
+				$dem=-1;
+				$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,12);
+				if((($ending_square->rank==1)&&($color_to_move==2))||(($ending_square->rank==8)&&($color_to_move==1))){
+					if(($canpromote==TRUE)){// then update the parity with new ptomoted values
+						//$piece->type=$piece->type+1;
+						//Force Promotion to add in movelist	
+						$new_move1 = new ChessMove(
+							$piece->square,
+							$ending_square,
+							0,
+							$piece->color,
+							$piece->type,
+							$capture,
+							$board,
+							$store_board_in_moves,
+							FALSE
+							);
+
+					$move3 = clone $new_move1;
+						//check if the king is killed
+						if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
+								$move3->set_killed_king(TRUE);						
+					$move3-> set_promotion_piece(12);
+					$moves[] = $move3;
+					}
+				}
+
+				if((($ending_square->rank==0)&&($color_to_move==2))||(($ending_square->rank==9)&&($color_to_move==1))){
+
+					$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,11);
+
+					if(($canpromote==TRUE)&&($royalp==true)){// then update the parity with new ptomoted values
+						//$piece->type=$piece->type+1;
+						//Force Promotion to add in movelist	
+						$new_move1 = new ChessMove(
+							$piece->square,
+							$ending_square,
+							0,					
+							$piece->color,
+							$piece->type,
+							$capture,
+							$board,
+							$store_board_in_moves,
+							FALSE
+							);
+
+						$move3 = clone $new_move1;
+						//check if the king is killed
+						if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
+								$move3->set_killed_king(TRUE);							
+						$move3-> set_promotion_piece(11);
+						$moves[] = $move3;
+					}
+				}
+			}
+			*/
+
 				//CASTLE to WAR  Defective ???
 				if((($piece->group=="ROYAL"))&&
 					(((($ending_square->rank>0)&&($ending_square->rank<9))&&(($ending_square->file>=0)&&($ending_square->file<=9)))&&		
@@ -2286,9 +2348,6 @@ static function get_corrected_Retreating_Knight_General_directions(
 						);
 	
 						$move2 = clone $new_move;
-						//check if the king is killed
-						if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-								$move2->set_killed_king(TRUE);							
 	
 						if(( $piece->type == ChessPiece::ANGRYINVERTEDKING)&&( $piece->type != ChessPiece::ANGRYARTHSHASTRI)&&( $piece->type != ChessPiece::ARTHSHASTRI)&&( $piece->type != ChessPiece::SPY)){
 							//$move2-> set_demotion_piece($piece->type+$dem);
@@ -2769,68 +2828,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 
 					}
                 }
-			
-				
-			//***  Process it at th end only */	No-mans is neither promotion nor demotion zone.
-			if(($piece->group=="SEMIROYAL")&&((($ending_square->rank>=8)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==1))||
-			(($ending_square->rank<=1)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==2))
-			))
-			{
-				$dem=-1;
-				$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,12);
-				if((($ending_square->rank==1)&&($color_to_move==2))||(($ending_square->rank==8)&&($color_to_move==1))){
-					if(($canpromote==TRUE)){// then update the parity with new ptomoted values
-						//$piece->type=$piece->type+1;
-						//Force Promotion to add in movelist	
-						$new_move1 = new ChessMove(
-							$piece->square,
-							$ending_square,
-							0,
-							$piece->color,
-							$piece->type,
-							$capture,
-							$board,
-							$store_board_in_moves,
-							FALSE
-							);
 
-					$move3 = clone $new_move1;
-						//check if the king is killed
-						if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-								$move3->set_killed_king(TRUE);						
-					$move3-> set_promotion_piece(12);
-					$moves[] = $move3;
-					}
-				}
-
-				if((($ending_square->rank==0)&&($color_to_move==2))||(($ending_square->rank==9)&&($color_to_move==1))){
-
-					$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,11);
-
-					if(($canpromote==TRUE)&&($royalp==true)){// then update the parity with new ptomoted values
-						//$piece->type=$piece->type+1;
-						//Force Promotion to add in movelist	
-						$new_move1 = new ChessMove(
-							$piece->square,
-							$ending_square,
-							0,					
-							$piece->color,
-							$piece->type,
-							$capture,
-							$board,
-							$store_board_in_moves,
-							FALSE
-							);
-
-						$move3 = clone $new_move1;
-						//check if the king is killed
-						if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-								$move3->set_killed_king(TRUE);							
-						$move3-> set_promotion_piece(11);
-						$moves[] = $move3;
-					}
-				}
-			}
 
 		
 			if((($piece->group=="OFFICER")&&($piece->square->file>=0)&&($piece->square->file<=9)))
