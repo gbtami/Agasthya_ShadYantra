@@ -40,7 +40,7 @@ class ChessBoard {
 	//const FEN_REGEX_FORMAT = '/^([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})([bw]{1})([-OQoq]{1,4})([0-9a-hx-y-]{1,2})((\d{1,2})(\d{1,4}))?$/';
 	const FEN_REGEX_FORMAT = '/^([rmneshijuvyaáä´çúýåcgpÖRMNESHIJUVYÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyöä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
 	
-	const DEFAULT_FEN = '1c2ái2c1/cmhgs1ghmc/cppppppppc/181/181/181/181/CPPPPPPPPC/CMHG1SGHMC/1C2IÁ2C1 w OQoq - 0 1';
+	const DEFAULT_FEN = '1c2ái2c1/cmhgsnghmc/cppppppppc/181/181/181/181/CPPPPPPPPC/CMHGNSGHMC/1C2IÁ2C1 w OQoq - 0 1';
 	
 	public $board = array(); // $board[y][x], or in this case, $board[rank][file]
 	public $color_to_move;
@@ -55,6 +55,8 @@ class ChessBoard {
 	public $blackcankill = 1;
 	public $bkingsquare;
 	public $wkingsquare;
+	public $basquare;
+	public $wasquare;
 	public $whitecankill = 1;
 	public $blackcanfullmove = 0;
 	public $whitecanfullmove = 0;
@@ -603,6 +605,9 @@ class ChessBoard {
 		 $winners=0;
 		 $this->bkingsquare=$this->get_king_square(2);//
 		 $this->wkingsquare=$this->get_king_square(1);//
+
+		 $this->basquare=$this->get_arthshastri_square(2);//
+		 $this->wasquare=$this->get_arthshastri_square(1);//
 
 		 $bkingsquare=$this->bkingsquare;//
 		 $wkingsquare=$this->wkingsquare;//
@@ -1192,7 +1197,7 @@ class ChessBoard {
 				if ( $piece ) {
 					////echo ' Actual = '.$piece->type.' Expected = '.ChessPiece::KING;
 
-					if ((($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::ANGRYARTHSHASTRI)) && ($piece->color == $color )) {
+					if ((($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::ANGRYARTHSHASTRI)||($piece->type == ChessPiece::RAJYAPAALARTHSHASTRI)) && ($piece->color == $color )) {
 						return $piece->square;
 					}
 				}

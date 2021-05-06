@@ -3,7 +3,13 @@ $(document).ready(function(){
 		var p1name='',p2name='';
 		var kingmove=false;
 		var arthshastrimove=false;
+		var naaradmove=false;
+		var knightmove=false;
+		var bishopmove=false;
+		var rookmove=false;
+		var generalmove=false;
 		var officermove=false;
+
 		var soldiermove=false;
 		var spymove=false;
 		
@@ -55,9 +61,9 @@ $(document).ready(function(){
 		if($("input#"+color_to_move+"officerscanmovefull").val()=='1')
 			$("textarea#playerta").val($("textarea#playerta").val()+"* All Military Officials can move full steps in WARZone.\n");
 		if($("input#"+color_to_move+"officerscankill").val()=='0')
-			$("textarea#playerta").val($("textarea#playerta").val()+"* Your ("+color_to_move+ ") Military Officials CANNOT STRIKE the Opponent. Reason: King is interested in Domestic Affairs.\n");
+			$("textarea#playerta").val($("textarea#playerta").val()+"* Your ("+color_to_move+ ") Military Officials CANNOT STRIKE the Opponent. Reason: King or ArthShashtri or both interested in Domestic Affairs.\n");
 		if($("input#"+color_to_move+"officerscankill").val()=='1')
-			$("textarea#playerta").val($("textarea#playerta").val()+"* All Military Officials can kill. Reason: King has declared the war or King is not involved in domestic affairs\n");
+			$("textarea#playerta").val($("textarea#playerta").val()+"* All Military Officials can kill. Reason: King and ArthShashtri both are not idle involved in domestic affairs\n");
 			
 		//$("textarea#opponentta").val($("textarea#opponentta").val()+"\:: Your Opponent Details:: \n");	
 		if($("input#"+opp_color_to_move+"officerscanmovefull").val()=='0')
@@ -234,7 +240,33 @@ $(document).ready(function(){
 			$('form#make_move').hide();
 			$("#winninggamemove").empty();	$("#move").empty();
 
-			if((p1name.toLowerCase()=='i')||(p1name.toLowerCase()=='u')||(p1name.toLowerCase()=='y'))
+
+				naaradmove=false;				
+				soldiermove=false;	
+				knightmove=false;	
+				bishopmove=false;
+				rookmove=false;
+				generalmove=false;	
+				kingmove=false;				
+				arthshastrimove=false;
+				soldiermove=false;
+				spymove=false;
+				officermove=false;
+
+
+			if((p1name.toLowerCase()=='n'))
+				naaradmove=true;				
+			else if((p1name.toLowerCase()=='p'))
+				soldiermove=true;	
+			else if((p1name.toLowerCase()=='h'))
+				knightmove=true;	
+			else if((p1name.toLowerCase()=='g'))
+				bishopmove=true;
+			else if((p1name.toLowerCase()=='m'))
+				rookmove=true;
+			else if((p1name.toLowerCase()=='s'))
+				generalmove=true;	
+			else if((p1name.toLowerCase()=='i')||(p1name.toLowerCase()=='u')||(p1name.toLowerCase()=='y'))
 				kingmove=true;				
 			else if((p1name.toLowerCase()=='a')||(p1name=='á')||(p1name=='Á')){
 				arthshastrimove=true;
@@ -247,6 +279,7 @@ $(document).ready(function(){
 				}
 			else if((p1name.toLowerCase()=='g')||(p1name.toLowerCase()=='h')||(p1name.toLowerCase()=='m')||(p1name.toLowerCase()=='s')){
 				officermove=true;
+				
 				}				
 				
 		/*
@@ -523,54 +556,56 @@ $("textarea#player2ta").val("");
 		if(kingmove==true){
 			$("div#player1 label").html("Rules for King (#I Means Indra or King)");	
 			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"* 'I' can move only 1 step at a time. 'I' can kill. #I01#");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' can move 1 or 2 steps like Knights in his own CASTLE. Castle itself is Royal and 'I' is aware of every area. #I02# #I03#");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' can move n number or Times 'To and From' any Zones with the help of Royal or Semi-Royal members only. #I04# ");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can declare war at his side by leaving the Scepter. Declaration of war helps the Army Officers to Strike the opponent; Otherwise Army cannot strike but only move. #I05");			
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' can promote any surrounding Military members on the move or even as a simple promotion without moves. #I06# ");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"* In general, 'I' can move 1 step at a time. 'I' can kill. #I01#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' can move or jump 1-2 steps like 'S' in his own CASTLE with max 2 steps. Castle itself is Royal and 'I' is aware of every area. #I02# #I03#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' cannot Jump over opponent.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' can move 'To and From' any Zones with the help of Royal or Semi-Royal members only. #I04# ");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' and 'A' both should declare war at their side by leaving the Scepter. Declaration of war helps the Army Officers to Strike the opponent; Otherwise Army cannot strike but only move. #I05");			
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' can promote any surrounding Military Officers on the move or even as a simple promotion without moves. #I06# ");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' when enters the opponent CASTLE becomes the Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses.");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Army when enters the opponent CASTLE makes the 'I' Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'A' when enters the opponent CASTLE makes the 'I' Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can suggest 'Army-Recall' by getting into Truce Zone.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' or 'S' can suggest 'Army-Recall' by getting into Truce Zone non Boundary Areas.");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can suggest 'Truce and Army-Recall' by getting into Truce Zone's special Boundary Area.");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can suggest 'Sandhi' even in the WAR-Zone.");						
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can Accept his Defeat in CASTLE. No Sandhi is allowed in CASTLE.");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can Accept his Defeat in TRUCE. No Sandhi is allowed in TRUCE.");						
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can Accept his Defeat in No Mans Land. No Sandhi is allowed in TRUCE.");						
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'I' can Accept his Defeat in No Mans Land. No Sandhi is allowed in TRUCE.");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* In Order to make Army to move to Full strength in any Specific Zone any of the Royal or Semi-Royal should be present in that Zone.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* In Order to make Army to move to Full strength in any Specific Zone, the Royal or Semi-Royal should be present in that Zone.");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'I' gets permanantly hidden in Naag-Lok or No-Mans land. War still goes on.");
 	
 			$("div#player2 label").html("Exceptions in Rules for King");	
 			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
 			$("textarea#player2ta").val($("textarea#player2ta").val()+"#I01# If Royal is surrounded with Royal or Semi-Royal in same zone then these Royal or Semi-Royal can move like Knight.");
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I02# King require help 'To move-in or move-out' of his own Compromised CASTLE.");
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I03# Kings own Compromised CASTLE becomes Secondary War-Zone.");
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I04# King doesn't need any help 'To move-in or move-out' of Opponent's Compromised CASTLE.");	
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I05# Army can Strike only of 'I' and 'A' both are not idle. (Still has defects to be fixed)");	
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I06# Parity of Ranks are maintained. Only 1 General, 2 Knights, 2 Gajarohi, 2 MahaRathis allowed.");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I02# 'I' require help 'To move-in or move-out' of his own Compromised CASTLE to Truce.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I03# 'I's own Compromised CASTLE becomes Secondary War-Zone.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I04# 'I' doesn't need any help 'To move-in or move-out' of Opponent's Compromised CASTLE.");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I05# Army can Strike only if 'I' and 'A' both are not idle. (Still has defects to be fixed)");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#I06# Parity of Ranks are maintained. Only 'G=2', 'H=2', 'M=2', 'S=1'  are allowed..");	
 			
 	}
 	
 		if(spymove==true){
 			$("div#player1 label").html("Rules for Chaaran (#C Means Chaaran or Spy)");	
 			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"* 'C' can move only 1 step at a time.  'S' CANNOT kill. #S01#");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can move 1 or 2 steps like Knights in his own CASTLE. Castle itself is Royal and 'C' is aware of every area. #S02# #S03#");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can move n number or Times 'To and From' any Zones with the help of Royal or Semi-Royal members only. #S04# ");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can promote any surrounding Military members on the move or even as a simple promotion without moves. #S05# ");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"* 'C' can move only 1 step at a time. 'C' CANNOT kill. #C01#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can move or jump 1-2 steps like 'S' in his own CASTLE with max 2 steps. Castle itself is Royal and 'C' is aware of every area. #C02# #C03#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' cannot Jump over opponent.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can move n number or Times 'To and From' any Zones with the help of Royal or Semi-Royal members only. #C04# ");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can promote any surrounding Military members on the move or even as a simple promotion without moves. #C05# ");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' can promote himself as optional in Opponent CASTLE without any help. This is exceptional honor");
 			
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* In Order to make Army to move to Full strength in any Specific Zone any of the Royal or Semi-Royal should be present in that Zone.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* In Order to make Army to move to Full strength in any Specific Zone, the Royal or Semi-Royal should be present in that Zone.");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'C' gets permanantly hidden in Naag-Lok or No-Mans land. War still goes on.");
 			
 			$("div#player2 label").html("Exceptions in Rules for 'C'");	
 			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"#S01# If Royal is surrounded with Royal or Semi-Royal in same zone then these Royal or Semi-Royal can move like Knight.");
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#S02# 'C' require help 'To move-in or move-out' of his own Compromised CASTLE.");
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#S03# 'C's own Compromised CASTLE becomes Secondary War-Zone.");
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#S04# 'C' doesn't need any help 'To move-in or move-out' of Opponent's Compromised CASTLE.");	
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#S05# Parity of Ranks are maintained. Only 1 General, 2 Knights, 2 Gajarohi, 2 MahaRathis allowed.");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"#C01# If Royal is surrounded with Royal or Semi-Royal in same zone then these Royal or Semi-Royal can move like Knight.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#C02# 'C' require help 'To move-in or move-out' of his own Compromised CASTLE to Truce or No-Mans.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#C03# 'C's own Compromised CASTLE becomes Secondary War-Zone.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#C04# 'C' doesn't need any help 'To move-in or move-out' of Opponent's Compromised CASTLE.");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#C05# Parity of Ranks are maintained. Only 'G=2', 'H=2', 'M=2', 'S=1'  are allowed.");	
 			
 	}
 
@@ -578,40 +613,182 @@ $("textarea#player2ta").val("");
 			$("div#player1 label").html("Rules for ArthShastri (#A Means ArthShastri or Prime Minister)");	
 			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"*'A' can move only 1 step at a time. 'A' CANNOT kill. #A01#");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' can move 1 or 2 steps like Knights in his own CASTLE. Castle itself is Royal and 'A' is aware of every area. #A02# #A03#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' can move or jump 1-2 steps like 'S' in his own CASTLE with max 2 steps. Castle itself is Royal and 'A' is aware of every area. #A02# #A03#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' cannot Jump over opponent.");
+			
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' can move n number or Times 'To and From' any Zones with the help of Royal or Semi-Royal members only. #A04# ");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' can promote any surrounding Military members on the move or even as a simple promotion without moves. #A05# ");
 			
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*In Order to make Army to move to Full strength in any Specific Zone any of the Royal or Semi-Royal should be present in that Zone.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* In Order to make Army to move to Full strength in any Specific Zone, the Royal or Semi-Royal should be present in that Zone.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* Only 'A' or 'I' can only suggest 'Truce' (His own Army as Strikeless) by getting into Truce Zone's Boundary Areas. Rest of the Truce Zone has no impact on Army.");
+
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' gets permanantly hidden in Naag-Lok or No-Mans land. War still goes on.");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*King when enters the opponent CASTLE becomes the Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*Army when enters the opponent CASTLE also makes the King Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' when enters the opponent CASTLE also makes the King Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'I' when enters the opponent CASTLE becomes the Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*Army when enters the opponent CASTLE also makes the 'I' Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' when enters the opponent CASTLE also makes the 'I' Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' if is idle then make the Soldiers and Army Strikeless. #A06#");
 			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'A' if dies then make the Soldiers and Army and permanently Strikeless. #A06#");
-			$("textarea#player1ta").val($("textarea#player1ta").val()+"\nArmy can Strike only of 'I' and 'A' both are not idle. (Still has defects to be fixed)");	
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*Army can Strike only if 'I' and 'A' both are not idle. (Still has defects to be fixed)");	
 			
 			$("div#player2 label").html("Exceptions in Rules for ArthShastri (ArthShashtri Code has to many bugs");	
 			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"#A01# If Royal is surrounded with Royal or Semi-Royal in same zone then these Royal or Semi-Royal can move like Knight.");
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A02# 'A' require help 'To move-in or move-out' of his own Compromised CASTLE.");
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A03# 'A' own Compromised CASTLE becomes Secondary War-Zone.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"#A01# If Royal is surrounded with Royal or Semi-Royal in same zone then these Royal or Semi-Royal can move like 'S' but only with 2 Moves maximum.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A02# 'A' require help 'To move-in or move-out' of his own Compromised CASTLE to Truce or No-Mans.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A03# 'A's own Compromised-CASTLE becomes Secondary War-Zone.");
 			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A04# 'A' doesn't need any help 'To move-in or move-out' of Opponent's Compromised CASTLE.");	
-			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A05# Parity of Ranks are maintained. Only 1 General, 2 Knights, 2 Gajarohi, 2 MahaRathis allowed.");	
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A05# Parity of Ranks are maintained. Only 'G=2', 'H=2', 'M=2', 'S=1'  are allowed.");	
 			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#A06# Kautilya Modified this rule and made Army Units as Autonomous and Self-Sustaining.");
 			
 	}		
 	
-	}
+	
+	
+	if(naaradmove==true){
+			$("div#player1 label").html("Rules for RaajRishi or GodMan (#N Means Naarad)");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"* Not Coded Yet. So Rules are complex for Naarad. For now. Made this piece as immovable");
+			
+			$("div#player2 label").html("Exceptions in Rules for RaajRishi (RaajRishi Code is too complex. Will take more than month to code");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"* Not Coded Yet. So Rules are complex for Naarad. For now. Made this piece as immovable");
+			
+	}	
+
+	if(soldiermove==true){
+			$("div#player1 label").html("Rules for Padati or Pawns (#P Means Pawns)");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"* 'P' are funded by 'A'. They are under Army Officers.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'P' moves or kills 1 direction forward (straight or Diagonal). #P01#.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'P' can move or kill only when surrounding squares in same Zone have Army Officers.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'P' CANNOT kill if War is not Declared.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'P' CANNOT kill if 'A' is Killed.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'P' CANNOT change Zones. #P02#.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'P' are indirectly controlled by Opponent's Naarad. (Not Coded Yet)");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'P' are not controlled by King. (Not Coded Yet)");
+			
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'P' are never promoted");
+			
+			$("div#player2 label").html("Exceptions in Rules for Pawns");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"*#P01# When 'I' or 'S' recalls the Army (Is in Truce&Recall Zone), 'P' cannot march forward but can march backward.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"*\n#P01# When 'I' signs Truce and Recall Both, then entire Army cannot Kill in any direction.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"*\n#P02# When the CASTLEs are compromised then everyone including Pawns can enter provided 'I'/'S' have not recalled the army.");
+
+	}	
 	
 
+	if(bishopmove==true){
+			$("div#player1 label").html("Rules for Gajaarohi or Hastin (#G Means Bishop)");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"* 'G' are last 1st Rank and Junior to Knight.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'G' are funded by ArthShastri (A). They are under Army 'S'.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'G' moves 1-2 steps in any direction BUT CANNOT jump.");
+			
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'G' can move and kill either straight or diagonal.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'G' CANNOT kill if War is not Declared.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'G' CANNOT kill if 'A' is Killed.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'G' CANNOT change Zones. #G01#.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'G' are directly controlled by Opponent's Naarad. (Not Coded Yet)");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'G' are indirectly controlled by King and can be promoted by any Royal or Semi Royal.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'G' when are promoted becomes 'H'(Knights).");
+			
+			
+			$("div#player2 label").html("Exceptions in Rules for Gajaarohi");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"*#G01# When King or 'S' (Senapati) recalls the Army (Is in Truce&Recall Zone), 'G' cannot march forward but can march backward.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#G01# When King signs Truce and Recall Both, then entire Army cannot Kill in any direction.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#G02# When the CASTLEs are compromised then everyone including 'G' can enter or exit provided I/S have  not recalled the army.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#G02# Kautilya Modified Army Units as Autonomous and Self-Sustaining.");
+
+	}		
+
+	if(knightmove==true){
+			$("div#player1 label").html("Rules for Ashwaarohi or Shoorveer (#H Means Knight)");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"* 'H' are last 2nd Rank and Senior to 'G'.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' are like Modern Guirellas funded by 'A'. They are under Army 'S'.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' moves 1-2 steps in any direction including jumping.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' CANNOT kill anyone if moved only 1 step in any direction. 'H' need resources to kill.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' cannot jump over opponent.");
+			
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' can kill only on 2 steps move. 1 step straight and then 2nd step straight or diagonal. If the 1st step has no team member except Naarad, then 'H' cannot Kill.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' CANNOT kill if War is not Declared.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' CANNOT kill if 'A' is Killed.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' CANNOT change Zones. #N01#.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' are directly controlled by Opponent's Naarad. (Not Coded Yet)");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' are indirectly controlled by 'I' and can be promoted by any Royal or Semi Royal.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n* 'H' when are promoted becomes 'M' (Rook).");
+			
+			
+			$("div#player2 label").html("Exceptions in Rules for Knight");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"*#N01# When 'I'  or 'S' recalls the Army (Is in Truce&Recall Zone), 'H' cannot march forward but can march backward.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#N01# When 'I' signs Truce and Recall Both, then entire Army cannot Kill in any direction.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#N01# When 'A' signs Truce, then entire Army cannot Kill in any direction.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#N02# When the CASTLEs are compromised then everyone including 'H' can enter or exit provided King/General have not recalled the army.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#G02# Kautilya Modified Army Units as Autonomous and Self-Sustaining.");
+
+	}		
+
+	if(rookmove==true){
+			$("div#player1 label").html("Rules for Mahaarathi (#M Means Rook)");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"*'M' are 3rd Rank and Senior to Knight.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'M' are funded by 'A'. They are under Army 'S'.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'M' moves 1-2 steps in any direction BUT CANNOT jump.");
+			
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'M' can move and kill either straight or diagonal.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'M' CANNOT kill if War is not Declared.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'M' CANNOT kill if 'A' is Killed.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'M' CANNOT change Zones. #M01#.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'M' are directly controlled by Opponent's Naarad. (Not Coded Yet)");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'M' are indirectly controlled by 'I' and can be promoted by any Royal or Semi Royal.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'M' when are promoted becomes 'S' (Senapati).");
+			
+			
+			$("div#player2 label").html("Exceptions in Rules for Mahaarathi");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"*#M01# When 'I' or 'S' recalls the Army (Is in Truce&Recall Zone), 'M' cannot march forward but can march backward.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#M01# When King signs Truce and Recall Both, then entire Army cannot Kill in any direction.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#M02# When the CASTLEs are compromised then everyone including 'M' can enter or exit provided I/S have  not recalled the army.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#G02# Kautilya Modified Army Units as Autonomous and Self-Sustaining.");
+
+	}		
 
 
+	if(generalmove==true){
+			$("div#player1 label").html("Rules for Senapati (#S Means General/WaZeer)");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"*'S' are last Rank and Senior to Rook 'M'.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' are funded by 'A'. They are the top commander ot Army Officers.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' moves 1-4 steps in any direction and can also jump.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' cannot jump over opponent.");
+			
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' can move and kill either straight or diagonal or like 'H'. #S01#");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' CANNOT kill if War is not Declared.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' CANNOT kill if 'A' is Killed.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' CAN change Zones with the help of Royal/Semi-Royals. #S03#.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' can only suggest 'ReCall' by getting into any areas of Truce Zone. #S04#");
 
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' are directly controlled by Opponent's Naarad. (Not Coded Yet)");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' are indirectly controlled by 'I'.");
+			$("textarea#player1ta").val($("textarea#player1ta").val()+"\n*'S' are never promoted.");
+			
+			
+			$("div#player2 label").html("Exceptions in Rules for Senapati");	
+			//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"*#S01#. 'S' is not dependent on resources. Hence, even if it is jumping 2 moves like 'H', it does not require resource in 1st step.");
+			
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"*#S02# When 'I' or 'S' recalls the Army (Is in Truce&Recall Zone), 'S' cannot march forward but can march backward.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#S03# When 'I' signs Truce and Recall Both, then entire Army cannot Kill in any direction.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#S03# When the CASTLEs are compromised then everyone including 'S' can enter or exit provided I has not recalled the army.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#S03# When only 'S' has Recalled the Army, then the maximum Area-Under-Control is counted as per the S's holding. It is maximum to the own boundary or the max row distance 'S' has covered.");
 
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*#S03# When the 'I' and 'S' both have Recalled the Army, then the maximum Area-Under-Control is counted as per the I's holding. It is maximum to the own boundary or the max row distance 'I' has covered.");
+			$("textarea#player2ta").val($("textarea#player2ta").val()+"\n#G02# Kautilya Modified Army Units as Autonomous and Self-Sustaining.");
+		}		
 
-
-
+	}
 
 	
 	//debugger
