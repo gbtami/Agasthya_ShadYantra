@@ -354,8 +354,13 @@ class ChessRulebook {
                 	// Set $king here so castling function can use it later.
                 	$SPY = $piece;
             	} elseif ($piece->type == ChessPiece::GODMAN) {
-                	//$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,TRUE);
-                	// Set $king here so castling function can use it later.
+					if($board->gametype==1){ //Classical Agastya
+						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, 2, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
+						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS, 2, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
+					}
+					elseif($board->gametype==2){ //Kautilya
+                		$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, 2, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
+					}
                 	$GODMAN = $piece;
             	}
         	}
@@ -2767,7 +2772,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 							}						
                     }					
 				else{
-					/* Classical officers cannot penetrate the CASTLE without royals*/
+					/* Classical. Officers can penetrate the compromised CASTLE without royals*/
 					if(($piece->group=="OFFICER") &&($board->board[$ending_square->rank][$ending_square->file]==null)&&((($piece->square->rank>0)&&($piece->square->rank<9))&&(($ending_square->file>=0)||($ending_square->file<=9))&&(
 						(($ending_square->rank==0)||($ending_square->rank==9))) && (($board->gametype==1)))){ 
 

@@ -39,7 +39,17 @@ class ChessBoard {
 	
 	//const FEN_REGEX_FORMAT = '/^([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})([bw]{1})([-OQoq]{1,4})([0-9a-hx-y-]{1,2})((\d{1,2})(\d{1,4}))?$/';
 	const FEN_REGEX_FORMAT = '/^([rmneshijuvyaáä´çúýåcgpÖRMNESHIJUVYÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyöä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_LEFT = '/^([cCuUaAvVsSnNyYäÄ1]{1})([rmneshijuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyáÁaäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshijuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,9}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT = '/^(([cCuUaArRvVsSnNyYäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([cCuUaAvrRVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyáÁaAäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/((([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
+
 	
+	const CLASSIC_FEN_REGEX_FORMAT_NOMANS = '/^([cCuUaArRvVsSnNyYäÄ1]{1})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_BCASTLE = '/^([rmneshijuvyaáÁäçcgpÖRMNESHUVYÇÄCGP12345678]{1,8})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_WAR = '/^([rmneshuvyaäçcgpRMNESHUVYÇAÄCGP12345678]{1,8})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_TRUCE = '/^([cCuUaAvrRVsSnyYNäÄ1]{1})?$/u';
+
+
 	const DEFAULT_FEN = '1c2ái2c1/cmhgsnghmc/cppppppppc/181/181/181/181/CPPPPPPPPC/CMHGNSGHMC/1C2IÁ2C1 w OQoq - 0 1';
 	
 	public $board = array(); // $board[y][x], or in this case, $board[rank][file]
@@ -367,11 +377,69 @@ class ChessBoard {
 		
 		$fen = trim($fen);
 		$Validparity = 0;
+		$valid_fen=null;
+		$tempmatch=null;
 		// Basic format check. This won't catch everything, but it will catch a lot of stuff.
 		// This also parses the info we need into $matches[1] through $matches[14]
 		// $matches[12] is skipped.
 		// TODO: Make this stricter so that it catches everything.
+
+
+		/*
+		const CLASSIC_FEN_REGEX_FORMAT_NOMANS = '/^(([cCuUaArRvVsSnNyYäÄ1]{1})?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_BCASTLE = '/^([rmneshijuvyaáÁäçcgpÖRMNESHUVYÇÄCGP12345678]{1,8}))?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_WAR = '/^([rmneshuvyaäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_TRUCE = '/^([cCuUaAvrRVsSnyYNäÄ1]{1})?$/u';
+		*/
+
 		$valid_fen = preg_match(self::FEN_REGEX_FORMAT, $fen, $matches);
+
+		if(($this->gametype==1)&&($valid_fen!=null))
+		{
+			// If the FEN Format is perfect then use this
+			$valid_fen = preg_match(self::CLASSIC_FEN_REGEX_FORMAT, $fen , $temp); 
+
+			// If the FEN Format is not perfect then use this
+	       /* if ($valid_fen) {
+				for($i = 1; $i <= 10; $i++) {
+					$fchar=substr($matches[$i], 0,1);
+					$midchar=substr($matches[$i], 1, -1);
+					$lchar=substr($matches[$i], -1);
+
+					if(($i==1)||($i==10)) 
+					{
+						$valid_fen = preg_match(self::CLASSIC_FEN_REGEX_FORMAT_NOMANS, $fchar , $temp); 
+						if ($valid_fen==null) break;
+						if(($i==1)) 
+						{
+							$valid_fen = preg_match(self::CLASSIC_FEN_REGEX_FORMAT_BCASTLE, $midchar, $temp); 
+							if ($valid_fen==null) break;
+						}
+						if(($i==10)) 
+						{
+							$valid_fen = preg_match(self::CLASSIC_FEN_REGEX_FORMAT_WCASTLE, $midchar, $temp); 
+							if ($valid_fen==null) break;
+						}
+						$valid_fen = preg_match(self::CLASSIC_FEN_REGEX_FORMAT_NOMANS, $lchar , $temp); 
+						if ($valid_fen==null) break;
+					}
+					
+					if(($i>1)&&($i<10))
+					{
+						$valid_fen = preg_match(self::CLASSIC_FEN_REGEX_FORMAT_TRUCE, $fchar , $temp); 
+						if ($valid_fen==null) break;
+						$valid_fen = preg_match(self::CLASSIC_FEN_REGEX_FORMAT_WAR, $midchar , $temp); 
+						if ($valid_fen==null) break;	
+						$valid_fen = preg_match(self::CLASSIC_FEN_REGEX_FORMAT_TRUCE, $lchar , $temp); 
+						if ($valid_fen==null) break;					
+					}					
+				}
+        	}
+			*/
+		}
+
 		if($this->checkparity($fen)==TRUE)
 		{
 			$this->setparity($fen);			
@@ -382,6 +450,7 @@ class ChessBoard {
 			$this->ParityOfficers[0]='';
 			$this->ParityOfficers[1]='';			
 		}
+
 
 		$ttt=$this->ParityOfficers;//DefaultParityOfficers;
 		$this->checkcontinuity($fen);
