@@ -206,6 +206,9 @@ class ChessRulebook {
 					$get_Killing_Allowed=1;}
 				else {$get_Killing_Allowed=0;}
 				*/
+				if ($piece->type == ChessPiece::GENERAL){
+					$get_FullMover=FALSE;
+				}
 				if(($piece->group=='ROYAL')||($piece->group=='SEMIROYAL')){
 					$get_FullMover=TRUE;
 					if(self::get_piece_castle_with_royals($piece,$color_to_move,$board)==1){
@@ -227,10 +230,14 @@ class ChessRulebook {
 							{
 							$get_FullMover=TRUE;
 							}
-						elseif(($piece->square->rank==9)&&($piece->square->file>0)&&($piece->square->file<9)&&($board->whitecanfullmoveinfoecastle==1))
+						elseif(($piece->square->rank==9)&&($piece->square->file>0)&&($piece->square->file<9)&&(($board->whitecanfullmoveinfoecastle==1)||($board->whitecanfullmove==1)))
 							{
 							$get_FullMover=TRUE;
 							}
+						elseif(($piece->square->rank==0)&&($piece->square->file>0)&&($piece->square->file<9)&&($board->whitecanfullmoveinowncastle==1))
+							{
+							$get_FullMover=TRUE;
+							}							
 						else  
 							$get_FullMover=FALSE;
 						
@@ -257,10 +264,14 @@ class ChessRulebook {
 							{
 								$get_FullMover=TRUE;
 							}
-						elseif(($piece->square->rank==0)&&($piece->square->file>0)&&($piece->square->file<9)&&($board->blackcanfullmoveinfoecastle==1))
+						elseif(($piece->square->rank==9)&&($piece->square->file>0)&&($piece->square->file<9)&&(($board->blackcanfullmoveinfoecastle==1)||($board->blackcanfullmove==1)))
 							{
 								$get_FullMover=TRUE;
 							}
+						elseif(($piece->square->rank==0)&&($piece->square->file>0)&&($piece->square->file<9)&&($board->blackcanfullmoveinowncastle==1))
+							{
+								$get_FullMover=TRUE;
+							}							
 						else  $get_FullMover=FALSE;
 
 						if($board->blackcankill==1) 
@@ -479,13 +490,23 @@ class ChessRulebook {
 
 		$rank = $starting_square->rank + $y_delta;
 		$file = $starting_square->file + $x_delta;
+		$minrank=1;
+		$maxrank=8;
+
+		//Proxy Neighbours as CASTLE and WAR are mixed.
+		if((($color_to_move==1)&&($board->whitecanfullmoveinfoecastle==1)) || (($color_to_move==2)&&($board->blackcanfullmoveinowncastle==1))){
+			$maxrank=9;
+		}
+
+		if((($color_to_move==1)&&($board->whitecanfullmoveinowncastle==1)) || (($color_to_move==2)&&($board->blackcanfullmoveinfoecastle==1))){
+			$minrank=0;
+		}
 
         $ending_square = self::try_to_make_square_using_rank_and_file_num($rank, $file);
 
-
 		if ($ending_square) {
 			if(($starting_square->file==0)||($starting_square->file==9)){
-				if(($starting_square->rank>=1)&&($starting_square->rank<=8)&&($ending_square->file!=$starting_square->file))
+				if(($starting_square->rank>=$minrank)&&($starting_square->rank<=$maxrank)&&($ending_square->file!=$starting_square->file))
 				{//Non-truce zone endpoint but Royal is in Truce-Zone. return
 				return null;
 				}
@@ -495,8 +516,9 @@ class ChessRulebook {
         if (!$ending_square) {
             return null;
         } else {
-            if ((($starting_square->rank>=1)&&($starting_square->rank<=8) && ($starting_square->file>=1) && ($starting_square->file<=8)&&
-			($ending_square->rank>=1)&&($ending_square->rank<=8) && ($ending_square->file>=1) && ($ending_square->file<=8))) //Check within War Zone
+			//Defective.... Check if the WAr-Zone and CASTLE are Mixed.  Incomplete ....
+            if ((($starting_square->rank>=$minrank)&&($starting_square->rank<=$maxrank) && ($starting_square->file>=1) && ($starting_square->file<=8)&&
+			($ending_square->rank>=$minrank)&&($ending_square->rank<=$maxrank) && ($ending_square->file>=1) && ($ending_square->file<=8))) //Check within War Zone
 			{
                 if ($board->board[$rank][$file]) {
                     if (($board->board[$rank][$file]->color == $color_to_move) && ($board->board[$rank][$file]->type==ChessPiece::GENERAL))
@@ -510,7 +532,7 @@ class ChessRulebook {
                 }
 				else
 				  $ending_square=null;
-            }
+            }			
 			else if ((($ending_square->rank==7)&&($starting_square->rank==8) && ($starting_square->file==0) && 	($ending_square->file==0))||
 			(($ending_square->rank==7)&&($starting_square->rank==8) && ($starting_square->file==9) && ($ending_square->file==9))||
 			(($ending_square->rank==2)&&($starting_square->rank==1) && ($starting_square->file==0) && ($ending_square->file==0))||
@@ -1793,7 +1815,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 			continue;
 		}
 
-		//classical cannot allow Officers to move from CAStle to Truce. Only General is allowed
+		//classical cannot allow Officers to move from Normal CAStle to Truce. Only General is allowed. But General can push Officrs from compromised CasTLE.
 		if(($board->gametype==1) && (( ($piece->group=="OFFICER") &&($piece->type!=ChessPiece::GENERAL))||($piece->group=="SOLDIER"))&&
 		(  (($ending_square->file==0)||($ending_square->file==9)) &&(($piece->square->rank==0)||($piece->square->rank==9))&&
 		 (($ending_square->rank>0)&&($ending_square->rank<9)) &&(($piece->square->file>0)&&($piece->square->file<9))
@@ -1802,7 +1824,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 			continue;
 		}
 
-		//classical cannot allow General to move from CAStle to Truce with Royal. Only General is allowed
+		//classical. Cannot allow General to move from CAStle to Truce without Royal.
 		if(($board->gametype==1) && ($piece->type==ChessPiece::GENERAL)&&($royalp==false) &&
 		(  (($ending_square->file==0)||($ending_square->file==9)) &&(($piece->square->rank==0)||($piece->square->rank==9))&&
 		 (($ending_square->rank>0)&&($ending_square->rank<9)) &&(($piece->square->file>0)&&($piece->square->file<9))
@@ -1811,8 +1833,8 @@ static function get_corrected_Retreating_Knight_General_directions(
 			continue;
 		}	
 
-
-			//***  Self Compromised CASTLE movement in and out without Royal. 2 steps are not allowed */	
+/*
+			//  Self Compromised CASTLE movement in and out without Royal. 2 steps are not allowed *
 			if((($piece->group=="SEMIROYAL")||($piece->group=="ROYAL"))&&($royalp==false)&&($selfbrokencastle==TRUE)&&
 			(((abs($ending_square->file-$piece->square->file)>1)&&(($ending_square->file>=0)&&($ending_square->file<=9))) ||
 			((abs($ending_square->rank-$piece->square->rank)>1)&&(($ending_square->file>=0)&&($ending_square->file<=9)))
@@ -1821,17 +1843,17 @@ static function get_corrected_Retreating_Knight_General_directions(
 			{			
 				continue;
 			}
-
+*/
 			//classical cannot allow Officers to move to no-mans. Only General is allowed
-			if(($board->gametype==1) && (( ($piece->group=="OFFICER") &&($piece->type!=ChessPiece::GENERAL))||($piece->group=="SOLDIER"))&&
+			if(($board->gametype==1) && ($royalp==false) && (( ($piece->group=="OFFICER") &&($piece->type!=ChessPiece::GENERAL))||($piece->group=="SOLDIER"))&&
 			(  (($ending_square->file==0)||($ending_square->file==9))&&	 (($ending_square->rank==0)||($ending_square->rank==9))
 			))
 			{			
 				continue;
 			}
 
-			//classical cannot allow Officers to move from CAStle to Truce. Only General is allowed
-			if(($board->gametype==1) && (( ($piece->group=="OFFICER") &&($piece->type!=ChessPiece::GENERAL))||($piece->group=="SOLDIER"))&&
+			//classical. Cannot allow Officers to move from CAStle to Truce. Only General is allowed
+			if(($board->gametype==1) &&($royalp==false) && (( ($piece->group=="OFFICER") &&($piece->type!=ChessPiece::GENERAL))||($piece->group=="SOLDIER"))&&
 			(  (($ending_square->file==0)||($ending_square->file==9)) &&(($piece->square->rank==0)||($piece->square->rank==9))&&
 			 (($ending_square->rank>0)&&($ending_square->rank<9)) &&(($piece->square->file>0)&&($piece->square->file<9))
 			))
@@ -1846,8 +1868,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 			))
 			{			
 				continue;
-			}			
-			
+			}		
 
 
 			if( $board->board[$ending_square->rank][$ending_square->file]!=null ){
@@ -2877,7 +2898,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 							}						
                     }					
 				else{
-					/* Classical. Officers can penetrate the compromised CASTLE without royals*/
+					/* Classical. Officers can penetrate the compromised CASTLE with royals or with General*/
 					if(($piece->group=="OFFICER") &&($board->board[$ending_square->rank][$ending_square->file]==null)&&((($piece->square->rank>0)&&($piece->square->rank<9))&&(($ending_square->file>=0)||($ending_square->file<=9))&&(
 						(($ending_square->rank==0)||($ending_square->rank==9))) && (($board->gametype==1)))){ 
 
@@ -2900,7 +2921,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 							}
 							continue;
 						}
-					//officers cannot jump from CASTLE or No Mans to WAR.But with neighbour Royals, it is possible
+					//Officers cannot jump from CASTLE or No Mans to WAR.But with neighbour Royals, it is possible
 					elseif(($piece->group=="OFFICER") &&($board->board[$ending_square->rank][$ending_square->file]==null)&&((($piece->square->file==0)||($piece->square->file==9))&&(($piece->square->rank>=0)&&($piece->square->rank<=9))&&(($ending_square->file>0)||($ending_square->file<9))&&(
 							(($ending_square->rank>0)&&($ending_square->rank<9))) && (($board->gametype==1)))){ 
 	
@@ -2949,11 +2970,34 @@ static function get_corrected_Retreating_Knight_General_directions(
                             }
                             continue;
                         }
+
+					/* Classical General or Officer can kill inside the compromised castle.*/
+					if(($piece->group=="OFFICER") &&($board->board[$ending_square->rank][$ending_square->file]!=null)&&((($piece->square->rank>0)&&($piece->square->rank<9))&&(($ending_square->file>0)&&($ending_square->file<9))&&(
+						((($ending_square->rank==0)&&($selfbrokencastle==true)&&($color_to_move==1))||(($ending_square->rank==9)&&($selfbrokencastle==true)&&($color_to_move==2))||
+						(($ending_square->rank==0)&&($foebrokencastle==true)&&($color_to_move==2))||(($ending_square->rank==9)&&($foebrokencastle==true)&&($color_to_move==1)))) && (($royalp==true)&&($board->gametype==1)) /*&& ($piece->type==ChessPiece::GENERAL) */)){
+                            if ($capture==true) {
+                                $new_move = new ChessMove(
+                                    $piece->square,
+                                    $ending_square,
+                                    0,
+                                    $piece->color,
+                                    $piece->type,
+                                    $capture,
+                                    $board,
+                                    $store_board_in_moves,
+                                    false
+                                );
+
+                                $move2 = clone $new_move;
+                                $moves[] = $move2;
+                            }
+                            continue;
+                        }
 					/** Can kill out of the Compromised castle.. Promotion logic not added here */
-					if( (($selfbrokencastle==true)&&( $piece->square->rank==9)&&($ending_square->rank<=8)&&($color_to_move==2)||
-						($foebrokencastle==true)&&($ending_square->rank>=1)&&($piece->square->rank==0)&&($color_to_move==2))||  
-						(($selfbrokencastle==true)&&( $piece->square->rank==0)&&($ending_square->rank>=1)&&($color_to_move==1)||
-						($foebrokencastle==true)&&($ending_square->rank<=8)&&($piece->square->rank==9)&&($color_to_move==1)))
+					if( (($selfbrokencastle==true)&&( $piece->square->rank==9)&&($ending_square->rank<=5)&&($color_to_move==2)||
+						($foebrokencastle==true)&&($ending_square->rank>=4)&&($piece->square->rank==0)&&($color_to_move==2))||  
+						(($selfbrokencastle==true)&&( $piece->square->rank==0)&&($ending_square->rank>=4)&&($color_to_move==1)||
+						($foebrokencastle==true)&&($ending_square->rank<=5)&&($piece->square->rank==9)&&($color_to_move==1)))
 						{ 
 							$new_move = new ChessMove(
 								$piece->square,
@@ -3000,6 +3044,9 @@ static function get_corrected_Retreating_Knight_General_directions(
 									$moves[] = $move2;
 									continue;
 							}
+
+
+							
 					/* Classical Officers can penetrate the TRUCE with the help of royal*/	
 					elseif(($piece->type==ChessPiece::GENERAL)&&($piece->group=="OFFICER") &&(($ending_square->file==0)||($ending_square->file==9))&&(
 						(($ending_square->rank>=0)&&($ending_square->rank<=9))
@@ -5076,7 +5123,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 			return null;
 		}
 
-		if(($starting_square->rank==9)&&($starting_square->file==1)&&($ending_square->rank==7)&&($ending_square->file==2))
+		if(($starting_square->rank==8)&&($starting_square->file==2)&&($ending_square->rank==9)&&($ending_square->file==2))
 		{$ttttttttt=1;}
 		if(($ending_square->rank==9)&&($ending_square->file==1)&&($starting_square->rank==7)&&($starting_square->file==2))
 		{$ttttttttt=1;}
