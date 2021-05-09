@@ -26,20 +26,26 @@ textarea[name="pgn"] {
 }
 
 select[name="winninggamemove"] {
-	width: 9em;
+	width: 8em;
 }
 select[name="move"] {
-	width: 9em;
+	width: 7em;
 }
 
 select[name="endgamemove"] {
-	width: 7em;
+	width: 6em;
 }
 select[name="surrendermove"] {
-	width: 7em;
+	width: 6em;
+}
+select[name="Shantimove"] {
+	width: 6em;
+}
+select[name="ReCallmove"] {
+	width: 6em;
 }
 select[name="moves"] {
-	width: 2em;
+	width: 1em;
 }
 
 
@@ -49,18 +55,23 @@ select[name="moves"] {
 }
 
 .KingMoves>div:nth-child(1) {
-	flex: 10%;
+	flex: 8%;
 }
 
 .KingMoves>div:nth-child(2) {
-	flex: 20%;
+	flex: 100%;
 }
-
 .KingMoves>div:nth-child(3) {
-	flex: 20%;
+	flex: 200%;
 }
 .KingMoves>div:nth-child(4) {
-	flex: 20%;
+	flex: 200%;
+}
+.KingMoves>div:nth-child(5) {
+	flex: 200%;
+}
+.KingMoves>div:nth-child(6) {
+	flex: 10%;
 }
 
 .two_columns {

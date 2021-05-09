@@ -132,33 +132,54 @@ if (! defined('VIEWER')) {
 			<div  style="display:block;position: relative;top:40px">
 			<div id="KingMoves" class="container" class="KingMoves">
 				
-			<div style="float:left;width:25%;">
-				<form id="make_move" name="make_move" hidden disabled readonly style="display:none;"  method="POST">	Normal Moves :<br/>	(Selected Piece) <br/>
+			<div style="float:left;width:18%;">
+				<form id="make_move" name="make_move" hidden disabled readonly style="display:none;"  method="POST">
+				<label >Normal:<br/></label>
 					<select id="move" name="move" size="10"></select>	
-					<br><span id="move_count"></span> 	Moves Count: <br>
+					<!--br><span id="move_count"></span> 	Moves : <br-->
 					<input id="submitmove" type="submit" value="Make Move">
 				</form>
 			</div>
 
-				<div style="float:left;width:22%;">
-					<form id="king_endgame" name="king_endgame" hidden disabled readonly style="display:none;"> Suggest Sandhi<br>
+				<div style="float:left;width:19%;">
+					<form id="king_endgame" name="king_endgame" hidden disabled readonly style="display:none;">
+					<label id="lblViraam">Viraam: <br/></label>
 						<select id="endgamemove" name="move" size="10"></select>
-							<br><span id="endgamemove_count"></span>Moves Count: <br>
+							<!--br><span id="endgamemove_count"></span>Moves : <br-->
 						<input id="submitendgamemove" type="submit" value="Make Move">
 					</form>
 				</div>
-				<div style="float:left;width:25%;">
-					<form id="winninggame" name="winninggame" hidden disabled readonly> Winning Moves <br>
-						<select id="winninggamemove" name="move" size="10"></select>
-							<br><span id="winninggamemove_count"></span>Moves Count: <br>
+
+				<div style="float:left;width:19%;">
+					<form id="recall" name="recall" hidden disabled readonly style="display:none;">
+					<label id="lblSandhi">Sandhi<br/></label>
+						<select id="recallmove" name="move" size="5"></select>
+							<!--br><span id="ReCallmove_count"></span>Moves Count: <br-->
+						<input id="submitrecallmove" type="submit" value="Make Move">
+					</form>
+				</div>
+				<div style="float:left;width:17%;">
+					<form id="king_Shanti" name="king_Shanti" hidden disabled readonly style="display:none;">
+					<label id="lblShanti">	</label>
+						<select id="Shantimove" name="move" size="5"></select>
+							<!--br><span id="ReCallmove_count"></span>Moves Count: <br-->
+						<input id="submitShantimove" type="submit" value="Make Move">
+					</form>
+				</div>				
+				<div style="float:left;width:16	%;">
+					<form id="winninggame" name="winninggame" hidden disabled readonly>
+					<label >Winning: <br/></label>
+						<select id="winninggamemove" name="move" size="8"></select>
+							<!--br><span id="winninggamemove_count"></span>Moves : <br-->
 						<input type="submit" id="	" value="Make Move">
 					</form>
 				</div>
 				
-				<div style="float:right;width:22%;;padding-right:10px;">
-					<form id="king_surrender" name="king_surrender" hidden disabled readonly style="display:none;"> Surrender <br/>
+				<div style="float:right;width:18%;;padding-right:10px;">
+					<form id="king_surrender" name="king_surrender" hidden disabled readonly style="display:none;">
+					<label >Surrender: <br/></label>
 						<select id="surrendermove" name="move" size="10"></select>
-							<br><span id="surrendermove_count"></span>Moves Count: <br>	
+							<!--br><span id="surrendermove_count"></span>Moves : <br-->	
 						<input type="submit" id="submitsurrendermove" value="Make Move">
 					</form>
 				</div>

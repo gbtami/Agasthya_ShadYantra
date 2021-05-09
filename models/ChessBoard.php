@@ -40,14 +40,14 @@ class ChessBoard {
 	//const FEN_REGEX_FORMAT = '/^([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})([bw]{1})([-OQoq]{1,4})([0-9a-hx-y-]{1,2})((\d{1,2})(\d{1,4}))?$/';
 	const FEN_REGEX_FORMAT = '/^([rmneshijuvyaáä´çúýåcgpÖRMNESHIJUVYÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyöä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
 	const CLASSIC_FEN_REGEX_FORMAT_LEFT = '/^([cCuUaAvVsSnNyYäÄ1]{1})([rmneshijuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyáÁaäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshijuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,9}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
-	const CLASSIC_FEN_REGEX_FORMAT = '/^(([cCuUaArRvVsSnNyYäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([cCuUaAvrRVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyáÁaAäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/((([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
+	//const CLASSIC_FEN_REGEX_FORMAT = '/^(([cCuUaArRvVsSnNyYäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([cCuUaAvrRVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyáÁaAäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/((([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT = '/^(([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaAvrRVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyáÁaAäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([ghmGHMrmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/((([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
 
-	
 	const CLASSIC_FEN_REGEX_FORMAT_NOMANS = '/^([cCuUaArRvVsSnNyYäÄ1]{1})?$/u';
 	const CLASSIC_FEN_REGEX_FORMAT_BCASTLE = '/^([rmneshijuvyaáÁäçcgpÖRMNESHUVYÇÄCGP12345678]{1,8})?$/u';
 	const CLASSIC_FEN_REGEX_FORMAT_WAR = '/^([rmneshuvyaäçcgpRMNESHUVYÇAÄCGP12345678]{1,8})?$/u';
 	const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8})?$/u';
-	const CLASSIC_FEN_REGEX_FORMAT_TRUCE = '/^([cCuUaAvrRVsSnyYNäÄ1]{1})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_TRUCE = '/^([ghmGHMcCuUaAvrRVsSnyYNäÄ1]{1})?$/u';
 
 
 	const DEFAULT_FEN = '1c2ái2c1/cmhgsnghmc/cppppppppc/181/181/181/181/CPPPPPPPPC/CMHGNSGHMC/1C2IÁ2C1 w OQoq - 0 1';
@@ -65,6 +65,10 @@ class ChessBoard {
 	public $blackcankill = 1;
 	public $bkingsquare;
 	public $wkingsquare;
+	public $bgsquare;
+	public $wgquare;	
+	public $elevatedbg=false;
+	public $elevatedwg=false;		
 	public $basquare;
 	public $wasquare;
 	public $whitecankill = 1;
@@ -682,6 +686,37 @@ class ChessBoard {
 		 $wkingsquare=$this->wkingsquare;//
 		 
 		 $bking=''; $wking='';
+
+		//We can dynamically update the FENValue
+		// $string=self::promoteking(2,$string);//Promote White
+
+		 if ($this->board[9][4]!=null) {
+            if (($this->board[9][4]!=null)&&($this->board[9][4]->color==1)&&(($this->board[9][4]->group=='OFFICER')||($this->board[9][4]->group=='SEMIROYAL')||($this->board[9][4]->group=='SOLDIER'))) {
+				///self::promoteking(1,$string);//Promote White
+				$this->Winner='1';$winners=$winners+1; //Black Wins
+            }
+        }
+		
+		if ($this->board[9][5]!=null) {
+            if (($this->board[9][5]!=null)&&($this->board[9][5]->color==1)&&(($this->board[9][5]->group=='OFFICER')||($this->board[9][5]->group=='SEMIROYAL')||($this->board[9][5]->group=='SOLDIER'))) {
+				//self::promoteking(1,$string);//Promote White
+				$this->Winner='1';$winners=$winners+1; //Black Wins
+            }
+        }    
+		
+		if ($this->board[0][4]!=null) {
+        	if (($this->board[0][4]!=null)&&($this->board[0][4]->color==2)&&(($this->board[0][4]->group=='OFFICER')||($this->board[0][4]->group=='SEMIROYAL')||($this->board[0][4]->group=='SOLDIER'))) {
+				//self::promoteking(2,$string);//Promote White
+				$this->Winner='2';$winners=$winners+1; //Black Wins
+        	}
+    	}	
+	
+		if($this->board[0][5]!=null){
+			if(($this->board[0][5]!=null)&&($this->board[0][5]->color==2)&&(($this->board[0][5]->group=='OFFICER')||($this->board[0][5]->group=='SEMIROYAL')||($this->board[0][5]->group=='SOLDIER'))){
+				//self::promoteking(2,$string);//Promote White
+				$this->Winner='2';$winners=$winners+1; //Black Wins
+			}
+		}
 
 		 //TRUCE or WAR KINGs are offering draws
 		 if(($bkingsquare!=null)&&($bkingsquare->rank!=null))
