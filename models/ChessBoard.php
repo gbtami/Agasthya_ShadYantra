@@ -1409,6 +1409,28 @@ class ChessBoard {
 								}								
 							if($count==4) break;
                         }
+					elseif ((($piece->group == 'OFFICER') || ($piece->group== 'SOLDIER'))) {
+						/*
+						if(($piece->square->rank==0)&&($piece->color==1)&& ($this->whitecanfullmoveinowncastle == 0)){
+							$this->whitecanfullmoveinowncastle = 1; //White Can full move
+							$count=$count+1;
+							}
+						if(($piece->square->rank==9)&&($piece->color==2)&& ($this->blackcanfullmoveinowncastle == 0)){
+								$this->blackcanfullmoveinowncastle = 1; //Black Can full move
+								$count=$count+1;
+								}
+						*/		
+
+						if(($piece->square->rank==9)&&($piece->color==1)&& ($this->whitecanfullmoveinfoecastle == 0)){
+								$this->whitecanfullmoveinfoecastle = 1; //Can fullmove
+								$count=$count+1;
+							}
+						if(($piece->square->rank==0)&&($piece->color==2)&& ($this->blackcanfullmoveinfoecastle == 0)){
+								$this->blackcanfullmoveinfoecastle = 1; //Can fullmove
+								$count=$count+1;
+							}								
+						if($count==4) break;
+					}	
                     }
 					
 				}

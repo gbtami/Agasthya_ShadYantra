@@ -220,7 +220,7 @@ class ChessRulebook {
 						}
 				}
 
-				if(($piece->group=='OFFICER')||($piece->group=='OFFICER')){
+				if(($piece->group=='OFFICER')){
 					if($piece->color==1){
 						if(($piece->square->rank>0)&&($piece->square->rank<9)&&($piece->square->file>0)&&($piece->square->file<9)&&($board->whitecanfullmove==1))
 							{
@@ -479,7 +479,7 @@ class ChessRulebook {
 
 
 
-	static function officer_square_surrounded_by_general(
+	static function officer_square_surrounded_by_general_royals(
 		ChessSquare $starting_square,
 		int $y_delta,int $x_delta,
 		$color_to_move,
@@ -492,6 +492,9 @@ class ChessRulebook {
 		$file = $starting_square->file + $x_delta;
 		$minrank=1;
 		$maxrank=8;
+
+		//All royals are exposed in CASTLE.
+	
 
 		//Proxy Neighbours as CASTLE and WAR are mixed.
 		if((($color_to_move==1)&&($board->whitecanfullmoveinfoecastle==1)) || (($color_to_move==2)&&($board->blackcanfullmoveinowncastle==1))){
@@ -521,11 +524,18 @@ class ChessRulebook {
 			($ending_square->rank>=$minrank)&&($ending_square->rank<=$maxrank) && ($ending_square->file>=1) && ($ending_square->file<=8))) //Check within War Zone
 			{
                 if ($board->board[$rank][$file]) {
-                    if (($board->board[$rank][$file]->color == $color_to_move) && ($board->board[$rank][$file]->type==ChessPiece::GENERAL))
+                    if ( (($board->board[$rank][$file]->color == $color_to_move) && ($board->board[$rank][$file]->type==ChessPiece::GENERAL)))
 					{
 						 //*echo ' Ending square contains a friendly General ';*/
                         return $ending_square;
                     }
+					elseif (($board->board[$rank][$file]->color == $color_to_move) && ( (($starting_square->rank==0)&&($color_to_move==1)&&($board->whitecanfullmoveinowncastle==1)) || 
+					(($starting_square->rank==9)&&($color_to_move==2)&&($board->blackcanfullmoveinowncastle==1))  ))
+						return $ending_square;
+					//Ending Block is neighhbour to its own compromised castle
+					elseif (($board->board[$rank][$file]->color == $color_to_move) && ( (($ending_square->rank==0)&&($ending_square->file>0)&&($ending_square->file<9)&&($starting_square->rank==1)&&($color_to_move==1)&&($board->blackcanfullmoveinfoecastle==1)) || 
+						(($ending_square->rank==9)&&($starting_square->rank==8)&&($ending_square->file>0)&&($ending_square->file<9)&&($color_to_move==2)&&($board->whitecanfullmoveinfoecastle==1))  ))
+							return $ending_square;					
 					else
 						$ending_square=null;
 
@@ -562,7 +572,7 @@ class ChessRulebook {
 		return $ending_square;
     }
 
-	static function check_general_neighbours( /**/
+	static function check_general_royal_neighbours( /**/
 		array $directions_list,
 		ChessPiece $piece,
 		$color_to_move,
@@ -574,7 +584,7 @@ class ChessRulebook {
                 $current_xy[0] *= 1;
                 $current_xy[1] *= 1;
                 $type=0;
-                $ending_square = self::officer_square_surrounded_by_general(
+                $ending_square = self::officer_square_surrounded_by_general_royals(
                     $piece->square,
                     $current_xy[0],
                     $current_xy[1],
@@ -740,7 +750,7 @@ class ChessRulebook {
 					$current_xy[1] *= 1;
 					$type=0;
 
-					$ending_square = self::officer_square_surrounded_by_general(
+					$ending_square = self::officer_square_surrounded_by_general_royals(
 						$actual_square,
 						$starting_square,
 						$current_xy[0],
@@ -847,48 +857,6 @@ class ChessRulebook {
 			return false;
         }	
 
-
-	static function add_general_neighbour_moves_to_moves_list( /**/
-		array $directions_list,
-		ChessPiece $piece,
-		$color_to_move,
-		ChessBoard $board
-	): bool {
-		$ending_square=null;
-		foreach ( $directions_list as $direction ) {
-                $current_xy = self::DIRECTION_OFFSETS[$direction];
-                $current_xy[0] *= 1;
-                $current_xy[1] *= 1;
-                $type=0;
-                $ending_square = self::officer_square_surrounded_by_general(
-					$piece->square,
-                    $piece->square,
-                    $current_xy[0],
-                    $current_xy[1],
-                    $color_to_move,
-                    $board,
-					FALSE
-                );
-				if(!$ending_square)
-				{ 					
-					continue;				
-				}
-				if($ending_square!=null)
-				{
-					if(($piece->group=='OFFICER')&&((($piece->type!=ChessPiece::GENERAL)&&($board->gametype==1))||($board->gametype==2))&&(($ending_square->file==0)||($ending_square->file==9)))
-					{
-						return false;
-					}
-					else					
-						return TRUE;
-				}
-            }
-	if(!$ending_square)
-	{ return FALSE;
-	}
-	else				
-		return TRUE;
-	}
 
 	static function check_royal_neighbours( /**/
 		array $directions_list,
@@ -1378,9 +1346,9 @@ static function get_corrected_Retreating_Knight_General_directions(
 			}				
 
 
-            if(($royalp==false)&&($piece->type!=ChessPiece::GENERAL)&&($piece->group=='OFFICER'))
+            if(($royalp==false)&&($piece->group=='OFFICER'))
 				{
-					$royalp=self::check_general_neighbours( /**/
+					$royalp=self::check_general_royal_neighbours( /**/
                 		self::KING_DIRECTIONS,
                 		$piece,
                 		$color_to_move,
@@ -3103,7 +3071,20 @@ static function get_corrected_Retreating_Knight_General_directions(
 					$board
 					);
 
-					if($droyalp==TRUE)
+
+					$targetpiece=clone $piece;
+					$targetpiece->square->file=	$ending_square->file;
+					$targetpiece->square->rank=	$ending_square->rank;
+
+					$dgeneralp=self::check_general_royal_neighbours( 
+						self::KING_DIRECTIONS,
+                		$targetpiece,
+                		$color_to_move,
+                		$board
+						);
+
+
+					if(($droyalp==TRUE) ||($dgeneralp==true))
 					{ // Check of demotion can happen
 						$dem=-1;
 
@@ -3191,7 +3172,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 				$piece->square->rank;
 			}
 
-				$officerp=self::check_general_neighbours( /**/
+				$officerp=self::check_general_royal_neighbours( /**/
 					self::KING_DIRECTIONS,
 					$piece,
 					$color_to_move,
@@ -3341,7 +3322,7 @@ static function get_corrected_Retreating_Knight_General_directions(
 				$piece->square->rank;
 			}
 
-			$officerp=self::check_general_neighbours( /**/
+			$officerp=self::check_general_royal_neighbours( /**/
 					self::KING_DIRECTIONS,
 					$piece,
 					$color_to_move,
@@ -3505,16 +3486,16 @@ static function get_corrected_Retreating_Knight_General_directions(
 				return $moves;
 			}
 		}
-		else if ($type==1) {/* Check if Officer has royals*/
+		elseif ($type==1) {/* Check if Officer has royals*/
 
-            if(($royalp==false)&&($piece->type!=ChessPiece::GENERAL)&&($piece->group=='OFFICER'))
+            if(($royalp==false)&&($piece->group=='OFFICER'))
 				{
-					$booljump=self::check_general_neighbours( /**/
+					$booljump=self::check_general_royal_neighbours( /**/
                 		self::KING_DIRECTIONS,
                 		$piece,
                 		$color_to_move,
                 		$board
-            	);
+            		);
 				$officer_royalp=true;
 				$booljump=true;
 				}
@@ -3713,13 +3694,22 @@ static function get_corrected_Retreating_Knight_General_directions(
             	if ($ending_square) {
                 	$capture = false;
 
-					//2 steps jump from normal castle not allowed
+					//2 steps jump for Royals from normal castle not allowed
 					if (($royalp==true)&&(strpos($piece->group,"ROYAL")!==FALSE) && (((($selfbrokencastle==false)&&($piece->square->rank==0)&&($color_to_move==1) && ($ending_square->rank>1))||
 					(($foebrokencastle==false)&&($piece->square->rank==9)&&($color_to_move==1) && ($ending_square->rank<8))) || 
 					((($selfbrokencastle==false)&&($piece->square->rank==9)&&($color_to_move==2)&& ($ending_square->rank<8))||
 					(($foebrokencastle==false)&&($piece->square->rank==0)&&($color_to_move==2)&& ($ending_square->rank>1))))){
 						continue;
 					}
+					//2 steps jump for Naarad/Officers/Soldiers from normal castle not allowed
+					else
+					if (($officer_royalp==true)&&(strpos($piece->group,"ROYAL")==FALSE) && (((($selfbrokencastle==false)&&($piece->square->rank==0)&&($color_to_move==1) && ($ending_square->rank>1))||
+					(($foebrokencastle==false)&&($piece->square->rank==9)&&($color_to_move==1) && ($ending_square->rank<8))) || 
+					((($selfbrokencastle==false)&&($piece->square->rank==9)&&($color_to_move==2)&& ($ending_square->rank<8))||
+					(($foebrokencastle==false)&&($piece->square->rank==0)&&($color_to_move==2)&& ($ending_square->rank>1))))){
+						continue;
+					}
+
 
 					if(($royalp==true)&&(strpos($piece->group,"ROYAL")!==FALSE)&&((($ending_square->rank==2)&&($piece->square->rank==0))||(($ending_square->rank==7)&&($piece->square->rank==9)))){
 					}
@@ -4385,11 +4375,29 @@ static function get_corrected_Retreating_Knight_General_directions(
 										$store_board_in_moves,
 										FALSE
 										);
-			
-									$move2 = clone $new_move;
-									$moves[] = $move2;
-									continue;
-			
+										$move2 = clone $new_move;
+
+										if($officer_royalp==TRUE)
+										{ // Check of promotion can happen
+											$dem=-1;
+				
+											$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,$piece->type-1);
+				
+											if($canpromote==TRUE){
+				
+												//check if the king is killed
+												if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
+													$move2->set_killed_king(TRUE);									
+												$move2-> set_promotion_piece($piece->type+$dem);
+				
+												//check if the king is killed
+												if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
+														$move2->set_killed_king(TRUE);								
+												}
+										}
+
+									$moves[] = $move2;									
+									continue;			
 								}
 								//1= Self CASTLE.. 0 = Foe CASTLE and can be jumped by Officers without royals or General.
 								elseif((($get_CASTLEMover==1)&&($piece->square->rank==0)&&($color_to_move==1))||
@@ -4847,13 +4855,10 @@ static function get_corrected_Retreating_Knight_General_directions(
                         $store_board_in_moves,
                         false
                     );
-
 					$move2 = clone $new_move1;
 
-						//check if the king is killed
-						if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
-								$move2->set_killed_king(TRUE);	
-					$moves[] = 	$move2;				
+					$moves[] = 	$move2;
+					//continue;
                 }
 
 				if(($piece->group=="SEMIROYAL")&&((($ending_square->rank>=8)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==1))||
@@ -4951,9 +4956,20 @@ static function get_corrected_Retreating_Knight_General_directions(
 					$color_to_move,
 					$board
 					);
+					
+					$targetpiece=clone $piece;
+					$targetpiece->square->file=	$ending_square->file;
+					$targetpiece->square->rank=	$ending_square->rank;
 
-						if($droyalp==TRUE)
-						{ // Check of demotion can happen
+					$dgeneralp=self::check_general_royal_neighbours( 
+						self::KING_DIRECTIONS,
+                		$targetpiece,
+                		$color_to_move,
+                		$board
+						);
+					// Check of destination promotion can happen
+					if(($droyalp==TRUE)||($dgeneralp==TRUE))
+						{ 
 							$dem=-1;
 
 							$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,$piece->type-1);
@@ -4974,8 +4990,8 @@ static function get_corrected_Retreating_Knight_General_directions(
 									);
 
 								$move3 = clone $new_move1;
-						//check if the king is killed
-						if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
+							//check if the king is killed
+							if(($capture==TRUE)&&( ($board->get_king_square(abs($color_to_move-3))->rank==$ending_square->rank) &&($board->get_king_square($color_to_move)->file==$ending_square->file)))
 								$move3->set_killed_king(TRUE);									
 								$move3-> set_promotion_piece($piece->type+$dem);
 
@@ -4985,6 +5001,12 @@ static function get_corrected_Retreating_Knight_General_directions(
 								
 								$moves[] = $move3;
 							}
+						}
+						else
+						{
+
+							
+
 						}
 				}
             }
@@ -5080,26 +5102,6 @@ static function get_corrected_Retreating_Knight_General_directions(
 		$xx=0;$yy=0;
 		$rank = $starting_square->rank + $y_delta;
 		$file = $starting_square->file + $x_delta;
-
-
-/* dialoganl jump logic for intermediate square
-
-						if ((($starting_square->rank)-($ending_square->rank)>=2)&&(($starting_square->file)-($ending_square->file)>=2)) {
-							$yy=-1;  $xx=-1 ;
-						}
-						if ((($starting_square->rank)-($ending_square->rank)>=2)&&(($ending_square->file)-($starting_square->file)>=2)) {
-							$yy=-1;  $xx=1 ;
-						}						
-						if ((($ending_square->rank)-($starting_square->rank)>=2)&&(($ending_square->file)-($starting_square->file)>=2)) {
-							$yy=1; $xx=1 ;
-						}
-						if ((($ending_square->rank)-($starting_square->rank)>=2)&&(($starting_square->file)-($ending_square->file)>=2)) {
-							$yy=1; $xx=-1 ;
-						}	
-
-
-*/
-
 
 
 		$ending_square = self::try_to_make_square_using_rank_and_file_num($rank,$file);
