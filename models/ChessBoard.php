@@ -74,10 +74,14 @@ class ChessBoard {
 	public $whitecankill = 1;
 	public $blackcanfullmove = 0;
 	public $whitecanfullmove = 0;
+	public $blackscanfullmove = 0;
+	public $whitescanfullmove = 0;	
 	public $blackcanfullmoveinowncastle = 1;
 	public $whitecanfullmoveinowncastle = 1;
 	public $blackcanfullmoveinfoecastle = 0;
 	public $whitecanfullmoveinfoecastle = 0;
+	public $wbrokencastle=false;
+	public $bbrokencastle=false;
 	public $gametype = 1; //1 means classical Agasthya 2: Means Kautilya
 	
 
@@ -98,7 +102,6 @@ class ChessBoard {
 			}
 		}
 	}
-
 
 	function setparity(string $fen): void {
 		$tchar = 0;
@@ -166,7 +169,6 @@ class ChessBoard {
 			//return FALSE;
 	 	}
 	}
-
 	
 	function checkdemotionparity(//no impact if royal throws
 		string $fen,
@@ -220,7 +222,6 @@ class ChessBoard {
 		return TRUE;
 	}
 
-
 	function checkpromotionparity(//no impact if royal throws
 		string $fen,
 		ChessPiece $piece,
@@ -264,7 +265,6 @@ class ChessBoard {
         }
 		return TRUE;
 	}
-
 
 	function checkparity(string $fen): bool {
 		$tchar = 0;
@@ -576,10 +576,10 @@ class ChessBoard {
 						$color = ChessPiece::BLACK;
 						$type = self::PIECE_LETTERS[$char];
 					} 
-					elseif(($char=='n')||($char=='n')) 
+					elseif(($char=='n')||($char=='N')) 
 					{
 					   $group='NOBLE';
-					   if($char=='g') $color = ChessPiece::BLACK;
+					   if($char=='n') $color = ChessPiece::BLACK;
 					   else  $color = ChessPiece::WHITE;
 					   $Mortal = 0;
 					   $type = self::PIECE_LETTERS[strtolower($char)];
@@ -827,8 +827,6 @@ class ChessBoard {
 		$this->Winners=$winners;
 	 }
 	
-
-
 	function promoteking($color,$string):string{
 
 		if($color==1){
@@ -1309,8 +1307,6 @@ class ChessBoard {
 		}
 		return NULL;
 	}
-
-	
 	
 	function get_generals_on_truce($color): bool {
 		//Echo '<li> ChessBoard.php 13# function get_king_square called </li>';	
@@ -1343,8 +1339,6 @@ class ChessBoard {
 		return FALSE;
 	}
 	
-
-
 	function get_royals_on_Scepters_TruceControl($color): bool {
 		//Echo '<li> ChessBoard.php 13# function get_king_square called </li>';	
 		$count=0;
@@ -1377,7 +1371,6 @@ class ChessBoard {
 		return FALSE;
 	}
 	
-
 	function get_royals_on_castle_for_full_move($color): bool {
 
 		$count=0;
@@ -1504,10 +1497,12 @@ class ChessBoard {
                         if ((($piece->group == 'ROYAL') || ($piece->group== 'SEMIROYAL'))) {
 							if(($piece->color==1)&& ($this->whitecanfullmove == 0)){
 								$this->whitecanfullmove = 1; //Can move fully
+								$this->whitescanfullmove = 1; //S Can move fully
 								$count=$count+1;
 								}
 							if(($piece->color==2)&& ($this->blackcanfullmove == 0)){
 									$this->blackcanfullmove = 1; //Can move fully
+									$this->blackscanfullmove = 1; //S Can move fully
 									$count=$count+1;
 								}
 							if($count==2) break;
@@ -1534,11 +1529,12 @@ class ChessBoard {
 				if ( $piece ) {
                     if (($piece->square->file>0)&&($piece->square->file<9)&&($piece->square->rank>0)&&($piece->square->rank<9)) {
                         if ((($piece->group == 'OFFICER') && ($piece->type== ChessPiece::GENERAL))) {
-							if(($piece->color==1)&& ($this->whitecanfullmove == 1)){
+							if(($piece->color==1) && ( $this->whitecanfullmove == 1)){
 								$this->whitecanfullmove = 1; //Can move fully
 								$count=$count+1;
 								}
 							elseif(($piece->color==1)&& ($this->whitecanfullmove == 0)){
+									$this->whitecanfullmove = 1; //Can move fully
 									$count=$count+1;
 									}								
 							if(($piece->color==2)&& ($this->blackcanfullmove == 1)){
@@ -1547,31 +1543,11 @@ class ChessBoard {
 								}
 							elseif(($piece->color==2)&& ($this->blackcanfullmove == 0)){
 									$count=$count+1;
+									$this->blackcanfullmove = 1; //Can move fully
 								}								
 							if($count==2) break;
                         }
                     }
-                    /*elseif (($piece->square->file>=0)&&($piece->square->file=<9)&&(($piece->square->rank==0)||($piece->square->rank==9))) {
-                        if ((($piece->group == 'OFFICER') && ($piece->type== ChessPiece::GENERAL))) {
-							if(($piece->color==1)&& ($this->whitecanfullmove == 1)){
-								$this->whitecanfullmove = 1; //Can move fully
-								$count=$count+1;
-								}
-							elseif(($piece->color==1)&& ($this->whitecanfullmove == 0)){
-									$count=$count+1;
-									}								
-							if(($piece->color==2)&& ($this->blackcanfullmove == 1)){
-									$this->blackcanfullmove = 1; //Can move fully
-									$count=$count+1;
-								}
-							elseif(($piece->color==2)&& ($this->blackcanfullmove == 0)){
-									$this->blackcanfullmove = 1; //Can move fully
-									$count=$count+1;
-								}								
-							if($count==2) break;
-                        }
-                    }*/				
-					
 				}
 			}
 		}
@@ -1579,7 +1555,7 @@ class ChessBoard {
 			return TRUE;
 		if($count==0)
 			return FALSE;
-	}	
+	}
 
 	function get_royals_on_warZone($color): ?ChessSquare {
 		//Echo '<li> ChessBoard.php 13# function get_king_square called </li>';	
@@ -1602,6 +1578,40 @@ class ChessBoard {
 		}
 		return NULL;
 	}
+
+	function get_compromised_castles() {
+		$j=0;
+		$castletocheck=1;
+		
+		for (; $castletocheck <= 2; $castletocheck++) { /**Loop through castle . Any side can enter castle*/
+			if ($castletocheck==1) {
+				$j=0;
+				}
+			elseif ($castletocheck==2) {
+				$j=9;
+				}
+			for ($i = 1; $i <= 8; $i++) { /**Loop through castle . Any side can enter castle*/				
+
+				if (!$this->board[$j][$i]) {
+					continue;
+				}
+
+				if((($this->board[$j][$i]->group=='ROYAL') || ($this->board[$j][$i]->group=='SEMIROYAL') ||
+				($this->board[$j][$i]->group=='NOBLE')) &&($this->board[$j][$i]->color!=$castletocheck)){//Compromised
+					if($j==0)$this->wbrokencastle=true;
+					if($j==9)$this->bbrokencastle=true;
+				}
+
+				//Opponent Army
+				if(($this->board[$j][$i]->group!='ROYAL')&&($this->board[$j][$i]->group!='SEMIROYAL')&&
+				($this->board[$j][$i]->group!='NOBLE')&&($this->board[$j][$i]->color!=$castletocheck)){//Compromised
+					if($j==0)$this->wbrokencastle=true;
+					if($j==9)$this->bbrokencastle=true;				}
+				else
+					continue;
+			}
+		}
+	}	
 
 	function remove_piece_from_square(ChessSquare $square): void {
 		//Echo '<li> ChessBoard.php 14# function remove_piece_from_square called </li>';	
