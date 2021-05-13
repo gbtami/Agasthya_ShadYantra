@@ -159,7 +159,7 @@ class ChessRulebook {
 		ChessPiece::KNIGHT
 	);
 	
-	const MAX_SLIDING_DISTANCE = 4;
+	const MAX_SLIDING_DISTANCE = 3;
 	const MAX_TOUCH = 1;
 	static function get_legal_moves_list(
 		$color_to_move, // Color changes when we call recursively. Can't rely on $board for color.
