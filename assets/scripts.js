@@ -718,7 +718,7 @@ $(document).ready(function(){
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~'A' when enters the opponent CASTLE also makes the 'I' Emperor or Vikramaditya (IndraJeet). War Ends and opponent loses. Here, 'A' also gets promoted.");
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~'A' if is idle then make the Soldiers and Army Strikeless. *A06#");
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~'A' if dies then make the Soldiers and Army and permanently Strikeless. *A06#");
-				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~Army can Strike only if 'I' and 'A' both are not idle.;	
+				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~Army can Strike only if 'I' and 'A' both are not idle.");	
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~'A' can promote the neighbour Army Ranks in same zone as per parity of Ranks.");				
 				
 				
