@@ -360,14 +360,25 @@ class ChessRulebook {
                 	$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,TRUE,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
                 	// Set $king here so castling function can use it later.
                 	$SPY = $piece;
-            	} elseif ($piece->type == ChessPiece::GODMAN) {
-					if($board->gametype==1){ //Classical Agastya
-						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, 2, $moves, $piece, $color_to_move, $board, $store_board_in_moves,FALSE,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
-						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS, 2, $moves, $piece, $color_to_move, $board, $store_board_in_moves,FALSE,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
-					}
-					elseif($board->gametype==2){ //Kautilya
-                		$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, 2, $moves, $piece, $color_to_move, $board, $store_board_in_moves,FALSE,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
-					}
+            	} elseif ($piece->type == ChessPiece::GODMAN) {                	
+					$get_FullMover=self::has_opponent_royal_neighbours( /**/
+						self::KING_DIRECTIONS,
+						$piece->square,
+						$piece->square,	
+						$color_to_move,
+						$board
+					);
+					$fullsteps=2;
+					if($get_FullMover==true)
+						$fullsteps=2;
+					else	
+						$fullsteps=1;
+
+					if($board->gametype==1){
+					 } //Classical Agastya
+						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, $fullsteps, $moves, $piece, $color_to_move, $board, $store_board_in_moves,FALSE,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
+						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS, $fullsteps, $moves, $piece, $color_to_move, $board, $store_board_in_moves,FALSE,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
+
                 	$GODMAN = $piece;
             	}
         	}
@@ -710,7 +721,8 @@ class ChessRulebook {
 		$color_to_move,
 		ChessBoard $board,
 		bool $sameplace
-	): ?ChessSquare {
+	): ?ChessSquare 
+	{
 		$sameplace;
 
         //$rank = $starting_square->rank + $y_delta;
@@ -799,6 +811,123 @@ class ChessRulebook {
 		return $ending_square;
     }
 
+	static function royal_square_surrounded_by_opponent_royals(
+		ChessSquare $actual_square,
+		ChessSquare $starting_square,
+		int $y_delta,int $x_delta,
+		$color_to_move,
+		ChessBoard $board,
+		bool $sameplace
+	): ?ChessSquare 
+	{
+		$sameplace;
+		$royalcolor=3-$color_to_move; //Revert the Color
+        //$rank = $starting_square->rank + $y_delta;
+        //$file = $starting_square->file + $x_delta;
+
+		$rank = $starting_square->rank + $y_delta;
+		$file = $starting_square->file + $x_delta;
+
+        $ending_square = self::try_to_make_square_using_rank_and_file_num($rank, $file);
+
+		if (($sameplace==TRUE)&&($ending_square)){
+				if(($actual_square->rank==$ending_square->rank)&& ($actual_square->file==$ending_square->file)){
+					return null;
+			}
+		}
+
+		if ($ending_square) {
+
+			if(($ending_square->file==0) &&($ending_square->rank==7))
+			{
+				$tttt=1;
+			}
+
+            if (($starting_square->rank==0) &&($starting_square->file==5) && ($ending_square->rank==0)&&($ending_square->file==4)) {
+                $starting_square=$starting_square;
+            }
+
+			if(($starting_square->file==0)||($starting_square->file==9)){
+				if(($starting_square->rank>=1)&&($starting_square->rank<=8)&&($ending_square->file!=$starting_square->file))
+				{//Non-truce zone endpoint but Royal is in Truce-Zone. return
+				return null;
+				}
+				else
+				$rank;
+			}
+		}
+
+        if (!$ending_square) {
+            return null;
+        } else {
+            if ((($ending_square->rank==0)&&($starting_square->rank==0) && ($starting_square->file>=1) && ($starting_square->file<=8)&&
+			($ending_square->file>=1) && ($ending_square->file<=8))||(($ending_square->rank==9)&&($starting_square->rank==9) && 
+			($starting_square->file>=1) && ($starting_square->file<=8)&&($ending_square->file>=1) && ($ending_square->file<=8))||
+			(($starting_square->rank>=1)&&($starting_square->rank<=8) && ($starting_square->file>=1) && ($starting_square->file<=8)&&
+			($ending_square->rank>=1)&&($ending_square->rank<=8) && ($ending_square->file>=1) && ($ending_square->file<=8))) 
+			{
+                if ($board->board[$rank][$file]) {
+                    if (($board->board[$rank][$file]->color == $royalcolor) && (($board->board[$rank][$file]->group=='ROYAL')||($board->board[$rank][$file]->group=='SEMIROYAL')))
+					{
+						 //*echo ' Ending square contains a friendly royal ';*/
+                        return $ending_square;
+                    }
+					else
+						$ending_square=null;
+
+                }
+				else
+				  $ending_square=null;
+            }
+			else if ((($ending_square->rank==7)&&($starting_square->rank==8) && ($starting_square->file==0) && 	($ending_square->file==0))||
+			(($ending_square->rank==7)&&($starting_square->rank==8) && ($starting_square->file==9) && ($ending_square->file==9))||
+			(($ending_square->rank==2)&&($starting_square->rank==1) && ($starting_square->file==0) && ($ending_square->file==0))||
+			(($ending_square->rank==2)&&($starting_square->rank==1) && ($starting_square->file==9) && ($ending_square->file==9))||
+			(($ending_square->rank>=1)&&($starting_square->rank==($ending_square->rank)+1) && ($starting_square->file==0) &&	($ending_square->file==0)&&($ending_square->rank<=7))||
+			(($ending_square->rank<=8)&&($starting_square->rank==($ending_square->rank)-1) && ($starting_square->file==0) && ($ending_square->file==0)&&($ending_square->rank>=2))||
+			(($ending_square->rank>=1)&&($starting_square->rank==($ending_square->rank)+1) && ($starting_square->file==9) && ($ending_square->file==9)&&($ending_square->rank<=7))||
+			(($ending_square->rank<=8)&&($starting_square->rank==($ending_square->rank)-1) && ($starting_square->file==9) && ($ending_square->file==9)&&($ending_square->rank>=2))
+			) 
+			{
+                if ($board->board[$rank][$file]) {
+                    if (($board->board[$rank][$file]->color == $royalcolor) && (($board->board[$rank][$file]->group=='ROYAL')||($board->board[$rank][$file]->group=='SEMIROYAL')))
+					{
+						 //*echo ' Ending square contains a friendly royal ';*/
+                        return $ending_square;
+                    }
+					else 
+						$ending_square=null;
+
+                }
+				else
+				  $ending_square=null;
+			}
+			//inside Opponent CASTLE; or near to Compromosed CASTLE but in WAR.
+			//public $wbrokencastle=false;
+			//public $bbrokencastle=false;			
+            elseif ((($ending_square->rank==0)&&($starting_square->rank<=1) && ($starting_square->file>=1) && ($starting_square->file<=8)&&
+			($ending_square->file>=1) && ($ending_square->file<=8) &&  ($board->wbrokencastle==true ))||(($ending_square->rank>=8)&&($starting_square->rank==9) && 
+			($starting_square->file>=1) && ($starting_square->file<=8)&&($ending_square->file>=1) && ($ending_square->file<=8) && ($board->bbrokencastle==true ))) 
+			{
+                if ($board->board[$rank][$file]) {
+                    if (($board->board[$rank][$file]->color == $royalcolor) && (($board->board[$rank][$file]->group=='ROYAL')||($board->board[$rank][$file]->group=='SEMIROYAL')))
+					{
+						 //*echo ' Ending square contains a friendly royal ';*/
+                        return $ending_square;
+                    }
+					else
+						$ending_square=null;
+
+                }
+				else
+				  $ending_square=null;
+            }			
+			else
+				$ending_square=null;
+        }
+		return $ending_square;
+    }
+
 	static function has_royal_neighbours( /**/
 			array $directions_list,
 			ChessSquare $actual_square,
@@ -835,6 +964,48 @@ class ChessRulebook {
 			}
 			else
 				return TRUE;
+		}
+
+	static function has_opponent_royal_neighbours( /**/
+			array $directions_list,
+			ChessSquare $actual_square,
+			ChessSquare $starting_square,
+			$color_to_move,
+			ChessBoard $board
+		): bool {
+			$ending_square=null;
+			foreach ( $directions_list as $direction ) {
+					$current_xy = self::DIRECTION_OFFSETS[$direction];
+					$current_xy[0] *= 1;
+					$current_xy[1] *= 1;
+					$type=0;
+
+					$ending_square = self::royal_square_surrounded_by_opponent_royals(
+						$actual_square,
+						$starting_square,
+						$current_xy[0],
+						$current_xy[1],
+						$color_to_move,
+						$board,
+						TRUE
+					);
+					if(!$ending_square)
+					{ continue;
+					}				
+					if($ending_square!=null)
+					{
+						//return TRUE;  //Atleast one Royal/Semi-Royal present
+						return FALSE; //Atleast one opponent Royal/Semi-Royal present
+					}
+				}
+			if(!$ending_square)
+			{ 	return TRUE;  //No Opponent Royal/Semi-Royal present
+				//return FALSE; //No Royal/Semi-Royal present
+			}
+			else
+			{ 	return TRUE;  //No Opponent Royal/Semi-Royal present
+				//return FALSE; //No Royal/Semi-Royal present
+			}
 		}
 
 	static function has_general_neighbour( /**/
@@ -1399,58 +1570,67 @@ class ChessRulebook {
 		$lastaccessiblerow=-1;
 		$generalaccessiblerow=-1;
 		//Create the Array of Move Types.. This will help in deciding the two types of moves in retrating.. Moving back and to the top border
-		$tempDirection=self::get_Retreating_ARMY_directions(
-			$piece,
-			$color_to_move,
-			$board,
-			$mtype
-		);
-
-		//Retreat or Truce Zone has Either King or General. Check this possibility.
-		if (isset($tempDirection) && is_array($tempDirection)){
-			$abcd=1;
-			if(!empty($tempDirection)) //King is sitting on RestZone within Truce
-				{
-					$directions_list=$tempDirection;				
-				}
-				$lastaccessiblerow=self::get_LastKingRow(
-					$piece,
-					$color_to_move,
-					$board,
-					$mtype
-					);
-		}
-
-		$tempDirection=null;
-
-		if(($piece->square->rank==8)&&($piece->square->file==0)){
-			$piece->square->rank;
-		}
-            $royalp=self::check_royal_neighbours( /**/
-                self::KING_DIRECTIONS,
-                $piece,
-                $color_to_move,
-                $board
-            );
-
-
-			if(($get_CASTLEMover==1)&&($selfbrokencastle==FALSE))//&&(($board->$blackcanfullmoveinowncastle == 1)||($board->$whitecanfullmoveinowncastle == 1)))
+		
+		if($piece->type!=ChessPiece::GODMAN)
 			{
-				$royalp=true;
-				$booljump=true;
-			}				
+				$tempDirection=self::get_Retreating_ARMY_directions(
+				$piece,
+				$color_to_move,
+				$board,
+				$mtype					
+				);
+			
+
+				//Retreat or Truce Zone has Either King or General. Check this possibility.
+				if (isset($tempDirection) && is_array($tempDirection)){
+					$abcd=1;
+					if(!empty($tempDirection)) //King is sitting on RestZone within Truce
+						{
+						$directions_list=$tempDirection;				
+						}
+						$lastaccessiblerow=self::get_LastKingRow(
+							$piece,
+							$color_to_move,
+							$board,
+							$mtype
+							);
+				}
+			
+
+				$tempDirection=null;
+
+				if(($piece->square->rank==8)&&($piece->square->file==0)){
+					$piece->square->rank;
+				}
+          		$royalp=self::check_royal_neighbours( /**/
+                	self::KING_DIRECTIONS,
+                	$piece,
+                	$color_to_move,
+               	 $board
+           		);
 
 
-            if(($royalp==false)&&($piece->group=='OFFICER'))
+				if(($get_CASTLEMover==1)&&($selfbrokencastle==FALSE))//&&(($board->$blackcanfullmoveinowncastle == 1)||($board->$whitecanfullmoveinowncastle == 1)))
 				{
-					$royalp=self::check_general_royal_neighbours( /**/
-                		self::KING_DIRECTIONS,
-                		$piece,
-                		$color_to_move,
-                		$board
-            	);
-			}
+					$royalp=true;
+					$booljump=true;
+				}
 
+
+            	if(($royalp==false)&&($piece->group=='OFFICER'))
+					{
+						$royalp=self::check_general_royal_neighbours( /**/
+                			self::KING_DIRECTIONS,
+	                		$piece,
+    	            		$color_to_move,
+        	        		$board
+            		);
+				}
+			}
+		else
+			{
+			$tttt=1;	
+			}	
 			//Single Royal cannot move out of any zone.
 			
 			if(($royalp==false)&&(strpos($piece->group,"ROYAL")!==FALSE)&&($piece->square->rank<=9)&&($piece->square->rank>=0)&&(($piece->square->file==0)&&($piece->square->file==9))){
