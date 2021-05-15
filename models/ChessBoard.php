@@ -388,7 +388,6 @@ class ChessBoard {
 		// $matches[12] is skipped.
 		// TODO: Make this stricter so that it catches everything.
 
-
 		/*
 		const CLASSIC_FEN_REGEX_FORMAT_NOMANS = '/^(([cCuUaArRvVsSnNyYäÄ1]{1})?$/u';
 		const CLASSIC_FEN_REGEX_FORMAT_BCASTLE = '/^([rmneshijuvyaáÁäçcgpÖRMNESHUVYÇÄCGP12345678]{1,8}))?$/u';
@@ -455,17 +454,18 @@ class ChessBoard {
 			$this->ParityOfficers[1]='';			
 		}
 
-
 		$ttt=$this->ParityOfficers;//DefaultParityOfficers;
 		$this->checkcontinuity($fen);
-		echo ' Fen Value = '.$fen.' <br/> ---------------- ';
+		
 		if ( ! $valid_fen ) {
 			throw new Exception('Invalid FEN');
 		}
 		else
 		{
-			if($this->Winner=='0') 
-				echo ' <br/> Valid FEN. Mover (w White / b Black) = '.$matches[11].'  '.$fen.'<br/>';
+            if ($this->Winner=='0') {
+                //echo ' <br/> Valid FEN. Mover (w White / b Black) = '.$matches[11].'  '.$fen.'<br/>';
+                //set some variable to let the game begin
+            }	
 		}
 		// ******* CREATE PIECES AND ASSIGN THEM TO SQUARES *******
 		
@@ -498,7 +498,6 @@ class ChessBoard {
 			//echo '<br/> ---------------------------------------------------------------------<br/>';
 
 			for ( $i = 0; $i <= strlen($rank_string[9-$nn]); $i++ ) {
-
 				
 				if (!function_exists('mb_substr'))  
 					{
@@ -527,7 +526,6 @@ class ChessBoard {
 						$square=$square;
 					}
 					$cc=ctype_upper($char);
-
 
 					if ($char=='C') {
 						$color = ChessPiece::WHITE;
@@ -591,16 +589,16 @@ class ChessBoard {
 					  else  $color = ChessPiece::WHITE;
 					  $Mortal = 1;
 					  $type = self::PIECE_LETTERS[strtolower($char)];
-				  }				   
-				elseif ( ctype_upper($char)) {
+					}				   
+					elseif ( ctype_upper($char)) {
 						$group='OFFICER';
 						$Mortal = 1;
 						$color = ChessPiece::WHITE;
 						$type = self::PIECE_LETTERS[strtolower($char)];
 
 					} 
-					 else
-					 {
+					else
+					{
 						$group='OFFICER';
 						$Mortal = 1;
 						$color = ChessPiece::BLACK;

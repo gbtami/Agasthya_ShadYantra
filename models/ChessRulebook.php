@@ -728,6 +728,12 @@ class ChessRulebook {
 		}
 
 		if ($ending_square) {
+
+			if(($ending_square->file==0) &&($ending_square->rank==7))
+			{
+				$tttt=1;
+			}
+
             if (($starting_square->rank==0) &&($starting_square->file==5) && ($ending_square->rank==0)&&($ending_square->file==4)) {
                 $starting_square=$starting_square;
             }
@@ -982,11 +988,11 @@ class ChessRulebook {
 				//For normal pieces General SemiRoyal/Royal are all top.
 				if($ending_square!=null)
 				{
-					if(($piece->group=='OFFICER')&&((($piece->type!=ChessPiece::GENERAL)&&($board->gametype==1))||($board->gametype==2))&&(($ending_square->file==0)||($ending_square->file==9)))
+					/*if(($piece->group=='OFFICER')&&((($piece->type!=ChessPiece::GENERAL)&&($board->gametype==1))||($board->gametype==2))&&(($ending_square->file==0)||($ending_square->file==9)))
 					{
 						return false;
 					}
-					else
+					else*/
 						return TRUE;
 				}
             }
@@ -1453,7 +1459,7 @@ class ChessRulebook {
 
 			//self-promotion to be added later for semi-royals
 
-			if(($piece->group=="OFFICER")&&($royalp==true)&&($piece->square->file>0)&&($piece->square->file<9)){ // Check of self promotion can happen but not in TZ
+			if(($piece->group=="OFFICER")&&($royalp==true) /*&&($piece->square->file>0)&&($piece->square->file<9)*/){ // Check of self promotion can happen but not in TZ without royal
 				if($royalp==TRUE) {$dem=-1;}
 				else {$dem=0;}
 				//$ending_square->file=$piece->square->file;
@@ -3592,7 +3598,7 @@ class ChessRulebook {
 			$booljump=true;
 		}
 
-		if(($piece->group=="OFFICER")&&($officer_royalp==TRUE)&&($piece->square->file>0)&&($piece->square->file<9)){ // Check of promotion can happen except TZ
+		if(($piece->group=="OFFICER")&&($officer_royalp==TRUE)&&($piece->square->file>0)&&($piece->square->file<9)){ // Check of promotion can happen except NMZ
 
 			if($piece->type!=9)
 			$canpromote=$board->checkpromotionparity( $board->export_fen(), $piece,$color_to_move,$board,10);
