@@ -67,11 +67,15 @@ class ChessBoard {
 	public $wkingsquare;
 	public $bgsquare;
 	public $wgquare;	
+	public $bnsquare;
+	public $wnsquare;	
 	public $elevatedbg=false;
 	public $elevatedwg=false;		
 	public $basquare;
 	public $wasquare;
 	public $whitecankill = 1;
+	public $blackncanfullmove = 1;
+	public $whitencanfullmove = 1;	
 	public $blackcanfullmove = 0;
 	public $whitecanfullmove = 0;
 	public $blackscanfullmove = 0;
@@ -679,6 +683,9 @@ class ChessBoard {
 
 		 $this->basquare=$this->get_arthshastri_square(2);//
 		 $this->wasquare=$this->get_arthshastri_square(1);//
+
+		 $this->bnsquare=$this->get_naarad_square(2);//
+		 $this->wnsquare=$this->get_naarad_square(1);//
 
 		 $bkingsquare=$this->bkingsquare;//
 		 $wkingsquare=$this->wkingsquare;//
@@ -1306,6 +1313,23 @@ class ChessBoard {
 		return NULL;
 	}
 	
+	function get_naarad_square($color): ?ChessSquare {
+		//Echo '<li> ChessBoard.php 13# function get_king_square called </li>';	
+		foreach ( $this->board as $rank ) {
+			////echo '<br/>';
+			foreach ( $rank as $piece ) {
+				if ( $piece ) {
+					////echo ' Actual = '.$piece->type.' Expected = '.ChessPiece::KING;
+
+					if (($piece->type == ChessPiece::GODMAN) && ($piece->color == $color )) {
+						return $piece->square;
+					}
+				}
+			}
+		}
+		return NULL;
+	}
+
 	function get_generals_on_truce($color): bool {
 		//Echo '<li> ChessBoard.php 13# function get_king_square called </li>';	
 		$count=0;

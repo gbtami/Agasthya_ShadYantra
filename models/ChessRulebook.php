@@ -187,11 +187,38 @@ class ChessRulebook {
 		$board->get_general_on_castle_for_full_move(1);
 		$board->get_generals_on_truce(1);
 		$board->get_compromised_castles();
+		//$board->get_naarad_for_fullmoves();
+
+		$get_FullMover=FALSE;//Check if killing allowed
+		
+		$nmover=self::has_opponent_royal_neighbours( /**/
+			self::KING_DIRECTIONS,
+			$board->bnsquare,
+			$board->bnsquare,
+			2,
+			$board
+		);
+
+		if($nmover==true){
+			$board->blackncanfullmove=0;
+		}
+		
+
+		$nmover=self::has_opponent_royal_neighbours( /**/
+			self::KING_DIRECTIONS,
+			$board->wnsquare,
+			$board->wnsquare,
+			1,
+			$board
+		);
+
+		if($nmover==true){
+			$board->whitencanfullmove=0;
+		}
 
 		//$board->get_royals_on_Scepters(2);
 
 		$get_Killing_Allowed=0;
-		$get_FullMover=FALSE;//Check if killing allowed
 		$get_CASTLEMover=-1;
 		if($color_to_move==1) { $selfbrokencastle=  $board->wbrokencastle;$foebrokencastle= $board->bbrokencastle; }
 		if($color_to_move==2) { $selfbrokencastle=  $board->bbrokencastle;$foebrokencastle= $board->wbrokencastle; }
@@ -360,19 +387,12 @@ class ChessRulebook {
                 	$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,TRUE,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover);
                 	// Set $king here so castling function can use it later.
                 	$SPY = $piece;
-            	} elseif ($piece->type == ChessPiece::GODMAN) {                	
-					$get_FullMover=self::has_opponent_royal_neighbours( /**/
-						self::KING_DIRECTIONS,
-						$piece->square,
-						$piece->square,	
-						$color_to_move,
-						$board
-					);
+            	} elseif ($piece->type == ChessPiece::GODMAN) {
 					$fullsteps=2;
-					if($get_FullMover==true)
-						$fullsteps=2;
-					else	
-						$fullsteps=1;
+					if((($color_to_move==1)&&($board->whitencanfullmove==1))||(($color_to_move==2)&&($board->blackncanfullmove==1)))
+						{$fullsteps=2;$get_FullMover=true;}
+					else
+						{$fullsteps=1;;$get_FullMover=false;}
 
 					if($board->gametype==1){
 					 } //Classical Agastya
@@ -994,17 +1014,17 @@ class ChessRulebook {
 					}				
 					if($ending_square!=null)
 					{
-						//return TRUE;  //Atleast one Royal/Semi-Royal present
-						return FALSE; //Atleast one opponent Royal/Semi-Royal present
+						return TRUE;  //Atleast one Royal/Semi-Royal present
+						//return FALSE; //Atleast one opponent Royal/Semi-Royal present
 					}
 				}
 			if(!$ending_square)
-			{ 	return TRUE;  //No Opponent Royal/Semi-Royal present
-				//return FALSE; //No Royal/Semi-Royal present
+			{ 	//return TRUE;  //No Opponent Royal/Semi-Royal present
+				return FALSE; //No Royal/Semi-Royal present
 			}
 			else
-			{ 	return TRUE;  //No Opponent Royal/Semi-Royal present
-				//return FALSE; //No Royal/Semi-Royal present
+			{ 	//return TRUE;  //No Opponent Royal/Semi-Royal present
+				return FALSE; //No Royal/Semi-Royal present
 			}
 		}
 
