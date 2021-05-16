@@ -187,36 +187,13 @@ class ChessRulebook {
 		$board->get_general_on_castle_for_full_move(1);
 		$board->get_generals_on_truce(1);
 		$board->get_compromised_castles();
-		//$board->get_naarad_for_fullmoves();
+		self::set_naarad_for_fullmoves($board);
 
-		$get_FullMover=FALSE;//Check if killing allowed
-		
-		$nmover=self::has_opponent_royal_neighbours( /**/
-			self::KING_DIRECTIONS,
-			$board->bnsquare,
-			$board->bnsquare,
-			2,
-			$board
-		);
+		$get_FullMover=FALSE;//Check if killing allowed		
 
-		if($nmover==true){
-			$board->blackncanfullmove=0;
-		}
-		
-
-		$nmover=self::has_opponent_royal_neighbours( /**/
-			self::KING_DIRECTIONS,
-			$board->wnsquare,
-			$board->wnsquare,
-			1,
-			$board
-		);
-
-		if($nmover==true){
-			$board->whitencanfullmove=0;
-		}
-
-		//$board->get_royals_on_Scepters(2);
+		//public $PinnedWRefugees = array();
+		//public $PinnedBRefugees = array();
+		//$board->get_PinnedWRefugees(2);
 
 		$get_Killing_Allowed=0;
 		$get_CASTLEMover=-1;
@@ -240,8 +217,11 @@ class ChessRulebook {
 						$get_CASTLEMover=0;//foe castle has 1 royal
 						}
 				}
+				if (($piece->type == ChessPiece::PAWN) &&($color_to_move==2)) {
+				$tttt=1;
+				}
 
-				if(($piece->group=='OFFICER')){
+				if(($piece->group=='OFFICER')||($piece->group=='SOLDIER')){
 					if($piece->color==1){
 						if(($piece->type!=ChessPiece::GENERAL)&&($piece->square->rank>0)&&($piece->square->rank<9)&&($piece->square->file>0)&&($piece->square->file<9)&&($board->whitecanfullmove==1))
 							{
@@ -567,6 +547,71 @@ class ChessRulebook {
 		return $ending_square;
     }
 
+	static function square_surrounded_by_army(
+		ChessSquare $starting_square,
+		int $y_delta,int $x_delta,
+		$color_to_move,
+		ChessBoard $board
+	): ?ChessSquare {
+        //$rank = $starting_square->rank + $x_delta;
+        //$file = $starting_square->file + $y_delta;
+
+		$rank = $starting_square->rank + $y_delta;
+		$file = $starting_square->file + $x_delta;
+		$minrank=1;
+		$maxrank=8;
+
+		//All royals are exposed in CASTLE.
+	
+
+		//Proxy Neighbours as CASTLE and WAR are mixed.
+		if((($color_to_move==1)&&($board->whitecanfullmoveinfoecastle==1)) || (($color_to_move==2)&&($board->blackcanfullmoveinowncastle==1))){
+			$maxrank=9;
+		}
+
+		if((($color_to_move==1)&&($board->whitecanfullmoveinowncastle==1)) || (($color_to_move==2)&&($board->blackcanfullmoveinfoecastle==1))){
+			$minrank=0;
+		}
+
+        $ending_square = self::try_to_make_square_using_rank_and_file_num($rank, $file);
+
+		if ($ending_square) {
+			if(($starting_square->file==0)||($starting_square->file==9)){
+				if(($starting_square->rank>=$minrank)&&($starting_square->rank<=$maxrank)&&($ending_square->file!=$starting_square->file))
+				{//Non-truce zone endpoint but Royal is in Truce-Zone. return
+				return null;
+				}
+			}
+		}
+
+        if (!$ending_square) {
+            return null;
+        } else {
+			//Defective.... Check if the WAr-Zone and CASTLE are Mixed.  Incomplete ....
+            if ((($starting_square->rank>=$minrank)&&($starting_square->rank<=$maxrank) && ($starting_square->file>=1) && ($starting_square->file<=8)&&
+			($ending_square->rank>=$minrank)&&($ending_square->rank<=$maxrank) && ($ending_square->file>=1) && ($ending_square->file<=8))) //Check within War Zone
+			{
+                if ($board->board[$rank][$file]) {
+                    if ( (($board->board[$rank][$file]->color == $color_to_move) && (($board->board[$rank][$file]->group=='OFFICER')||($board->board[$rank][$file]->group=='SOLDIER'))))
+					{
+						 //*echo ' Ending square contains a friendly General ';*/
+                        return $ending_square;
+                    }
+					else
+						$ending_square=null;
+
+                }
+				else
+				  $ending_square=null;
+            }
+			else 
+				$ending_square=null;
+
+
+        }
+		return $ending_square;
+    }	
+
 	static function officer_square_surrounded_by_general_royals(
 		ChessSquare $starting_square,
 		int $y_delta,int $x_delta,
@@ -831,7 +876,127 @@ class ChessRulebook {
 		return $ending_square;
     }
 
-	static function royal_square_surrounded_by_opponent_royals(
+	static function set_naarad_for_fullmoves($board){
+			$nmover=self::has_opponent_royal_neighbours( /**/
+				self::KING_DIRECTIONS,
+				$board->bnsquare,
+				$board->bnsquare,
+				2,
+				$board
+			);
+
+			if($nmover==true){
+				$board->blackncanfullmove=0;
+			}
+
+		$nmover=self::has_opponent_royal_neighbours( /**/
+			self::KING_DIRECTIONS,
+			$board->wnsquare,
+			$board->wnsquare,
+			1,
+			$board
+		);
+
+		if($nmover==true){
+			$board->whitencanfullmove=0;
+		}
+
+		self::populate_opponent_neighbours($board); /**/
+	}
+
+	static function has_opponent_royal_neighbours( /**/
+		array $directions_list,
+		ChessSquare $actual_square,
+		ChessSquare $starting_square,
+		$color_to_move,
+		ChessBoard $board
+	): bool {
+		$ending_square=null;
+		foreach ( $directions_list as $direction ) {
+				$current_xy = self::DIRECTION_OFFSETS[$direction];
+				$current_xy[0] *= 1;
+				$current_xy[1] *= 1;
+				$type=0;
+
+				$ending_square = self::square_surrounded_by_opponent_royals(
+					$actual_square,
+					$starting_square,
+					$current_xy[0],
+					$current_xy[1],
+					$color_to_move,
+					$board,
+					TRUE
+				);
+				if(!$ending_square)
+				{ continue;
+				}				
+				if($ending_square!=null)
+				{
+					return TRUE;  //Atleast one Royal/Semi-Royal present
+					//return FALSE; //Atleast one opponent Royal/Semi-Royal present
+				}
+			}
+		if(!$ending_square)
+		{ 	//return TRUE;  //No Opponent Royal/Semi-Royal present
+			return FALSE; //No Royal/Semi-Royal present
+		}
+		else
+		{ 	//return TRUE;  //No Opponent Royal/Semi-Royal present
+			return FALSE; //No Royal/Semi-Royal present
+		}
+	}
+
+	static function populate_opponent_neighbours( $board){
+		$ending_square=null;
+		$starting_square=null;
+
+		for($opponent_colors=1;$opponent_colors<=2;$opponent_colors++){		
+				$allpieces = null;
+				if($opponent_colors==1)
+					$starting_square=$board->bnsquare;
+
+				if($opponent_colors==2)
+					$starting_square=$board->wnsquare;
+
+				foreach ( self::KING_DIRECTIONS as $direction ) {
+						$current_xy = self::DIRECTION_OFFSETS[$direction];
+						$current_xy[0] *= 1;
+						$current_xy[1] *= 1;
+						
+						$ending_square = self::square_surrounded_by_army(
+							$starting_square,
+							$current_xy[0],
+							$current_xy[1],
+							$opponent_colors,
+							$board
+						);
+						if(!$ending_square)
+							{ continue;
+							}				
+						if($ending_square!=null)
+							{
+							$allpieces[] = $ending_square;
+							continue;
+							}
+					}
+
+				if(!$allpieces)
+					{ 	
+					if($opponent_colors==2) $board->PinnedBRefugees= null; 
+					if($opponent_colors==1) $board->PinnedWRefugees= null;
+					}
+				else
+					{ 
+					if($opponent_colors==2) $board->PinnedBRefugees= $allpieces; 
+					if($opponent_colors==1) $board->PinnedWRefugees= $allpieces;			
+					}
+			}
+	}
+
+	//in future, merge this function with has_opponent_royal_neighbours
+
+
+	static function square_surrounded_by_opponent_royals(
 		ChessSquare $actual_square,
 		ChessSquare $starting_square,
 		int $y_delta,int $x_delta,
@@ -842,8 +1007,6 @@ class ChessRulebook {
 	{
 		$sameplace;
 		$royalcolor=3-$color_to_move; //Revert the Color
-        //$rank = $starting_square->rank + $y_delta;
-        //$file = $starting_square->file + $x_delta;
 
 		$rank = $starting_square->rank + $y_delta;
 		$file = $starting_square->file + $x_delta;
@@ -986,47 +1149,6 @@ class ChessRulebook {
 				return TRUE;
 		}
 
-	static function has_opponent_royal_neighbours( /**/
-			array $directions_list,
-			ChessSquare $actual_square,
-			ChessSquare $starting_square,
-			$color_to_move,
-			ChessBoard $board
-		): bool {
-			$ending_square=null;
-			foreach ( $directions_list as $direction ) {
-					$current_xy = self::DIRECTION_OFFSETS[$direction];
-					$current_xy[0] *= 1;
-					$current_xy[1] *= 1;
-					$type=0;
-
-					$ending_square = self::royal_square_surrounded_by_opponent_royals(
-						$actual_square,
-						$starting_square,
-						$current_xy[0],
-						$current_xy[1],
-						$color_to_move,
-						$board,
-						TRUE
-					);
-					if(!$ending_square)
-					{ continue;
-					}				
-					if($ending_square!=null)
-					{
-						return TRUE;  //Atleast one Royal/Semi-Royal present
-						//return FALSE; //Atleast one opponent Royal/Semi-Royal present
-					}
-				}
-			if(!$ending_square)
-			{ 	//return TRUE;  //No Opponent Royal/Semi-Royal present
-				return FALSE; //No Royal/Semi-Royal present
-			}
-			else
-			{ 	//return TRUE;  //No Opponent Royal/Semi-Royal present
-				return FALSE; //No Royal/Semi-Royal present
-			}
-		}
 
 	static function has_general_neighbour( /**/
 			array $directions_list,
@@ -5371,6 +5493,30 @@ class ChessRulebook {
 		
 		return $list_of_pieces;
 	}
+
+	static function checkpinnedrefugees($color_to_move,$board,ChessSquare $starting_square,ChessSquare $ending_square):?bool
+	{
+	
+		if($color_to_move==2){
+				$pinnedelementscount=count($board->PinnedWRefugees);
+		}
+		elseif($color_to_move==1){
+			$pinnedelementscount=count($board->PinnedBRefugees);
+		}				
+			for($i=0;$i<$pinnedelementscount;$i++){
+					if ( (($color_to_move==2)&&  (($ending_square->rank==$board->PinnedWRefugees[$i]->rank) &&($ending_square->file==$board->PinnedWRefugees[$i]->file))) 
+						|| (($color_to_move==1)&&(($ending_square->rank==$board->PinnedBRefugees[$i]->rank) &&($ending_square->file==$board->PinnedBRefugees[$i]->file)))
+						||(($color_to_move==1)&&($board->board[$starting_square->rank][$starting_square->file]->group=='OFFICER')&&(($starting_square->rank==$board->PinnedWRefugees[$i]->rank) &&($starting_square->file==$board->PinnedWRefugees[$i]->file))) ||  
+						(($color_to_move==2)&&($board->board[$starting_square->rank][$starting_square->file]->group=='OFFICER')&&(($starting_square->rank==$board->PinnedBRefugees[$i]->rank) &&($starting_square->file==$board->PinnedBRefugees[$i]->file)))
+						){
+						//Cannt kill as it is pinned
+						return true;
+						}
+				}
+			return false;
+	}
+				
+
 	
 	// positive X = east, negative X = west, positive Y = north, negative Y = south
 	static function square_exists_and_not_occupied_by_friendly_piece(		
@@ -5394,6 +5540,10 @@ class ChessRulebook {
 
 		$ending_square = self::try_to_make_square_using_rank_and_file_num($rank,$file);
 		$intermediate_square = null;
+
+		//if(self::checkpinnedrefugees($color_to_move,$board,$rank,$file)==true){
+			//$tttt=1;
+		//}
 
 		if(($type!=0)&&(($get_FullMover==false)&&($file==-1)||($file==10))){
 			if($file==-1){ //War to Truce
@@ -5548,7 +5698,10 @@ class ChessRulebook {
 						}
 						else
 						if ( abs($board->board[$rank][$file]->color - $color_to_move) ==1) {
-						//**echo ' diffcolor'; abs($board->board[$rank][$file]->color - $color_to_move)
+							//**echo ' diffcolor'; abs($board->board[$rank][$file]->color - $color_to_move)
+							//check if no naarad pinned blocks present
+							if(self::checkpinnedrefugees($color_to_move,$board, $starting_square,$ending_square)==true)
+								return null;
 						}
 						else
 						{
@@ -5708,7 +5861,10 @@ class ChessRulebook {
 						}											
 						else
 						if ( abs($board->board[$rank][$file]->color - $color_to_move) ==1) {
-						//**echo ' diffcolor'; abs($board->board[$rank][$file]->color - $color_to_move)
+							//**echo ' diffcolor'; abs($board->board[$rank][$file]->color - $color_to_move)
+							//check if no naarad pinned block
+							if(self::checkpinnedrefugees($color_to_move,$board,$starting_square,$ending_square)==true)
+								return null;
 						}
 						else
 						{
@@ -5848,7 +6004,10 @@ class ChessRulebook {
 						}											
 						else
 						if ( abs($board->board[$rank][$file]->color - $color_to_move) ==1) {
-						//**echo ' diffcolor'; abs($board->board[$rank][$file]->color - $color_to_move)
+							//**echo ' diffcolor'; abs($board->board[$rank][$file]->color - $color_to_move)
+							//check if no naarad pinned blocks present
+							if(self::checkpinnedrefugees($color_to_move,$board,$starting_square,$ending_square)==true)
+								return null;
 						}
 						else
 						{
@@ -5985,7 +6144,10 @@ class ChessRulebook {
 				}											
 				else
 				if ( abs($board->board[$rank][$file]->color - $color_to_move) ==1) {
-				//**echo ' diffcolor'; abs($board->board[$rank][$file]->color - $color_to_move)
+					//**echo ' diffcolor'; abs($board->board[$rank][$file]->color - $color_to_move)
+					//check if no naarad pinned blocks present
+					if(self::checkpinnedrefugees($color_to_move,$board,$starting_square,$ending_square)==true)
+					return null;
 				}
 				else
 				{
@@ -6019,12 +6181,13 @@ class ChessRulebook {
 				//echo ' samecolor';
 				return null; 
 				}
-				else
-				if ( $board->board[$rank][$file]->color == $color_to_move ) {
+				elseif ( $board->board[$rank][$file]->color == $color_to_move ) {
 					return null;
 				}											
-				else
-				if ( abs($board->board[$rank][$file]->color - $color_to_move) ==1) {
+				elseif( abs($board->board[$rank][$file]->color - $color_to_move) ==1) {
+					//check if no naarad pinned blocks present
+					if(self::checkpinnedrefugees($color_to_move,$board,$starting_square,$ending_square)==true)
+					return null;
 				}
 				else
 				{
@@ -6041,10 +6204,18 @@ class ChessRulebook {
 
 		// Ending square contains a friendly piece
 		if ( $board->board[$rank][$file] ) {
-			if ( $board->board[$rank][$file]->color == $color_to_move ) {
-				//**echo ' Ending square contains a friendly piece ';
-				return null;
-			}
+			if ( $board->board[$rank][$file]->color - $color_to_move==0 ) {
+				//echo ' samecolor';
+				return null; 
+				}
+				elseif ( $board->board[$rank][$file]->color == $color_to_move ) {
+					return null;
+				}											
+				elseif( abs($board->board[$rank][$file]->color - $color_to_move) ==1) {
+					//check if no naarad pinned blocks present
+					if(self::checkpinnedrefugees($color_to_move,$board,$starting_square,$ending_square)==true)
+					return null;
+				}
 		}
 
 		return $ending_square;

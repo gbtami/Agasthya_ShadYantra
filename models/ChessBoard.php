@@ -59,6 +59,8 @@ class ChessBoard {
 	public $halfmove_clock;
 	public $fullmove_number;
 	public $ParityOfficers = array();
+	public $PinnedWRefugees = array();
+	public $PinnedBRefugees = array();
 	public $Winner = '0';
 	public $Winners=0;
 	public $DefaultParityOfficers = '1S2M2H2G';
@@ -1261,13 +1263,9 @@ class ChessBoard {
 	}
 	
 	function get_king_square($color): ?ChessSquare {
-		//Echo '<li> ChessBoard.php 13# function get_king_square called </li>';	
 		foreach ( $this->board as $rank ) {
-			////echo '<br/>';
 			foreach ( $rank as $piece ) {
 				if ( $piece ) {
-					////echo ' Actual = '.$piece->type.' Expected = '.ChessPiece::KING;
-
 					if($piece->group=='ROYAL'){
 						if ((($piece->type == ChessPiece::SIMPLEKING)||($piece->type == ChessPiece::VIKRAMADITYA)||($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::INVERTEDKING)||($piece->type == ChessPiece::ANGRYKING)||($piece->type == ChessPiece::ANGRYINVERTEDKING)) && ($piece->color == $color )) {
 							return $piece->square;
@@ -1280,13 +1278,9 @@ class ChessBoard {
 	}
 
 	function get_general_square($color): ?ChessSquare {
-		//Echo '<li> ChessBoard.php 13# function get_king_square called </li>';	
 		foreach ( $this->board as $rank ) {
-			////echo '<br/>';
 			foreach ( $rank as $piece ) {
 				if ( $piece ) {
-					////echo ' Actual = '.$piece->type.' Expected = '.ChessPiece::KING;
-
 					if (($piece->type == ChessPiece::GENERAL) && ($piece->color == $color )) {
 						return $piece->square;
 					}
@@ -1297,13 +1291,9 @@ class ChessBoard {
 	}	
 
 	function get_arthshastri_square($color): ?ChessSquare {
-		//Echo '<li> ChessBoard.php 13# function get_king_square called </li>';	
 		foreach ( $this->board as $rank ) {
-			////echo '<br/>';
 			foreach ( $rank as $piece ) {
 				if ( $piece ) {
-					////echo ' Actual = '.$piece->type.' Expected = '.ChessPiece::KING;
-
 					if ((($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::ANGRYARTHSHASTRI)||($piece->type == ChessPiece::RAJYAPAALARTHSHASTRI)) && ($piece->color == $color )) {
 						return $piece->square;
 					}
@@ -1314,13 +1304,9 @@ class ChessBoard {
 	}
 	
 	function get_naarad_square($color): ?ChessSquare {
-		//Echo '<li> ChessBoard.php 13# function get_king_square called </li>';	
 		foreach ( $this->board as $rank ) {
-			////echo '<br/>';
 			foreach ( $rank as $piece ) {
 				if ( $piece ) {
-					////echo ' Actual = '.$piece->type.' Expected = '.ChessPiece::KING;
-
 					if (($piece->type == ChessPiece::GODMAN) && ($piece->color == $color )) {
 						return $piece->square;
 					}
