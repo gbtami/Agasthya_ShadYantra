@@ -749,7 +749,8 @@ class ChessRulebook {
 		array $directions_list,
 		ChessPiece $piece,
 		$color_to_move,
-		ChessBoard $board
+		ChessBoard $board,
+		$condition
 	): bool {
 		$ending_square=null;
 		foreach ( $directions_list as $direction ) {
@@ -769,6 +770,8 @@ class ChessRulebook {
 				}				
 				if($ending_square!=null)
 				{
+					if(($condition=='exclude')&&(self::checkpinnedrefugees($color_to_move,$board, $ending_square,$ending_square)==true))
+						continue;
 					return TRUE;
 				}
             }
@@ -3577,7 +3580,8 @@ class ChessRulebook {
 					self::KING_DIRECTIONS,
 					$piece,
 					$color_to_move,
-					$board
+					$board,
+					'exclude'
 				);
 				
 			$officerp;
@@ -3731,7 +3735,8 @@ class ChessRulebook {
 					self::KING_DIRECTIONS,
 					$piece,
 					$color_to_move,
-					$board
+					$board,
+					'include'
 				);
 				
 			$officerp;
