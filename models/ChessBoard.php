@@ -766,7 +766,8 @@ class ChessBoard {
 		$this->Winner='2';$winners=1; //Black Wins
 	   }
 	   
-
+	   $bwinner=0;
+	   $wwinner=0;
         for ($row = 0; $row <= 9; $row++) {
             for ($col = 0; $col <= 9; $col++) {
 
@@ -776,10 +777,10 @@ class ChessBoard {
 				// Winner with V on any place
 				if (($this->board[$row][$col]) &&($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('V')])){
 						if($this->board[$row][$col]->color==1) {
-							$this->Winner='1';$winners=$winners+1;
+							$this->Winner='1'; $wwinner=$wwinner+1;
 						}
 						if ($this->board[$row][$col]->color==2) {
-								$this->Winner='2';$winners=$winners+1;
+								$this->Winner='2'; $bwinner=$bwinner+1;
 						}
 						//continue;
 				}
@@ -788,12 +789,12 @@ class ChessBoard {
 						if (($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')])||
 						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')])){
 							if(($this->board[$row][$col]->color==2)) {
-								$this->Winner='1';$winners=$winners+1;
+								$this->Winner='1';$wwinner=$wwinner+1;
 								//return FALSE;
 							}
 
 							if(($this->board[$row][$col]->color==1)) {
-								$this->Winner='2';$winners=$winners+1;
+								$this->Winner='2';$bwinner=$bwinner+1;
 								//return FALSE;
 							}							
 						}
@@ -803,7 +804,7 @@ class ChessBoard {
                     	if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')])||
 						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')]))&&
 						($this->board[$row][$col]->color==2)) {
-                        	$this->Winner='1';$winners=$winners+1;
+                        	$this->Winner='1';$wwinner=$wwinner+1;
                         	//return FALSE;
                     	}
                 }
@@ -812,7 +813,7 @@ class ChessBoard {
                     	if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]) ||
 						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')]))&&
 						($this->board[$row][$col]->color==1)) {
-                        	$this->Winner='2';$winners=$winners+1;
+                        	$this->Winner='2';$bwinner=$bwinner+1;
                         	//return FALSE;
                     	}
                 	}
@@ -821,17 +822,19 @@ class ChessBoard {
                     	if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]) ||
 						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')]))&&
 						($this->board[$row][$col]->color==1)) {
-                        	$this->Winner='2';$winners=$winners+1;
+                        	$this->Winner='2';$wwinner=$wwinner+1;
                     	}
 						if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]) ||
 						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')]))&&
 						($this->board[$row][$col]->color==2)) {
-                            $this->Winner='1';$winners=$winners+1;
+                            $this->Winner='1';$bwinner=$bwinner+1;
                     	}
                 	}
             	}
         }
-		$this->Winners=$winners;
+		if($bwinner!=0) $bwinner=1;if($wwinner!=0) $wwinner=1;
+
+		$this->Winners=$bwinner+$wwinner;
 	 }
 	
 	function promoteking($color,$string):string{

@@ -880,29 +880,33 @@ class ChessRulebook {
     }
 
 	static function set_naarad_for_fullmoves($board){
-			$nmover=self::has_opponent_royal_neighbours( /**/
-				self::KING_DIRECTIONS,
-				$board->bnsquare,
-				$board->bnsquare,
-				2,
-				$board
-			);
+			if($board->bnsquare!=null){
+					$nmover=self::has_opponent_royal_neighbours( /**/
+						self::KING_DIRECTIONS,
+						$board->bnsquare,
+						$board->bnsquare,
+						2,
+						$board
+					);
 
-			if($nmover==true){
-				$board->blackncanfullmove=0;
+					if($nmover==true){
+						$board->blackncanfullmove=0;
+					}
 			}
 
-		$nmover=self::has_opponent_royal_neighbours( /**/
-			self::KING_DIRECTIONS,
-			$board->wnsquare,
-			$board->wnsquare,
-			1,
-			$board
-		);
+		if($board->wnsquare!=null){
+				$nmover=self::has_opponent_royal_neighbours( /**/
+					self::KING_DIRECTIONS,
+					$board->wnsquare,
+					$board->wnsquare,
+					1,
+					$board
+				);
 
-		if($nmover==true){
-			$board->whitencanfullmove=0;
-		}
+				if($nmover==true){
+					$board->whitencanfullmove=0;
+				}
+			}		
 
 		self::populate_opponent_neighbours($board); /**/
 	}
@@ -961,6 +965,8 @@ class ChessRulebook {
 				if($opponent_colors==2)
 					$starting_square=$board->wnsquare;
 
+				if($starting_square==null)	continue;
+
 				foreach ( self::KING_DIRECTIONS as $direction ) {
 						$current_xy = self::DIRECTION_OFFSETS[$direction];
 						$current_xy[0] *= 1;
@@ -985,13 +991,16 @@ class ChessRulebook {
 
 				if(!$allpieces)
 					{ 	
-					if($opponent_colors==2) $board->PinnedBRefugees= null; 
-					if($opponent_colors==1) $board->PinnedWRefugees= null;
-					}
+					if($opponent_colors==2) $board->PinnedBRefugees= []; 
+					if($opponent_colors==1) $board->PinnedWRefugees= [];
+					}	
 				else
 					{ 
-					if($opponent_colors==2) $board->PinnedBRefugees= $allpieces; 
-					if($opponent_colors==1) $board->PinnedWRefugees= $allpieces;			
+					if(($opponent_colors==2) && ($board->whitencanfullmove==1)) $board->PinnedBRefugees= $allpieces; 
+					else $board->PinnedBRefugees= []; 
+					if(($opponent_colors==1)  && ($board->blackncanfullmove==1)) $board->PinnedWRefugees= $allpieces;
+					else $board->PinnedWRefugees= []; 
+			
 					}
 			}
 	}
@@ -5507,17 +5516,35 @@ class ChessRulebook {
 		}
 		elseif($color_to_move==1){
 			$pinnedelementscount=count($board->PinnedBRefugees);
-		}				
-			for($i=0;$i<$pinnedelementscount;$i++){
-					if ( (($color_to_move==2)&&  (($ending_square->rank==$board->PinnedWRefugees[$i]->rank) &&($ending_square->file==$board->PinnedWRefugees[$i]->file))) 
-						|| (($color_to_move==1)&&(($ending_square->rank==$board->PinnedBRefugees[$i]->rank) &&($ending_square->file==$board->PinnedBRefugees[$i]->file)))
-						||(($color_to_move==1)&&($board->board[$starting_square->rank][$starting_square->file]->group=='OFFICER')&&(($starting_square->rank==$board->PinnedWRefugees[$i]->rank) &&($starting_square->file==$board->PinnedWRefugees[$i]->file))) ||  
-						(($color_to_move==2)&&($board->board[$starting_square->rank][$starting_square->file]->group=='OFFICER')&&(($starting_square->rank==$board->PinnedBRefugees[$i]->rank) &&($starting_square->file==$board->PinnedBRefugees[$i]->file)))
-						){
-						//Cannt kill as it is pinned
-						return true;
+		}
+			for($i=0;$i<8;$i++){
+
+				if($i<count($board->PinnedWRefugees)){
+						if (($color_to_move==2)&&  (($ending_square->rank==$board->PinnedWRefugees[$i]->rank) &&($ending_square->file==$board->PinnedWRefugees[$i]->file))){
+							//Cannt kill as it is pinned
+							return true;
+							}
+
+						if (($color_to_move==1)&&(count($board->PinnedWRefugees)>$i)&&(($board->board[$starting_square->rank][$starting_square->file]->group=='OFFICER')
+							&&(($starting_square->rank==$board->PinnedWRefugees[$i]->rank) &&($starting_square->file==$board->PinnedWRefugees[$i]->file)))){
+								//Cannt kill as it is pinned
+								return true;
+							}
+					}
+				elseif($i<count($board->PinnedBRefugees)){
+						if ( ($color_to_move==1)&&(($ending_square->rank==$board->PinnedBRefugees[$i]->rank) &&($ending_square->file==$board->PinnedBRefugees[$i]->file)) ){
+							//Cannt kill as it is pinned
+							return true;
 						}
+
+						if (($color_to_move==2)&&(count($board->PinnedBRefugees)>$i)&&(($board->board[$starting_square->rank][$starting_square->file]->group=='OFFICER')
+						&&(($starting_square->rank==$board->PinnedBRefugees[$i]->rank) &&($starting_square->file==$board->PinnedBRefugees[$i]->file)))){
+							//Cannt kill as it is pinned
+							return true;
+						}
+					}
 				}
+
 			return false;
 	}
 				
