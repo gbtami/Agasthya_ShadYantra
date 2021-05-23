@@ -67,14 +67,14 @@ class ChessBoard {
 	public $blackcankill = 1;
 	public $bkingsquare;
 	public $wkingsquare;
-	public $bgsquare;
-	public $wgquare;	
 	public $bnsquare;
 	public $wnsquare;	
-	public $elevatedbg=false;
-	public $elevatedwg=false;		
+	public $elevatedbs=false;
+	public $elevatedws=false;		
 	public $basquare;
 	public $wasquare;
+	public $bssquare;
+	public $wssquare;		
 	public $whitecankill = 1;
 	public $blackncanfullmove = 1;
 	public $whitencanfullmove = 1;	
@@ -682,6 +682,9 @@ class ChessBoard {
 		 $winners=0;
 		 $this->bkingsquare=$this->get_king_square(2);//
 		 $this->wkingsquare=$this->get_king_square(1);//
+
+		 $this->bssquare=$this->get_general_square(2);//
+		 $this->wssquare=$this->get_general_square(1);//
 
 		 $this->basquare=$this->get_arthshastri_square(2);//
 		 $this->wasquare=$this->get_arthshastri_square(1);//

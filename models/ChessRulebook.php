@@ -188,6 +188,7 @@ class ChessRulebook {
 		$board->get_generals_on_truce(1);
 		$board->get_compromised_castles();
 		self::set_naarad_for_fullmoves($board);
+		self::set_general_for_elevatedmoves($board);
 
 		$get_FullMover=FALSE;//Check if killing allowed		
 
@@ -666,7 +667,11 @@ class ChessRulebook {
                     if ( (($board->board[$rank][$file]->color == $color_to_move) && ($board->board[$rank][$file]->type==ChessPiece::GENERAL)))
 					{
 						 //*echo ' Ending square contains a friendly General ';*/
+						//Check if general is elevated
+						if( (($board->elevatedbs==true) && ($color_to_move==2)) || (($board->elevatedws==true) && ($color_to_move==1))) 
                         return $ending_square;
+						elseif( (($board->elevatedbs==false) && ($color_to_move==2)) || (($board->elevatedws==false) && ($color_to_move==1))) 
+                        return null;						
                     }
 					elseif (($board->board[$rank][$file]->color == $color_to_move) && ( (($starting_square->rank==0)&&($color_to_move==1)&&($board->whitecanfullmoveinowncastle==1)) || 
 					(($starting_square->rank==9)&&($color_to_move==2)&&($board->blackcanfullmoveinowncastle==1))  ))
@@ -674,8 +679,13 @@ class ChessRulebook {
 					//Ending Block is neighhbour to its own compromised castle
 					elseif (($board->board[$rank][$file]->color == $color_to_move) && ( (($ending_square->rank==0)&&($ending_square->file>0)&&($ending_square->file<9)&&($starting_square->rank==1)&&($color_to_move==1)&&($board->blackcanfullmoveinfoecastle==1)) || 
 						(($ending_square->rank==9)&&($starting_square->rank==8)&&($ending_square->file>0)&&($ending_square->file<9)&&($color_to_move==2)&&($board->whitecanfullmoveinfoecastle==1))  ))
-							return $ending_square;					
-					else
+							return $ending_square;
+					elseif( (($board->board[$rank][$file]->color == $color_to_move) && (($board->board[$rank][$file]->group=='ROYAL')||($board->board[$rank][$file]->group=='SEMIROYAL'))))
+					{
+						 //*echo ' Ending square contains a friendly General ';*/
+                        return $ending_square;
+                    }
+					else					
 						$ending_square=null;
 
                 }
@@ -911,6 +921,43 @@ class ChessRulebook {
 		self::populate_opponent_neighbours($board); /**/
 	}
 
+	static function set_general_for_elevatedmoves($board){
+		$ending_square=null;
+		$generalsquare=null;
+		$board->elevatedws=false;
+		$board->elevatedbs=false;		
+		for($color=1;$color<=2;$color++){
+			if($color==1)
+				$generalsquare=$board->wssquare;
+			elseif($color==2)
+				$generalsquare=$board->bssquare;
+			foreach ( self::KING_DIRECTIONS as $direction ) {
+            	    $current_xy = self::DIRECTION_OFFSETS[$direction];
+                	$current_xy[0] *= 1;
+                	$current_xy[1] *= 1;
+                	$type=0;
+					$ending_square = self::officer_square_surrounded_by_general_royals	(
+						$generalsquare,
+						$current_xy[0],
+						$current_xy[1],
+						$color,
+						$board
+					);
+					if(!$ending_square)
+					{ continue;
+					}
+					if($ending_square!=null)
+					{
+						if($color==1)
+							$board->elevatedws=true;
+						elseif($color==2)
+							$board->elevatedbs=true;
+						break; // Goto external loop now
+					}
+           		}
+			}	
+	}
+
 	static function has_opponent_royal_neighbours( /**/
 		array $directions_list,
 		ChessSquare $actual_square,
@@ -1006,7 +1053,6 @@ class ChessRulebook {
 	}
 
 	//in future, merge this function with has_opponent_royal_neighbours
-
 
 	static function square_surrounded_by_opponent_royals(
 		ChessSquare $actual_square,
@@ -1458,12 +1504,12 @@ class ChessRulebook {
 	}
 
 	static function get_corrected_Retreating_Knight_General_directions(
-	ChessPiece $piece,
-	$color_to_move,
-	ChessBoard $board,
-	int $mtype,
-	int $lastaccessiblerow,
-	$tempDirection
+		ChessPiece $piece,
+		$color_to_move,
+		ChessBoard $board,
+		int $mtype,
+		int $lastaccessiblerow,
+		$tempDirection
 	): array {
 
 		$directions_list=[];
@@ -1732,8 +1778,7 @@ class ChessRulebook {
 				$color_to_move,
 				$board,
 				$mtype					
-				);
-			
+				);			
 
 				//Retreat or Truce Zone has Either King or General. Check this possibility.
 				if (isset($tempDirection) && is_array($tempDirection)){
@@ -4868,7 +4913,6 @@ class ChessRulebook {
 								else 
 									continue; /** Cannot get inside CASTLE piece */
 							}
-
 						}
 
 						//No Mans Area. Check if the Pieces not allowed can kill or not.
@@ -4992,8 +5036,14 @@ class ChessRulebook {
 							$board->gametype==1))
 							{
 								continue;
-							}						
-						
+							}
+
+					/*if(($piece->group=="OFFICER") &&($piece->type!=="GENERAL")&&( (($board->elevatedws==false)&&($color_to_move==1)&&($officer_royalp==false)) ||
+					(($board->elevatedbs==false)&&($color_to_move==2)&&($officer_royalp==false)) )&&($board->gametype==1))
+								{
+									continue;
+								}
+					*/
 					//movement to TRUCE with demotion as per kautilya or no demotion as per classical (check if this is correct logic)
 					if(($piece->group=="OFFICER") &&(($ending_square->file==0)||($ending_square->file==9))&&(
 						(($ending_square->rank>0)&&($ending_square->rank<9))&&($get_CASTLEMover==1)
