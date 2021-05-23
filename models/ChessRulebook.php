@@ -2244,7 +2244,7 @@ class ChessRulebook {
 					}
 
 				//classical cannot allow Officers to move to no-mans. Only General is allowed
-				if(($board->gametype==1) && (( ($piece->group=="OFFICER") &&($piece->type!=ChessPiece::GENERAL))||($piece->group=="SOLDIER"))&&
+				if(($board->gametype==1) && (( ($piece->group=="OFFICER") &&($royalp==false)/*&&($piece->type!=ChessPiece::GENERAL)*/)||($piece->group=="SOLDIER"))&&
 				(  (($ending_square->file==0)||($ending_square->file==9))&&	 (($ending_square->rank==0)||($ending_square->rank==9))	))
 				{
 					continue;
@@ -2262,7 +2262,7 @@ class ChessRulebook {
 				if(($board->gametype==1) && ($piece->type==ChessPiece::GENERAL)&&($royalp==false) &&
 				(  (($ending_square->file==0)||($ending_square->file==9)) &&(($piece->square->rank==0)||($piece->square->rank==9))&&
 				 (($ending_square->rank>0)&&($ending_square->rank<9)) &&(($piece->square->file>0)&&($piece->square->file<9))))
-				{			
+				{
 				continue;
 				}	
 
@@ -2717,8 +2717,6 @@ class ChessRulebook {
 							continue;
 							}
 					}
-
-					
 
 			//***  Compromised CASTLE Penetration or Normal CASTLE movement in and out without Royal */	No-mans is neither promotion nor demotion zone.
 			if(($piece->group=="SEMIROYAL")&&($royalp==false)&&($foebrokencastle==TRUE)&&((($ending_square->rank>=8)&&(($ending_square->file>0)&&($ending_square->file<9))&&($color_to_move==1))||
@@ -4824,7 +4822,7 @@ class ChessRulebook {
 						}
 					elseif(strpos($piece->group,"ROYAL")==FALSE)	{
 						if($piece->group=="OFFICER"){
-							if(($ending_square->file!=0)&&($ending_square->file!=9)&&(($ending_square->rank==0)||($ending_square->rank==9))){
+							if(($ending_square->file>=1)&&($ending_square->file<=8)&&(($ending_square->rank==0)||($ending_square->rank==9))){
 								//if castle compromised then can jump else not. Compromised castle does need Royal push
 								if(((($selfbrokencastle==true)&&($piece->square->rank>=0)&&($color_to_move==1) && ($ending_square->rank==0))||
 								(($foebrokencastle==true)&&($piece->square->rank<=9)&&($color_to_move==1) && ($ending_square->rank==9))) || 
@@ -4891,8 +4889,9 @@ class ChessRulebook {
 									continue;
 								}
 								//if the ending square has blank value in castle
-								elseif(($piece->group=="OFFICER") &&($board->board[$ending_square->rank][$ending_square->file]==null)&&((($piece->square->rank>0)&&($piece->square->rank<9))&&(($ending_square->file>=0)||($ending_square->file<=9))&&(
-									(($ending_square->rank==0)||($ending_square->rank==9))) && (($officer_royalp==true)&&($board->gametype==1)) && ($piece->type==ChessPiece::GENERAL) )){ /* Classical General can penetrate the CASTLE. */
+								elseif(($piece->group=="OFFICER") &&($board->board[$ending_square->rank][$ending_square->file]==null)&&
+								( (($piece->square->rank>0)&&($piece->square->rank<9))&&(($ending_square->file>=0)&&($ending_square->file<=9))&&
+								((($ending_square->rank==0)||($ending_square->rank==9))) && (($officer_royalp==true)&&($board->gametype==1)) /*&& ($piece->type==ChessPiece::GENERAL)*/) ){ /* Classical General can penetrate the CASTLE. */
 				
 										$new_move = new ChessMove(
 											$piece->square,
