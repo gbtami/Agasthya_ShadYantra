@@ -3,23 +3,28 @@
 class ChessPiece
 {
 	public $color;
+	public $state='R'; //real or virtual
 	public $type;
 	public $mortal;	
 	public $square;
+	public $striker;
+	public $controlledpiece=false;
 	public $group;/*royal*/
-
+	public $selftrapped = false;
+	public $selfpushed = false;
+	public $selfpushedsquare = null;
+	public $selfpushersquare = null;
+	public $selfpushedpiece = null;
+	public $selfpusherpiece =null;
 	
 	const VIKRAMADITYA	= 100;
 	const SIMPLEKING	= 30;
 
 	const KING = 1;
 	const INVERTEDKING = 2;
-	const ANGRYKING = 3;
-	const ANGRYINVERTEDKING = 4;
 	const RAJYAPAALARTHSHASTRI	= 50;
-	const ARTHSHASTRI = 5;
-	const ANGRYARTHSHASTRI = 6;
-	const SPY = 7;
+	const ARTHSHASTRI = 6;
+	const SPY = 7; //12.5
 	const GODMAN = 8;
 	const GENERAL = 9;
 	const ROOK = 10;
@@ -52,15 +57,12 @@ class ChessPiece
 	);
 	const VALID_TYPES = array(
 		self::VIKRAMADITYA,
-		self::KING,
 		self::SIMPLEKING,
 
 		self::INVERTEDKING,
-		self::ANGRYKING,		
-		self::ANGRYINVERTEDKING,
+		self::KING,
 		self::RAJYAPAALARTHSHASTRI,
 		self::ARTHSHASTRI,
-		self::ANGRYARTHSHASTRI,
 		self::CAPTUREDSCEPTRE,
 
 		self::SPY,
@@ -79,11 +81,9 @@ class ChessPiece
 			self::KING => '&#9812;',
 			self::SIMPLEKING =>'R',
 			self::INVERTEDKING => '&#9812;',
-			self::ANGRYKING => '&#9812;',
-			self::ANGRYINVERTEDKING => 'Y',
 			self::RAJYAPAALARTHSHASTRI	=> 'Ä',			
 			self::ARTHSHASTRI=> '&#9921;',
-			self::ANGRYARTHSHASTRI=> '&#9920;',
+			//self::ARTHSHASTRI=> '&#9920;',
 			self::SPY => '&#9734;',
 			self::GODMAN => '&#9872;',				
 			self::CAPTUREDSCEPTRE => 'Ö',
@@ -101,11 +101,9 @@ class ChessPiece
 			self::SIMPLEKING =>'r',
 
 			self::INVERTEDKING => '&#9818;',
-			self::ANGRYKING => '&#9818;',
-			self::ANGRYINVERTEDKING => '&#9818;',
 			self::RAJYAPAALARTHSHASTRI	=> 'ä',
 			self::ARTHSHASTRI=> '&#9923;',
-			self::ANGRYARTHSHASTRI=> '&#9922;',
+			//self::ARTHSHASTRI=> '&#9922;',
 			self::CAPTUREDSCEPTRE => 'ö',
 			
 			self::SPY => '&#9733;',
@@ -127,11 +125,8 @@ class ChessPiece
 			self::SIMPLEKING =>'R',
 
 			self::INVERTEDKING => 'J',
-			self::ANGRYKING => 'U',
-			self::ANGRYINVERTEDKING => 'Y',			
 			self::RAJYAPAALARTHSHASTRI	=> 'Ä',
-			self::ARTHSHASTRI=> 'Á',
-			self::ANGRYARTHSHASTRI=> 'A',
+			self::ARTHSHASTRI=> 'A',
 			self::SPY => 'C',
 			self::GODMAN => 'N',	
 			self::CAPTUREDSCEPTRE => 'Ö',
@@ -148,11 +143,8 @@ class ChessPiece
 			self::SIMPLEKING =>'r',
 
 			self::INVERTEDKING => 'j',
-			self::ANGRYKING => 'u',
-			self::ANGRYINVERTEDKING => 'y',		
 			self::RAJYAPAALARTHSHASTRI	=> 'ä',
-			self::ARTHSHASTRI=> 'á',
-			self::ANGRYARTHSHASTRI=> 'a',		
+			self::ARTHSHASTRI=> 'a',		
 			self::SPY => 'c',
 			self::CAPTUREDSCEPTRE => 'ö',
 
@@ -178,11 +170,8 @@ class ChessPiece
 		self::SIMPLEKING =>0,
 
 		self::INVERTEDKING => 0,
-		self::ANGRYKING => 0,
-		self::ANGRYINVERTEDKING => 0,
 		self::RAJYAPAALARTHSHASTRI	=> 0,
 		self::ARTHSHASTRI=> 9,
-		self::ANGRYARTHSHASTRI=> 9,		
 		self::GODMAN => 0,
 		self::SPY => 9
 	);
@@ -191,7 +180,7 @@ class ChessPiece
 		self::BLACK => -1
 	);
 	
-	function __construct($color, string $square_string, $type, $group,$mortal) {
+	function __construct($color, string $square_string, $type, $group,$mortal,$Striker) {
 		if ( in_array($color, self::VALID_COLORS) ) {
 			$this->color = $color;
 		} else {
@@ -199,6 +188,7 @@ class ChessPiece
 		}
 
 		$this->mortal = $mortal;
+		$this->striker = $Striker;
 
 		//if ( in_array($group, self::VALID_GROUPS) ) {
 			$this->group = $group;

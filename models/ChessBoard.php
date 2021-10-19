@@ -8,15 +8,12 @@ class ChessBoard {
 		'm' => ChessPiece::ROOK,
 		's' => ChessPiece::GENERAL,
 		'i' => ChessPiece::KING,
-		'r' => ChessPiece::SIMPLEKING ,
+		'r' => ChessPiece::SIMPLEKING,
 
 		'v' => ChessPiece::VIKRAMADITYA	,
 		'j' => ChessPiece::INVERTEDKING,
-		'u' => ChessPiece::ANGRYKING,
-		'y' => ChessPiece::ANGRYINVERTEDKING,
 		'ä' => ChessPiece::RAJYAPAALARTHSHASTRI,
-		'á' => ChessPiece::ARTHSHASTRI,
-		'a' => ChessPiece::ANGRYARTHSHASTRI,
+		'a' => ChessPiece::ARTHSHASTRI,
 		'c' => ChessPiece::SPY,
 		'n' => ChessPiece::GODMAN
 	);
@@ -35,27 +32,29 @@ class ChessBoard {
 	
 	//0r2kq2r0/0rneskbnr0/0pppppppp0/080/080/080/080/0PPPPPPPP0/0RNBQKBNR0/0R2KQ2R0 w KQkq - 0 1♪◙
 
-	//const FEN_REGEX_FORMAT = "/^([rnesijuyáä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyaä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyáä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyáä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyáä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyáä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyáä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyáä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyáä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyáä\´çúýåcgpRNESIJUYÁAÇÚÝÄCGP0123456789]{1,10}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/";
+	//const FEN_REGEX_FORMAT = "/^([rnesijuyä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyaä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10})\/([rnesijuyä\´çúýåcgpRNESIJUYAÇÚÝÄCGP0123456789]{1,10}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/";
 	
 	//const FEN_REGEX_FORMAT = '/^([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})\/([rnesijuy\u00E1a\u00B0\u00B4\u00E7\u00FA\u00FD\u00E5cgpRNESIJUY\u00C1A\u00C7\u00DA\u00DD\u00C5CGP0123456789]{1,10})([bw]{1})([-OQoq]{1,4})([0-9a-hx-y-]{1,2})((\d{1,2})(\d{1,4}))?$/';
-	const FEN_REGEX_FORMAT = '/^([rmneshijuvyaáä´çúýåcgpÖRMNESHIJUVYÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyaä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijuvyöä´çúýåcgpRMNESHIJUVYÁAÇÚÝÄCGP0123456789]{1,10}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
-	const CLASSIC_FEN_REGEX_FORMAT_LEFT = '/^([cCuUaAvVsSnNyYäÄ1]{1})([rmneshijuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyáÁaäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshuvyaáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,9})*?([cCuUaAvVsSnNyYäÄ1]{1})\/([cCuUaAvVsSnyYNäÄ1]{1})([rmneshijuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,9}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
-	//const CLASSIC_FEN_REGEX_FORMAT = '/^(([cCuUaArRvVsSnNyYäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([cCuUaAvrRVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyáÁaAäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/(([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})\/((([cCuUaArRvVsSnyYNäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([cCuUaArRvVsSnNyYäÄ1]{1})) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
-	const CLASSIC_FEN_REGEX_FORMAT = '/^(([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaAvrRVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyáÁaAäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([ghmGHMrmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/(([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshuvyaAáÁäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})\/((([ghmGHMcCuUaArRvVsSnyYNäÄ1]{1})([rmneshijuvyaAáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))*?([ghmGHMcCuUaArRvVsSnNyYäÄ1]{1})) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
+	const FEN_REGEX_FORMAT = '/^([rmneshijvaäçcgpÖRMNESHIJVÇÄCGP0123456789]{1,10})\/([rmneshijvaäçcgpRMNESHIJVAÇÄCGP0123456789]{1,10})\/([rmneshijvaäçcgpRMNESHIJVAÇÄCGP0123456789]{1,10})\/([rmneshijvaäçcgpRMNESHIJVAÇÄCGP0123456789]{1,10})\/([rmneshijvaäçcgpRMNESHIJVAÇÄCGP0123456789]{1,10})\/([rmneshijvaäçcgpRMNESHIJVAÇÄCGP0123456789]{1,10})\/([rmneshijvaäçcgpRMNESHIJVAÇÄCGP0123456789]{1,10})\/([rmneshijvaäçcgpRMNESHIJVAÇÄCGP0123456789]{1,10})\/([rmneshijvaäçcgpRMNESHIJVAÇÚÝÄCGP0123456789]{1,10})\/([rmneshijvöaäçcgpRMNESHIJVAÇÄCGP0123456789]{1,10}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_LEFT = '/^([cCiIaAvVsSnNjJäÄ1]{1})([rmneshijvaäçcgpÖRMNESHIJVÇÄCGP12345678]{1,9})*?([cCiIaAvVsSnNjJäÄ1]{1})\/([cCiIaAvVsSnjJNäÄ1]{1})([rmneshuvyaäçcgpRMNESHVÇÄCGP12345678]{1,9})*?([cCiIaAvVsSnNjJäÄ1]{1})\/([cCiIaAvVsSnjJNäÄ1]{1})([rmneshuvyaäçcgpRMNESHVÇÄCGP12345678]{1,9})*?([cCiIaAvVsSnNjJäÄ1]{1})\/([cCiIaAvVsSnjJNäÄ1]{1})([rmneshuvyaäçcgpRMNESHVÇÄCGP12345678]{1,9})*?([cCiIaAvVsSnNjJäÄ1]{1})\/([cCiIaAvVsSnjJNäÄ1]{1})([rmneshuvyaäçcgpRMNESHVÇÄCGP12345678]{1,9})*?([cCiIaAvVsSnNjJäÄ1]{1})\/([cCiIaAvVsSnjJNäÄ1]{1})([rmneshuvyaäçcgpRMNESHVÇÄCGP12345678]{1,9})*?([cCiIaAvVsSnNjJäÄ1]{1})\/([cCiIaAvVsSnjJNäÄ1]{1})([rmneshuvyaäçcgpRMNESHVÇÄCGP12345678]{1,9})*?([cCiIaAvVsSnNjJäÄ1]{1})\/([cCiIaAvVsSnjJNäÄ1]{1})([rmneshuvyaäçcgpRMNESHVÇÄCGP12345678]{1,9})*?([cCiIaAvVsSnNjJäÄ1]{1})\/([cCiIaAvVsSnjJNäÄ1]{1})([rmneshuvyaäçcgpRMNESHVÇÄCGP12345678]{1,9})*?([cCiIaAvVsSnNjJäÄ1]{1})\/([cCiIaAvVsSnjJNäÄ1]{1})([rmneshijvaäçcgpÖRMNESHIJVÇÄCGP12345678]{1,9}) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
+	//const CLASSIC_FEN_REGEX_FORMAT = '/^(([cCiIaArRvVsSnNjJäÄ1]{1})([rmneshijvaAäçcgpÖRMNESHIJVÇÄCGP12345678]{1,8}))*?([cCiIaAvrRVsSnNjJäÄ1]{1})\/(([cCiIaArRvVsSnjJNäÄ1]{1})([rmneshuvyaAäçcgpRMNESHVÇÄCGP12345678]{1,8}))*?([cCiIaArRvVsSnNjJäÄ1]{1})\/(([cCiIaArRvVsSnjJNäÄ1]{1})([rmneshuvyaAäçcgpRMNESHVÇÄCGP12345678]{1,8}))*?([cCiIaArRvVsSnNjJäÄ1]{1})\/(([cCiIaArRvVsSnjJNäÄ1]{1})([rmneshuvyaAäçcgpRMNESHVÇÄCGP12345678]{1,8}))*?([cCiIaArRvVsSnNjJäÄ1]{1})\/(([cCiIaArRvVsSnjJNäÄ1]{1})([rmneshuvyaAäçcgpRMNESHVÇÄCGP12345678]{1,8}))*?([cCiIaArRvVsSnNjJäÄ1]{1})\/(([cCiIaArRvVsSnjJNäÄ1]{1})([rmneshuvyaAäçcgpRMNESHVÇÄCGP12345678]{1,8}))*?([cCiIaArRvVsSnNjJäÄ1]{1})\/(([cCiIaArRvVsSnjJNäÄ1]{1})([rmneshuvyaAäçcgpRMNESHVÇÄCGP12345678]{1,8}))*?([cCiIaArRvVsSnNjJäÄ1]{1})\/(([cCiIaArRvVsSnjJNäÄ1]{1})([rmneshuvyaAäçcgpRMNESHVÇÄCGP12345678]{1,8}))*?([cCiIaArRvVsSnNjJäÄ1]{1})\/(([cCiIaArRvVsSnjJNäÄ1]{1})([rmneshuvyaAäçcgpRMNESHVÇÄCGP12345678]{1,8}))*?([cCiIaArRvVsSnNjJäÄ1]{1})\/((([cCiIaArRvVsSnjJNäÄ1]{1})([rmneshijvaAäçcgpÖRMNESHIJVÇÄCGP12345678]{1,8}))*?([cCiIaArRvVsSnNjJäÄ1]{1})) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT = '/^(([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})([rmneshijvaAäçcgpÖRMNESHIJVÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaAvrRVsSnNjJäÄ1]{1})\/(([ghmGHMcCiIaArRvVsSnjJNäÄ1]{1})([rmneshivIaAäçcgpRMNESjUVJÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})\/(([ghmGHMcCiIaArRvVsSnjJNäÄ1]{1})([rmneshivIaAäçcgpRMNESHjVJÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})\/(([ghmGHMcCiIaArRvVsSnjJNäÄ1]{1})([rmneshijvaAäçcgpRMNESHIVJÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})\/(([ghmGHMcCiIaArRvVsSnjJNäÄ1]{1})([rmneshivjaAäçcgpRMNESHIVJÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})\/(([ghmGHMcCiIaArRvVsSnjJNäÄ1]{1})([rmneshivjaAäçcgpRMNESHIVJÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})\/(([ghmGHMcCiIaArRvVsSnjJNäÄ1]{1})([ghmGHMrmneshivjaAäçcgpRMNESHIVJÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})\/(([ghmGHMcCiIaArRvVsSnjJNäÄ1]{1})([rmneshivjaAäçcgpRMNESHIVJÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})\/(([ghmGHMcCiIaArRvVsSnjJNäÄ1]{1})([rmneshivjaAäçcgpRMNESHIVJÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})\/((([ghmGHMcCiIaArRvVsSnjJNäÄ1]{1})([rmneshijvjaAäçcgpÖRMNESHIJVÇÄCGP12345678]{1,8}))*?([ghmGHMcCiIaArRvVsSnNjJäÄ1]{1})) ([bw]{1}) ([-OQoq]{1,4}) ([a-hx-y0-9-]{1,2})( (\d{1,2}) (\d{1,4}))?$/u';
 
-	const CLASSIC_FEN_REGEX_FORMAT_NOMANS = '/^([cCuUaArRvVsSnNyYäÄ1]{1})?$/u';
-	const CLASSIC_FEN_REGEX_FORMAT_BCASTLE = '/^([rmneshijuvyaáÁäçcgpÖRMNESHUVYÇÄCGP12345678]{1,8})?$/u';
-	const CLASSIC_FEN_REGEX_FORMAT_WAR = '/^([rmneshuvyaäçcgpRMNESHUVYÇAÄCGP12345678]{1,8})?$/u';
-	const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8})?$/u';
-	const CLASSIC_FEN_REGEX_FORMAT_TRUCE = '/^([ghmGHMcCuUaAvrRVsSnyYNäÄ1]{1})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_NOMANS = '/^([cCiIaArRvVsSnNjJäÄ1]{1})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_BCASTLE = '/^([rmneshijvaäçcgpÖRMNESHVÇÄCGP12345678]{1,8})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_WAR = '/^([rmneshuvyaäçcgpRMNESHVÇAÄCGP12345678]{1,8})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaäçcgpÖRMNESHIJVÇÄCGP12345678]{1,8})?$/u';
+	const CLASSIC_FEN_REGEX_FORMAT_TRUCE = '/^([ghmGHMcCiIaAvrRVsSnjJNäÄ1]{1})?$/u';
 
 
-	const DEFAULT_FEN = '1c2ái2c1/cmhgsnghmc/cppppppppc/181/181/181/181/CPPPPPPPPC/CMHGNSGHMC/1C2IÁ2C1 w OQoq - 0 1';
+	const DEFAULT_FEN = '1c2ai2c1/cmhgsnghmc/cppppppppc/181/181/181/181/CPPPPPPPPC/CMHGNSGHMC/1C2IA2C1 w OQoq - 0 1';
 	
 	public $board = array(); // $board[y][x], or in this case, $board[rank][file]
+	public $gametype = 1; //1 means classical Agasthya 2: Means Kautilya
 	public $color_to_move;
+	public $boardtype = 1;//1 means white
 	public $castling = array(); // format is array('white_can_castle_kingside' => TRUE, etc.)
-	public $en_passant_target_square = NULL;
+	//public $en_passant_target_square = NULL;
 	public $halfmove_clock;
 	public $fullmove_number;
 	public $ParityOfficers = array();
@@ -88,7 +87,6 @@ class ChessBoard {
 	public $whitecanfullmoveinfoecastle = 0;
 	public $wbrokencastle=false;
 	public $bbrokencastle=false;
-	public $gametype = 1; //1 means classical Agasthya 2: Means Kautilya
 	
 
 	function __construct(string $fen = self::DEFAULT_FEN) {
@@ -295,77 +293,79 @@ class ChessBoard {
     	}
 
 		//parityRoyals
-		$tchar = substr_count($fen,'i');
 		$tcount = 1;
 
-		if ($tchar > $tcount )
-			return FALSE;
-
-		$tchar = substr_count($fen,'I');
-		if ($tchar > $tcount )
-			return FALSE;
-
-		$tchar = substr_count($fen,'j');
-		$tcount = 1;
+		$tchar = substr_count($fen,'v')+substr_count($fen,'V');
 
 		if ($tchar > $tcount )
 			return FALSE;
 
-		$tchar = substr_count($fen,'J');
-		if ($tchar > $tcount )
-			return FALSE;
+		$tchar = substr_count($fen,'ä')+substr_count($fen,'Ä');
 
-			$tchar = substr_count($fen,'u');
-			$tcount = 1;
-	
 			if ($tchar > $tcount )
 				return FALSE;
-	
-			$tchar = substr_count($fen,'U');
-			if ($tchar > $tcount )
-				return FALSE;			
 
+		$tchar = substr_count($fen,'Ö')+substr_count($fen,'ö');
 
-
-				$tchar = substr_count($fen,'y');
-				$tcount = 1;
-		
 				if ($tchar > $tcount )
-					return FALSE;
-		
-				$tchar = substr_count($fen,'Y');
-				if ($tchar > $tcount )
-					return FALSE;
-					
-					$tchar = substr_count($fen,'a');
-					$tcount = 1;
-				
-					if ($tchar > $tcount )
-						return FALSE;
-				
-					$tchar = substr_count($fen,'A');
+					return FALSE;				
+
+		$tchar = substr_count($fen,'ö')+substr_count($fen,'V');
+
 					if ($tchar > $tcount )
 						return FALSE;
 
-						$tchar = substr_count($fen,'Ö');
-						$tcount = 1;
-					
-						if ($tchar > $tcount )
+		$tchar = substr_count($fen,'Ä')+substr_count($fen,'v');
+			
+					if ($tchar > $tcount )
 							return FALSE;
 
-							$tchar = substr_count($fen,'ö');
-							$tcount = 1;
-						
+				$tchar = substr_count($fen,'ä')+substr_count($fen,'Ö');
+			
 							if ($tchar > $tcount )
-								return FALSE;
+									return FALSE;
+					
+				$tchar = substr_count($fen,'Ä')+substr_count($fen,'ö');
+					
+							if ($tchar > $tcount )
+										return FALSE;	
 
-		$tchar = substr_count($fen,'á');
-		$tcount = 1;
-	
+		$tchar = substr_count($fen,'ä')+substr_count($fen,'V');
+			
+					if ($tchar > $tcount )
+							return FALSE;
+			
+		$tchar = substr_count($fen,'Ö')+substr_count($fen,'v');
+			
+					if ($tchar > $tcount )
+								return FALSE;		
+
+		$tchar = substr_count($fen,'i')+substr_count($fen,'j')+substr_count($fen,'r')+substr_count($fen,'v');
+
 		if ($tchar > $tcount )
 			return FALSE;
-	
-		$tchar = substr_count($fen,'Á');
+
+		$tchar = substr_count($fen,'I')+substr_count($fen,'J')+substr_count($fen,'R')+substr_count($fen,'V');
+
+		if ($tchar > $tcount )
+			return FALSE;
+					
+		$tchar = substr_count($fen,'a')+substr_count($fen,'ä');
+				
+		if ($tchar > $tcount )
+			return FALSE;
+				
+		$tchar = $tchar = substr_count($fen,'A')+substr_count($fen,'Ä');
+		if ($tchar > $tcount )
+			return FALSE;
+
+		$tchar = substr_count($fen,'Ö');
+					
+		if ($tchar > $tcount )
+			return FALSE;
+
+		$tchar = substr_count($fen,'ö');
+						
 		if ($tchar > $tcount )
 			return FALSE;
 
@@ -378,12 +378,28 @@ class ChessBoard {
 		  $slice = array_slice($arr, $offset + 1, $length);
 		  return implode("", $slice);
 	}
+	function setboard(string $import_boardtype): void {
+		//Echo '<li> ChessBoard.php 1# function import_fen called </li>';	
+
+		// TODO: FEN probably needs its own class.
+		// Then it can have a method for each section of code below.
+		if($import_boardtype=="black"){
+			$this->boardtype=2;
+
+		}
+		else if(($import_boardtype=="white") || ($import_boardtype=="")){
+			$this->boardtype=1;
+		}
+
+
+	}
 
 	function import_fen(string $fen): void {
 		//Echo '<li> ChessBoard.php 1# function import_fen called </li>';	
 
 		// TODO: FEN probably needs its own class.
 		// Then it can have a method for each section of code below.
+		
 		
 		$fen = trim($fen);
 		$Validparity = 0;
@@ -395,12 +411,12 @@ class ChessBoard {
 		// TODO: Make this stricter so that it catches everything.
 
 		/*
-		const CLASSIC_FEN_REGEX_FORMAT_NOMANS = '/^(([cCuUaArRvVsSnNyYäÄ1]{1})?$/u';
-		const CLASSIC_FEN_REGEX_FORMAT_BCASTLE = '/^([rmneshijuvyaáÁäçcgpÖRMNESHUVYÇÄCGP12345678]{1,8}))?$/u';
-		const CLASSIC_FEN_REGEX_FORMAT_WAR = '/^([rmneshuvyaäçcgpRMNESHUVYÇÄCGP12345678]{1,8}))?$/u';
-		const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))?$/u';
-		const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaáÁäçcgpÖRMNESHIJUVYÇÄCGP12345678]{1,8}))?$/u';
-		const CLASSIC_FEN_REGEX_FORMAT_TRUCE = '/^([cCuUaAvrRVsSnyYNäÄ1]{1})?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_NOMANS = '/^(([cCiIaArRvVsSnNjJäÄ1]{1})?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_BCASTLE = '/^([rmneshijvaáÁäçcgpÖRMNESHVÇÄCGP12345678]{1,8}))?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_WAR = '/^([rmneshuvyaäçcgpRMNESHVÇÄCGP12345678]{1,8}))?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaáÁäçcgpÖRMNESHIJVÇÄCGP12345678]{1,8}))?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_WCASTLE = '/^([rmneshuvyaáÁäçcgpÖRMNESHIJVÇÄCGP12345678]{1,8}))?$/u';
+		const CLASSIC_FEN_REGEX_FORMAT_TRUCE = '/^([cCiIaAvrRVsSnjJNäÄ1]{1})?$/u';
 		*/
 
 		$valid_fen = preg_match(self::FEN_REGEX_FORMAT, $fen, $matches);
@@ -496,6 +512,7 @@ class ChessBoard {
 		$nn=0;
 		$group='OFFICER';
 		$Mortal='1';
+		$Striker=0;
 		// Process $rank variable strings, convert to pieces and add them to $this->board[][]
 		foreach ( $rank_string as $rank => $string ) {
 			$file = 0;
@@ -504,7 +521,8 @@ class ChessBoard {
 			//echo '<br/> ---------------------------------------------------------------------<br/>';
 
 			for ( $i = 0; $i <= strlen($rank_string[9-$nn]); $i++ ) {
-				
+				$Striker = 1;
+
 				if (!function_exists('mb_substr'))  
 					{
 						$char = $this->my_mb_substr($string, $i, 1); 
@@ -515,12 +533,12 @@ class ChessBoard {
 
 				//$char = mb_substr($string, $i, 1,'UTF-8');
 				//$char = substr(utf8_decode($string), $i, 1);
-				if(preg_match('/[^a-z0-9ÇÚÝÄäÁçúýåá´°á]/i', $char) or strlen($char)==0)
+				if(preg_match('/[^a-zA-Z0-9ÇÄäç]/i', $char) or strlen($char)==0)
 					{
 					//echo ' <b><i><u><br/> ***'.$char. " is not valid string </u></i></b>";
 					}
 				else
-				{				
+				{
 					//echo ' <br/> Temp i = '.$i.' String length = '.strlen($string).' Char is = '.$char;
 					// Don't use is_int here. $char is a string. Use is_numeric instead.
 					if ( is_numeric($char) ) {					
@@ -536,12 +554,14 @@ class ChessBoard {
 					if ($char=='C') {
 						$color = ChessPiece::WHITE;
 						$Mortal = 1;
+						$Striker = 0;
 						$group='SEMIROYAL';
 						$type = self::PIECE_LETTERS[strtolower($char)];
 					}
 					elseif ($char=='Ç') {
 						$color = ChessPiece::WHITE;
 						$Mortal = 1;
+						$Striker = 0;
 						$group='SEMIROYAL';	
 						$char='ç';
 						$type = self::PIECE_LETTERS[$char];
@@ -553,39 +573,44 @@ class ChessBoard {
 						$type = self::PIECE_LETTERS[$char];
 					}
 					else
-					if (($char=='A')|| ($char=='R')||($char=='V')||($char=='I')|| ($char=='U')|| ($char=='Y')||($char=='J')) {
+					if (($char=='R')||($char=='V')||($char=='I')|| ($char=='J')) {
 						$color = ChessPiece::WHITE;
 						$Mortal = 1;
 						$group='ROYAL';
 						$type = self::PIECE_LETTERS[strtolower($char)];
 					} 
-					elseif (($char=='Á')|| ($char=='Ú')|| ($char=='Ý')||($char=='Ä')) {
+					elseif (($char=='A') ||($char=='Ä')) {
 						$color = ChessPiece::WHITE;
-						$Mortal = 1;
+						$Striker = 0;
+						$char='a';
 						$group='ROYAL';
-						if($char=='Á')
-						{	$char='á';	}
-						elseif($char=='Ú')
-						{	$char='ú';	}
-						elseif($char=='Ý')	
-						{	$char='ý';	}					
-						elseif($char=='Ä')
-						{	$char='ä';	}
+						if($char=='Ä')
+							{	$char='ä';	}
 
 						$type = self::PIECE_LETTERS[$char];
-					} 
-					elseif (($char=='v')||($char=='r')||($char=='i')||($char=='j')||($char=='á')||($char=='a')|| ($char=='ú')||($char=='u')|| ($char=='ý')||($char=='y')||($char=='ä')||($char=='å')||($char=='a')) {
+					}
+					elseif (($char=='v')||($char=='r')||($char=='i')||($char=='j')) {
 						$group='ROYAL';
 						$Mortal = 1;
 						$color = ChessPiece::BLACK;
 						$type = self::PIECE_LETTERS[$char];
-					} 
+					}
+					elseif (($char=='a') ||($char=='ä')) {
+						$color = ChessPiece::BLACK;
+						$Striker = 0;
+						$group='ROYAL';
+						if($char!='ä')
+							{	$char='a';	}
+
+						$type = self::PIECE_LETTERS[$char];
+					}					
 					elseif(($char=='n')||($char=='N')) 
 					{
 					   $group='NOBLE';
 					   if($char=='n') $color = ChessPiece::BLACK;
 					   else  $color = ChessPiece::WHITE;
 					   $Mortal = 0;
+					   $Striker = 0;
 					   $type = self::PIECE_LETTERS[strtolower($char)];
 				   }
 				   elseif(($char=='p')||($char=='P')) 
@@ -593,7 +618,7 @@ class ChessBoard {
 					  $group='SOLDIER';
 					  if($char=='p') $color = ChessPiece::BLACK;
 					  else  $color = ChessPiece::WHITE;
-					  $Mortal = 1;
+					  $Mortal = 1; 
 					  $type = self::PIECE_LETTERS[strtolower($char)];
 					}				   
 					elseif ( ctype_upper($char)) {
@@ -613,7 +638,7 @@ class ChessBoard {
 					//echo ' Check lower Char type '.strtolower($char); 			
 					//echo ' Type = '.$type.' Color = '.$color;; 
 					
-					$this->board[$rank][$file] = new ChessPiece($color, $square, $type,$group,$Mortal);					
+					$this->board[$rank][$file] = new ChessPiece($color, $square, $type,$group,$Mortal,$Striker);					
 
 					if((($rank==9)&&($color==2)&&($file>=4)&&($file<=5)&&(($type==3)||($type==4)))||
 					(($rank==0)&&($color==1)&&($file>=4)&&($file<=5)&&(($type==3)||($type==4))))
@@ -621,11 +646,11 @@ class ChessBoard {
 
 					if((($rank==9)&&($color==2)&&(($file<4)||($file>5))&&($type==1))||
 					 (($rank==0)&&($color==1)&&(($file<4)||($file>5))&&($type==1)))
-					  $this->board[$rank][$file]->type= self::PIECE_LETTERS['u'];						 
+					  $this->board[$rank][$file]->type= self::PIECE_LETTERS['i'];						 
 
 					if((($rank==9)&&($color==2)&&(($file<4)||($file>5))&&($type==2))||
 					  (($rank==0)&&($color==1)&&(($file<4)||($file>5))&&($type==2)))
-					   $this->board[$rank][$file]->type= self::PIECE_LETTERS['y'];	
+					   $this->board[$rank][$file]->type= self::PIECE_LETTERS['j'];	
 
 					$file++;
 					}
@@ -650,13 +675,13 @@ class ChessBoard {
 		$this->castling['black_can_castle_kingside'] = FALSE;
 		$this->castling['black_can_castle_generalside'] = FALSE;
 		
-		
 		// ******* SET EN PASSANT TARGET SQUARE *******
-		if ( $matches[13] == '-' ) {
+		/*if ( $matches[13] == '-' ) {
 			$this->en_passant_target_square = FALSE;
 		} else {
 			$this->en_passant_target_square = new ChessSquare($matches[13]);
 		}
+		*/
 		// ChessPiece throws its own exceptions, so no need to throw one here.
 		
 		// Normal (long) FEN
@@ -678,6 +703,86 @@ class ChessBoard {
 
  	}
 
+	function import_live_fen(string $fen): void 
+	{
+		$oldfen="";
+		$matched=false;
+
+		if((file_exists("livegame.txt"))){
+			//$this->import_fen($fen);
+			chmod("livegame.txt", 0755);
+			$file = fopen("livegame.txt","r");
+	
+			while(!feof($file)) {
+					$line = fgets($file);
+				   //echo ("$line");
+				   if (strpos($line, '$currentfen=') !== false) {
+						$splitted = explode( '$currentfen=',$line);
+						$oldfen = $splitted[1];
+						if($fen == "") $fen = $oldfen; 
+				   }
+				   else if (strpos($line, '$gameid=') !== false) {
+					$splitted = explode( '$gameid=',$line);
+					$gameid = $splitted[1]; 
+			   		}
+				if (strpos($line, '_Move=') !== false) {
+						$splittedfen_notation = explode( '=',$line);
+						$oldfennotation = $splittedfen_notation[1]; 
+						$matchedfen =  explode( ';',$oldfennotation)[0];
+						if (strpos($matchedfen.PHP_EOL, $fen) !== false){
+							$fen=$matchedfen;
+							$matched=true;
+						}
+					}
+				}
+				fclose($file);
+		}
+		else {
+			$fen=self::DEFAULT_FEN;
+			$file = fopen("livegame.txt","w");
+			fwrite($file,'$gameid='.'livemove'.str_shuffle("acdefhijkmnprtuvwxyz0123456789").PHP_EOL);
+			fwrite($file,'$newfen='.$fen);
+			fclose($file);
+			chmod("livegame.txt", 0755);
+			$matched=true;
+			$oldfen=$fen;
+		}
+
+		if($matched==false){$fen = $oldfen;}
+
+		$this->import_fen($fen);
+
+		
+		if(strcmp($oldfen,$fen)!=0){
+			$data = file('livegame.txt'); // reads an array of lines
+			
+			$reading = fopen('livegame.txt', 'r');
+			$writing = fopen('livegame.tmp.txt', 'w');
+			
+			$replaced = false;
+			$importedmatched=false;
+			while (!feof($reading)&&($importedmatched==false)) {
+			  $line = fgets($reading);
+			  if ((stristr($line,'$currentfen='))&&(stristr($line,$oldfen))) {
+				$line = '$currentfen='.$fen.";"."Moved_FEN=Good".PHP_EOL;
+				$replaced = true;
+				$importedmatched=true;
+			  }
+			  fputs($writing, $line);
+			}
+			fclose($reading); fclose($writing);
+			chmod("livegame.tmp.txt", 0755);
+
+			// might as well not overwrite the file if we didn't replace anything
+			if ($replaced)
+			{
+			  rename('livegame.tmp.txt', 'livegame.txt');
+			} else {
+			  unlink('livegame.tmp.txt');
+			}
+		}
+	}
+	
 	 function checkwinner():void{
 		 $winners=0;
 		 $this->bkingsquare=$this->get_king_square(2);//
@@ -701,28 +806,28 @@ class ChessBoard {
 		// $string=self::promoteking(2,$string);//Promote White
 
 		 if ($this->board[9][4]!=null) {
-            if (($this->board[9][4]!=null)&&($this->board[9][4]->color==1)&&(($this->board[9][4]->group=='OFFICER')||($this->board[9][4]->group=='SEMIROYAL')||($this->board[9][4]->group=='SOLDIER'))) {
+            if (($this->board[9][4]!=null)&&($this->board[9][4]->color==1)&&(($this->board[9][4]->group=='OFFICER')||($this->board[9][4]->group=='SOLDIER'))) {
 				///self::promoteking(1,$string);//Promote White
 				$this->Winner='1';$winners=$winners+1; //Black Wins
             }
         }
 		
 		if ($this->board[9][5]!=null) {
-            if (($this->board[9][5]!=null)&&($this->board[9][5]->color==1)&&(($this->board[9][5]->group=='OFFICER')||($this->board[9][5]->group=='SEMIROYAL')||($this->board[9][5]->group=='SOLDIER'))) {
+            if (($this->board[9][5]!=null)&&($this->board[9][5]->color==1)&&(($this->board[9][5]->group=='OFFICER')||($this->board[9][5]->group=='SOLDIER'))) {
 				//self::promoteking(1,$string);//Promote White
 				$this->Winner='1';$winners=$winners+1; //Black Wins
             }
-        }    
+        }
 		
 		if ($this->board[0][4]!=null) {
-        	if (($this->board[0][4]!=null)&&($this->board[0][4]->color==2)&&(($this->board[0][4]->group=='OFFICER')||($this->board[0][4]->group=='SEMIROYAL')||($this->board[0][4]->group=='SOLDIER'))) {
+        	if (($this->board[0][4]!=null)&&($this->board[0][4]->color==2)&&(($this->board[0][4]->group=='OFFICER')||($this->board[0][4]->group=='SOLDIER'))) {
 				//self::promoteking(2,$string);//Promote White
 				$this->Winner='2';$winners=$winners+1; //Black Wins
         	}
-    	}	
+		}
 	
 		if($this->board[0][5]!=null){
-			if(($this->board[0][5]!=null)&&($this->board[0][5]->color==2)&&(($this->board[0][5]->group=='OFFICER')||($this->board[0][5]->group=='SEMIROYAL')||($this->board[0][5]->group=='SOLDIER'))){
+			if(($this->board[0][5]!=null)&&($this->board[0][5]->color==2)&&(($this->board[0][5]->group=='OFFICER')||($this->board[0][5]->group=='SOLDIER'))){
 				//self::promoteking(2,$string);//Promote White
 				$this->Winner='2';$winners=$winners+1; //Black Wins
 			}
@@ -733,41 +838,67 @@ class ChessBoard {
 		 {
 		 	if ($this->board[$bkingsquare->rank][$bkingsquare->file]!=null){
 		        if((($bkingsquare->rank>0) &&($bkingsquare->rank<9)&&(($bkingsquare->file==0) ||($bkingsquare->file==9))) 
-				&&($this->board[$bkingsquare->rank][$bkingsquare->file]->type==self::PIECE_LETTERS[strtolower('U')])){
-		 			$bking='TU';
+				&&($this->board[$bkingsquare->rank][$bkingsquare->file]->type==self::PIECE_LETTERS[strtolower('I')])){
+		 			$bking='D'; //D
 					}
-				if((($bkingsquare->rank>0) &&($bkingsquare->rank<9)&&(($bkingsquare->file>0) &&($bkingsquare->file<9))) 
-				&&($this->board[$bkingsquare->rank][$bkingsquare->file]->type==self::PIECE_LETTERS[strtolower('Y')])){
-					$bking='WY';
-					}	 
-				}
+				else if((($bkingsquare->rank>0) &&($bkingsquare->rank<9)&&(($bkingsquare->file>0) &&($bkingsquare->file<9))) 
+				&&($this->board[$bkingsquare->rank][$bkingsquare->file]->type==self::PIECE_LETTERS[strtolower('J')])){
+					$bking='D';
+					}
+				else if((($bkingsquare->file>0) &&($bkingsquare->file<9)&&(($bkingsquare->rank==9))) 
+				&&($this->board[$bkingsquare->rank][$bkingsquare->file]->type==self::PIECE_LETTERS[strtolower('J')])){
+					 $bking='D';
+					}
+				else if((($bkingsquare->file==0) ||($bkingsquare->file==9)&&(($bkingsquare->rank==0)||($bkingsquare->rank==9))) 
+				&&($this->board[$bkingsquare->rank][$bkingsquare->file]->type==self::PIECE_LETTERS[strtolower('J')])){
+					$bking='D';
+					}
+		        else if((($bkingsquare->rank>0) &&($bkingsquare->rank<9)&&(($bkingsquare->file==0) ||($bkingsquare->file==9))) 
+				&&($this->board[$bkingsquare->rank][$bkingsquare->file]->type==self::PIECE_LETTERS[strtolower('J')])){
+		 			$wking='W'; //D
+					}
+			}
 		}
 
 		//TRUCE or WAR KINGs are offering draws
 		if(($wkingsquare!=null)&&($wkingsquare->rank!=null))
 		{
 			if ($this->board[$wkingsquare->rank][$wkingsquare->file]!=null){
-			   if((($wkingsquare->rank>0) &&($wkingsquare->rank<9)&&(($wkingsquare->file==0) ||($wkingsquare->file==9))) 
-			   &&($this->board[$wkingsquare->rank][$wkingsquare->file]->type==self::PIECE_LETTERS[strtolower('U')])){
-					$wking='TU';
-				   }
-			   if((($wkingsquare->rank>0) &&($wkingsquare->rank<9)&&(($wkingsquare->file>0) &&($wkingsquare->file<9))) 
-			   &&($this->board[$wkingsquare->rank][$wkingsquare->file]->type==self::PIECE_LETTERS[strtolower('Y')])){
-				   $wking='WY';
-				   }
-			   }
-	   }
+				if((($wkingsquare->rank>0) &&($wkingsquare->rank<9)&&(($wkingsquare->file==0) ||($wkingsquare->file==9))) 
+				   	&&($this->board[$wkingsquare->rank][$wkingsquare->file]->type==self::PIECE_LETTERS[strtolower('I')])){
+						$wking='D';
+				}
+				else if((($wkingsquare->rank>0) &&($wkingsquare->rank<9)&&(($wkingsquare->file>0) &&($wkingsquare->file<9))) 
+				&&($this->board[$wkingsquare->rank][$wkingsquare->file]->type==self::PIECE_LETTERS[strtolower('J')])){
+					$wking='D';
+				}
+				else if((($wkingsquare->file>0) &&($wkingsquare->file<9)&&(($wkingsquare->rank==0))) 
+				&&($this->board[$wkingsquare->rank][$wkingsquare->file]->type==self::PIECE_LETTERS[strtolower('J')])){
+					$wking='D';
+				}
+				else if((($wkingsquare->file==0) ||($wkingsquare->file==9)&&(($wkingsquare->rank==0)||($wkingsquare->rank==9))) 
+				&&($this->board[$wkingsquare->rank][$wkingsquare->file]->type==self::PIECE_LETTERS[strtolower('J')])){
+					$wking='D';
+				}
+				else if((($wkingsquare->rank>0) &&($wkingsquare->rank<9)&&(($wkingsquare->file==0) ||($wkingsquare->file==9))) 
+				&&($this->board[$wkingsquare->rank][$wkingsquare->file]->type==self::PIECE_LETTERS[strtolower('J')])){
+		   			$bking='W'; //D
+				}
+  			}
+		}
 
-	   //TRUCE vs WAR DRAWs or WINNERs
-	   if((($bking=='TU')&&($wking=='TU'))||(($bking=='WY')&&($wking=='WY'))){
-		$this->Winner='3';$winners=1; //Draw Game
-	   }
-	   elseif(($bking=='TU')&&($wking=='WY')){
-		$this->Winner='1';$winners=1; //WHITE Wins
-	   }
-	   elseif(($bking=='WY')&&($wking=='TU')){
-		$this->Winner='2';$winners=1; //Black Wins
-	   }
+		$winners=0;
+	   	//TRUCE vs WAR DRAWs or WINNERs
+	   	if($wking=='W'){
+			$this->Winner='1';$winners=1; //Draw Game
+	   	}
+	   	else if($bking=='W'){
+			$this->Winner='2';$winners=1; //Draw Game
+	   	}
+	   	//TRUCE vs WAR DRAWs or WINNERs
+	   	else if((($bking=='D')&&($wking=='D'))){
+			$this->Winner='3';$winners=1; //Draw Game
+		}
 	   
 	   $bwinner=0;
 	   $wwinner=0;
@@ -787,7 +918,8 @@ class ChessBoard {
 						}
 						//continue;
 				}
-				//No Mans Invertion means lost
+				//No Mans Invertion means almost lost
+				/*
 				elseif (($this->board[$row][$col]) && ((($col==0)&&($row==0))||(($col==9)&&($row==0))||(($col==0)&&($row==9))||(($col==9) &&($row==9)))) {
 						if (($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')])||
 						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')])){
@@ -804,8 +936,7 @@ class ChessBoard {
 				}
 				//CASTLE INVERSION	
 				elseif (($this->board[$row][$col]) && ($col>0) &&($col<9)&&($row==9)) {
-                    	if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')])||
-						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')]))&&
+                    	if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]))&&
 						($this->board[$row][$col]->color==2)) {
                         	$this->Winner='1';$wwinner=$wwinner+1;
                         	//return FALSE;
@@ -813,22 +944,20 @@ class ChessBoard {
                 }
 				//CASTLE INVERSION
 				elseif (($this->board[$row][$col]) && ($col>0) &&($col<9)&&($row==0)) {
-                    	if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]) ||
-						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')]))&&
+                    	if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]))&&
 						($this->board[$row][$col]->color==1)) {
                         	$this->Winner='2';$bwinner=$bwinner+1;
                         	//return FALSE;
                     	}
                 	}
+				*/
 				/* Check the TRUCE Inversion*/	 
 				elseif (($this->board[$row][$col]) && ($row>0) &&($row<9)&&(($col==9)||($col==0))) {
-                    	if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]) ||
-						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')]))&&
+                    	if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]))&&
 						($this->board[$row][$col]->color==1)) {
                         	$this->Winner='2';$wwinner=$wwinner+1;
                     	}
-						if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]) ||
-						($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('Y')]))&&
+						if ((($this->board[$row][$col]->type==self::PIECE_LETTERS[strtolower('J')]))&&
 						($this->board[$row][$col]->color==2)) {
                             $this->Winner='1';$bwinner=$bwinner+1;
                     	}
@@ -873,6 +1002,296 @@ class ChessBoard {
 		return $string;
 	} 
 
+	//function export_fen_moves($move->starting_square,$move->ending_square)
+	function export_fen_moves(ChessSquare $starting_square,ChessSquare $ending_square): string {
+        //Echo '<li> ChessBoard.php 2# function export_fen called </li>';
+        $string = '';
+		$piece=null;
+		$startingpiece=null;
+		$pushedpiece=null;
+		$middleman= null;
+		$originator=null;
+		$pusherpiece=null;
+		$finalpushedpiece=null;
+		$ending_square->mediatorrank=null;
+		$ending_square->mediatorfile=null;
+
+		//se4e2
+		$startingpiece= $this->board[$starting_square->rank][$starting_square->file];
+		if(($starting_square->rank==5) &&($starting_square->file ==4) )//&& ($ending_square->rank==2) &&($ending_square->file ==1))
+			$test=1;
+			
+		if(($starting_square->rank==$ending_square->rank) &&($starting_square->file ==$ending_square->file) && ($starting_square->rank!=null) )//&& ($ending_square->rank==2) &&($ending_square->file ==1))
+			$ttt=1;
+		else
+		{
+			for ($rank = 9; $rank >= 0; $rank--) {
+				if($pusherpiece!=null) 
+					break;
+            	for ($file = 0; $file <= 9; $file++) {
+
+					if(($rank==4) &&($file ==5))
+						$test=1;
+
+					if (($this->board[$rank][$file]!=null) && 
+					($rank==$ending_square->rank)  &&
+					($file==$ending_square->file)&& ($this->board[$starting_square->rank][$starting_square->file]==null)) {
+						$state=$this->board[$rank][$file]->state;
+						if( (strpos($state,"V=")!==FALSE) && ($this->board[$rank][$file]->type!=null)) {
+							$originator=clone $this->board[$rank][$file];
+							$originator->color=(int) explode(",", explode("color:",$state)[1])[0];
+							$originator->state="V";
+							$originator->type=(int) explode(",", explode("type:",$state)[1])[0];
+							$originator->mortal=(int) explode(",", explode("mortal:",$state)[1])[0];
+							$originator->striker=(int) explode(",", explode("striker:",$state)[1])[0];
+							$originator->group=explode(",", explode("group:",$state)[1])[0];
+							$originator->square->rank=$rank;
+							$originator->square->file=$file;
+
+							$middleman=clone $this->board[$rank][$file];
+							$middleman->rank=$this->board[$rank][$file]->square->rank;
+							$middleman->file=$this->board[$rank][$file]->square->file;
+
+							$middleman->state="R";
+							$orank=(int) explode(",", explode("rank:",$state)[1])[0];
+							$ofile=(int) explode(";", explode("file:",$state)[1])[0];
+
+							$this->board[$middleman->square->rank][$middleman->square->file]=$middleman;
+							$this->board[$rank][$file]=$originator;
+						}
+						else if((strpos($state,"Fake=")!==FALSE) && ($this->board[$rank][$file]->type!=null)) {
+								$originator=clone $this->board[$rank][$file];
+	
+								$middleman=clone $this->board[$rank][$file];
+								$middleman->square->rank=$rank;
+								$middleman->square->file=$file;
+								$middleman->type=(int) explode(",", explode("type:",$state)[1])[0];
+								$middleman->group=(int) explode(",", explode("group:",$state)[1])[0];
+								$middleman->color=(int) explode(",", explode("color:",$state)[1])[0];
+								$middleman->state="R";
+								$orank=(int) explode(",", explode("rank:",$state)[1])[0];
+								$ofile=(int) explode(";", explode("file:",$state)[1])[0];
+	
+								$this->board[$middleman->square->rank][$middleman->square->file]=$middleman;
+								$originator=$middleman;
+								$this->board[$rank][$file]=$originator;
+							}
+					}	
+					else if (($this->board[$rank][$file]!=null) && 
+					($this->board[$rank][$file]->selfpushed==true)  &&
+					($this->board[$rank][$file]->selfpushedsquare!=null)) 
+					{
+						$state=$this->board[$rank][$file]->state;
+						if(strpos($state,"V=")!==FALSE){
+							$originator=clone $this->board[$rank][$file];
+							$originator->color=(int) explode(",", explode("color:",$state)[1])[0];
+							$originator->state="V";
+							$originator->type=(int) explode(",", explode("type:",$state)[1])[0];
+							$originator->mortal=(int) explode(",", explode("mortal:",$state)[1])[0];
+							$originator->striker=(int) explode(",", explode("striker:",$state)[1])[0];
+							$originator->group=explode(",", explode("group:",$state)[1])[0];
+							$originator->square->rank=$rank;
+							$originator->square->file=$file;
+
+							$middleman=clone $this->board[$rank][$file];
+							$middleman->rank=$this->board[$rank][$file]->square->rank;
+							$middleman->file=$this->board[$rank][$file]->square->file;
+
+							$middleman->state="R";
+							$orank=(int) explode(",", explode("rank:",$state)[1])[0];
+							$ofile=(int) explode(";", explode("file:",$state)[1])[0];
+
+							$this->board[$middleman->square->rank][$middleman->square->file]=$middleman;
+							$this->board[$rank][$file]=$originator;
+						
+							$finalenemyposition=clone $this->board[$rank][$file]->selfpushedpiece;
+							$finalenemyposition->square->rank=$this->board[$rank][$file]->selfpushedsquare["rank"];
+							$finalenemyposition->square->file=$this->board[$rank][$file]->selfpushedsquare["file"];
+							$this->board[$finalenemyposition->square->rank][$finalenemyposition->square->file]=$finalenemyposition;
+						}
+						if(strpos($state,"Fake=")!==FALSE){
+							$originator=clone $this->board[$rank][$file];
+							$originator->color=(int) explode(",", explode("color:",$state)[1])[0];
+							$originator->state="V";
+							$originator->type=(int) explode(",", explode("type:",$state)[1])[0];
+							$originator->mortal=(int) explode(",", explode("mortal:",$state)[1])[0];
+							$originator->striker=(int) explode(",", explode("striker:",$state)[1])[0];
+							$originator->group=explode(",", explode("group:",$state)[1])[0];
+							$originator->square->rank=$rank;
+							$originator->square->file=$file;
+
+							$middleman=clone $this->board[$rank][$file];
+							$middleman->rank=$this->board[$rank][$file]->square->rank;
+							$middleman->file=$this->board[$rank][$file]->square->file;
+
+							$middleman->state="R";
+							$orank=(int) explode(",", explode("rank:",$state)[1])[0];
+							$ofile=(int) explode(";", explode("file:",$state)[1])[0];
+
+							$this->board[$middleman->square->rank][$middleman->square->file]=$middleman;
+							$this->board[$rank][$file]=$originator;
+						
+							$finalenemyposition=clone $this->board[$rank][$file];
+							$finalenemyposition->color=(int) explode(",", explode("endcolor:",$state)[1])[0];
+							$finalenemyposition->state="V";
+							$finalenemyposition->type=(int) explode(",", explode("endtype:",$state)[1])[0];
+							$finalenemyposition->mortal=(int) explode(",", explode("endmortal:",$state)[1])[0];
+							$finalenemyposition->striker=(int) explode(",", explode("endstriker:",$state)[1])[0];
+							$finalenemyposition->group=explode(",", explode("endgroup:",$state)[1])[0];
+							$finalenemyposition->square->rank=explode(",", explode("endrank:",$state)[1])[0];
+							$finalenemyposition->square->file=explode(";", explode("endfile:",$state)[1])[0];
+
+							$this->board[$finalenemyposition->square->rank][$finalenemyposition->square->file]=$finalenemyposition;
+						}	
+						else if (($this->board[$starting_square->rank][$starting_square->file]==null) && 
+						($this->board[$ending_square->rank][$ending_square->file]==null) &&
+						($this->board[$rank][$file]->selfpushed==true))
+							if(($this->board[$rank][$file]->selfpushedsquare!=null) && ($this->board[$rank][$file]->selfpushedsquare["rank"]==$ending_square->rank)&&
+							($this->board[$rank][$file]->selfpushedsquare["file"]==$ending_square->file)) {
+	
+								$this->board[$ending_square->rank][$ending_square->file]=$this->board[$rank][$file]->selfpushedpiece;
+								$this->board[$ending_square->rank][$ending_square->file]->state='R';
+								$this->board[$ending_square->rank][$ending_square->file]->square=$ending_square;
+						
+							}
+						}
+				}
+			}
+
+			if($this->board[$starting_square->rank][$starting_square->file]!=null){
+				$this->board[$starting_square->rank][$starting_square->file]=null;
+			}
+		}	
+			for ($rank = 9; $rank >= 0; $rank--) {
+            	$empty_squares = 0;
+				$empty_l =0;
+				$empty_r =0;
+				$instance =null;
+				//echo '<br/><br/>';
+				for ($file = 0; $file <= 9; $file++) {
+					$piece=null;
+					if($this->board[$rank][$file]!=null)
+						$piece = clone $this->board[$rank][$file];	
+					$instance ='1';
+
+					if(($rank==4) &&($file ==1))
+						$test=1;
+	
+					//Pusher is matched with victim's piece. Skip
+					if(($pusherpiece!=null) && ($piece==null) && ($starting_square->file==$file) && ($starting_square->rank==$rank) 
+					&& (($pusherpiece->square->rank ==$rank)&&
+					($pusherpiece->square->file==$file)&&($pusherpiece->square->rank!=null))) {
+						$piece=null;
+					}
+					//Pushed piece is matched with victim. Add
+					else if(($finalpushedpiece!=null) && ($piece==null) && ($ending_square->file==$file) && ($ending_square->rank==$rank) 
+					&& (($finalpushedpiece->square->rank ==$rank)&&
+					($finalpushedpiece->square->file==$file)&&($finalpushedpiece->square->rank!=null))) {
+						$piece=clone $finalpushedpiece;
+					}
+					//Pushed piece gets the starting piece. Use the Starting Piece
+					else if(($pushedpiece!=null) && ($pusherpiece!=null) && ($piece!=null) &&(($pushedpiece->square->rank ==$piece->square->rank)&&
+					($pushedpiece->square->file==$piece->square->file)&&($pushedpiece->square->rank!=null))) {
+						$piece=clone $pusherpiece;$piece->square->file=$file; $piece->square->rank=$rank;
+					}
+
+					if (($piece)) {
+						$instance=$piece->get_fen_symbol();
+					} //else {$instance=null};
+
+					if ((! $piece)||($instance=='') ||(($instance==null))) {
+						//echo ' (Empty) ';
+						if ($file ==0) {
+							$empty_l =1;
+							$string .=$empty_l;
+						} elseif ($file ==9) {
+								if (($empty_squares<=8)&&($empty_squares>=1)) {
+								$string .=$empty_squares;
+								}
+                        
+								$empty_r =1;
+								$string .=$empty_r;
+						} else {
+							$empty_squares++;
+							}
+					} else { //Square as some piece
+								//echo ' #Piece# = '.$piece->type;
+								//echo ' Blank = '.$empty_squares;
+								if ($empty_squares) { //if empty square is non-zero and reached the file
+									$string .= $empty_squares;
+									$empty_squares = 0;
+								}
+								$string .= $piece->get_fen_symbol();
+							}
+				}
+
+				if ($rank != 0) {
+					$string .= "/";
+				}				
+		}
+        if ($this->color_to_move == ChessPiece::WHITE) {
+            $string .= " w ";
+        } elseif ($this->color_to_move == ChessPiece::BLACK) {
+            $string .= " b ";
+        }
+            
+        $string .= "-";
+        $string .= " -";            
+        $string .= " " . $this->halfmove_clock . ' ' . $this->fullmove_number;
+
+        //Change positions of winning empereror and arthshastri if present
+
+        if ($this->board[9][4]!=null) {
+            if (($this->board[9][4]!=null)&&($this->board[9][4]->color==1)&&(($this->board[9][4]->group=='OFFICER')||($this->board[9][4]->group=='SOLDIER'))) {
+				$string = self::promoteking(1,$string);//Promote White
+				return $string;
+            }
+        }
+		
+		if ($this->board[9][5]!=null) {
+            if (($this->board[9][5]!=null)&&($this->board[9][5]->color==1)&&(($this->board[9][5]->group=='OFFICER')||($this->board[9][5]->group=='SOLDIER'))) {
+				$string = self::promoteking(1,$string);//Promote White
+				return $string;			
+            }
+        }    
+		
+		if ($this->board[0][4]!=null) {
+        	if (($this->board[0][4]!=null)&&($this->board[0][4]->color==2)&&(($this->board[0][4]->group=='OFFICER')||($this->board[0][4]->group=='SOLDIER'))) {
+				$string = self::promoteking(2,$string);//Promote Black
+				return $string;
+        	}
+    	}	
+	
+		if($this->board[0][5]!=null){
+			if(($this->board[0][5]!=null)&&($this->board[0][5]->color==2)&&(($this->board[0][5]->group=='OFFICER')||($this->board[0][5]->group=='SOLDIER'))){
+				$string = self::promoteking(2,$string);//Promote Black
+				return $string;
+			}
+		}
+	
+		if (strpos($string,"Ä")!==FALSE) {
+			$string = self::promoteking(1,$string);//Promote White
+			return $string;
+		}
+		
+		if (strpos($string,"ä")!==FALSE) {		
+			$string = self::promoteking(2,$string);//Promote Black
+			return $string;		
+		}
+
+		if ((strpos($string,"V")!==FALSE)) {		
+			$string = self::promoteking(1,$string);//Promote White
+			return $string;
+		}
+		else
+		if ((strpos($string,"v")!==FALSE)) {		
+			$string = self::promoteking(2,$string);//Promote Black
+			return $string;		
+		}	
+		
+		return $string;
+	}
+
 	function export_fen(): string {
         //Echo '<li> ChessBoard.php 2# function export_fen called </li>';
         $string = '';
@@ -883,7 +1302,8 @@ class ChessBoard {
         // etc.
         // But we want to print them starting with row 8 first.
         // So we need to adjust the loops a bit.
-    
+		$piece = null;
+		
         for ($rank = 9; $rank >= 0; $rank--) {
             $empty_squares = 0;
             $empty_l =0;
@@ -891,12 +1311,16 @@ class ChessBoard {
             $instance =null;
             //echo '<br/><br/>';
             for ($file = 0; $file <= 9; $file++) {
-                $piece = $this->board[$rank][$file];
+				$piece=null;
+				if($this->board[$rank][$file]!=null)
+                	$piece = clone $this->board[$rank][$file];	
                 $instance ='1';
+				//Pusher is matched with victim's piece. Skip
 
-                if ($piece) {
+				if (($piece)) {
                     $instance=$piece->get_fen_symbol();
                 } //else {$instance=null};
+
                 if ((! $piece)||($instance=='') ||(($instance==null))) {
                     //echo ' (Empty) ';
                     if ($file ==0) {
@@ -916,24 +1340,12 @@ class ChessBoard {
                     //echo ' #Piece# = '.$piece->type;
                     //echo ' Blank = '.$empty_squares;
                         if ($empty_squares) { //if empty square is non-zero and reached the file
-                            //echo ' *** ';
                             $string .= $empty_squares;
                             $empty_squares = 0;
                         }
-                    //if ( $empty_squares ) { //if empty square is non-zero and reached the file
-                    ////echo ' ************** ';
-                    //$string .= $empty_squares;
-                    //$empty_squares = 0;
-                    //}
-
                     $string .= $piece->get_fen_symbol();
                 }
             }
-            //echo ' <br/> *** Blank L = '.$empty_l.' Blank Mid = '.$empty_squares.' Blank R = '.$empty_r;
-
-            //if ( $empty_squares ) {
-            //$string .= $empty_l.$empty_squares==0?'':$empty_squares.$empty_r;
-            //}
             
             if ($rank != 0) {
                 $string .= "/";
@@ -947,13 +1359,10 @@ class ChessBoard {
         }
             
         $string .= "-";
-            
-        $string .= " -";
-            
+        $string .= " -";            
         $string .= " " . $this->halfmove_clock . ' ' . $this->fullmove_number;
 
         //Change positions of winning empereror and arthshastri if present
-
 
         if ($this->board[9][4]!=null) {
             if (($this->board[9][4]!=null)&&($this->board[9][4]->color==1)&&(($this->board[9][4]->group=='OFFICER')||($this->board[9][4]->group=='SEMIROYAL')||($this->board[9][4]->group=='SOLDIER'))) {
@@ -983,7 +1392,7 @@ class ChessBoard {
 			}
 		}
 	
-		if (strpos($string,"Ä")!==FALSE) {		
+		if (strpos($string,"Ä")!==FALSE) {
 			$string = self::promoteking(1,$string);//Promote White
 			return $string;
 		}
@@ -1005,16 +1414,110 @@ class ChessBoard {
 		
 		return $string;
 	}
+
+	function export_live_fen(string $fcondition,array $legal_moves): string
+	{
+		$exportedfen="";
+		$matched=0;
+		//add the returned data in file
+		$exportedfen= $this->export_fen();
+		$gametype="old";
+
+		if(($fcondition=="1")&&(file_exists("livegame.txt"))){
+			$file = fopen("livegame.txt","r");
+	
+			while(!feof($file)) {
+					$line = fgets($file);
+
+					if (strpos($line, '$newfen=') !== false) {
+						//$splitted = explode( '$currentfen=',$line);
+						//$fen = $splitted[1];
+						//if (strpos($exportedfen.PHP_EOL, $fen) !== false) {
+							//$matched=2; //New request
+						//}
+						$gametype="new";
+				   }					
+				   else if (strpos($line, '$currentfen=') !== false) {
+						$splitted = explode( '$currentfen=',$line);
+						$fen = $splitted[1];
+						if (strpos($exportedfen.PHP_EOL, $fen) !== false) {
+							$matched=2; //New request
+							$gametype="old";
+						}
+				   }
+				   else if (strpos($line, '$gameid=') !== false) {
+					$splitted = explode( '$gameid=',$line);
+					$gameid = $splitted[1];
+					}
+
+					if (strpos($line, '_Move=') !== false) {
+						$splittedfen_notation = explode( '=',$line);
+						$oldfennotation = $splittedfen_notation[1]; 
+						$matchedfen =  explode( ';',$oldfennotation)[0];
+						//if (strpos($matchedfen.PHP_EOL, $fen) !== false){
+							//$fen=$matchedfen;
+							$matched=1;
+						//}
+					}
+				}
+				fclose($file);
+
+				if($matched==2){
+					$file = fopen("livegame.txt","a");
+					$movecount=0;
+					foreach ( $legal_moves as $key => $move ): 
+						$movecount=$movecount+1;
+
+						$notationvalue=""; $ending_square=$move->ending_square;
+						if($move->pushedending_square!=null)
+							$ending_square=$move->pushedending_square;
+							$move_FEN= $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
+							$move->ending_square=$ending_square;
+							$notationvalue=$move->get_notation();
+					
+						fwrite($file, $movecount.'_Move='.$move_FEN.';'); 
+						fwrite($file,$movecount.'_Notation='.$notationvalue.PHP_EOL);
+					endforeach;
+	
+					fclose($file);
+					}
+			}
+
+		if($gametype=="new") {
+			$file = fopen("livegame.txt","w");
+			fwrite($file,'$gameid='.'livemove'.str_shuffle("acdefhijkmnprtuvwxyz0123456789").PHP_EOL);
+			fwrite($file,'$currentfen='.$exportedfen.PHP_EOL);
+			$movecount=0;
+			foreach ( $legal_moves as $key => $move ): 
+				$movecount=$movecount+1;
+				$notationvalue=""; $ending_square=$move->ending_square;
+				if($move->pushedending_square!=null)
+					$ending_square=$move->pushedending_square;
+					$move_FEN = $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
+					$move->ending_square=$ending_square;
+					$notationvalue=$move->get_notation();
+					fwrite($file, $movecount.'_Move='.$move_FEN.';'); 
+					fwrite($file,$movecount.'_Notation='.$notationvalue.PHP_EOL);
+			endforeach;
+
+			fclose($file);
+			chmod("livegame.txt", 0755);			
+		}
+		return $exportedfen;
+	}
 	
 	// Keeping this for debug reasons.
     function get_ascii_board(): string {
 		//Echo '<li> ChessBoard.php 3# function get_ascii_board called </li>';	
+        $string = '';
+
 		if ($this->Winners>=2) {
 			$string .= "INVALID FEN. There cannot be two Winners";
 			//return $string;
 		}
 
-        $string = '';
+		$string = '';
+
 		if($this->Winner=='-1')
 			$string .= "No Kings. Chanakya Game";
 		else
@@ -1062,21 +1565,6 @@ class ChessBoard {
     }
 	
 	function get_graphical_board(): array {
-		//Echo '<li> ChessBoard.php 4# function get_graphical_board called </li>';	
-
-		// We need to throw some variables into an array so our view can build the board.
-		// The array shall be in the following format:
-			// square_color = black / white
-			// id = a1-h8
-			// piece = HTML unicode for that piece
-		
-		// A chessboard looks like this
-			// a8 b8 c8 d8
-			// a7 b7 c7 d7
-			// etc.
-		// But we want to print them starting with row 8 first.
-		// So we need to adjust the loops a bit.
-		
 		$graphical_board_array = array();
 		for ( $rank = 9; $rank >= 0; $rank-- ) {
 			for ( $file = 0; $file <= 9; $file++ ) {
@@ -1133,15 +1621,11 @@ class ChessBoard {
 
 		$string = '';
 		
-		$string = '';
-		
 		if ($this->Winners>=2) {
 			$string .= "INVALID FEN. There cannot be two Winners";
 			return $string;
 		}
 	
-		
-
 		if($this->Winner=='-1')
 			$string .= "No Kings. Chanakya Game";
 		else
@@ -1205,33 +1689,86 @@ class ChessBoard {
 	
 	// Note: This does not check for and reject illegal moves. It is up to code in the ChessGame class to generate a list of legal moves, then only make_move those moves.
 	// In fact, sometimes make_move will be used on illegal moves (king in check moves), then the illegal moves will be deleted from the list of legal moves in a later step.
-	function make_move(ChessSquare $old_square, ChessSquare $new_square,bool $sameplace): void {
+	function make_move(ChessSquare $old_square1, ChessSquare $new_square,bool $capture, bool $sameplace): int {
 		//Echo '<li> ChessBoard.php 9# function make_move called </li>';	
+		$movetype=1;
+		$sitting_piece = null;$is_capture=null;	$pushedsquare=null;
+		$moving_piece = null;
+		$old_square = clone $old_square1;
+		if( $this->board[$old_square->rank][$old_square->file])
+			$moving_piece = clone $this->board[$old_square->rank][$old_square->file];
 
-		$moving_piece = clone $this->board[$old_square->rank][$old_square->file];
+		if(($moving_piece==null) &&($old_square->mediatorrank!=null) &&($old_square->mediatorfile!=null) )
+			{
+				$moving_piece = clone $this->board[$old_square->mediatorrank][$old_square->mediatorfile];
+				$old_square->rank =$old_square->mediatorrank;
+				$old_square->file =$old_square->mediatorfile;
+			}
+
+		if($moving_piece!=null){
+			if(($moving_piece->type==9))
+				$ttt=1;
+			if($this->board[$new_square->rank][$new_square->file]!=null) 
+				$sitting_piece = clone $this->board[$new_square->rank][$new_square->file];
 		
-		$is_capture = $this->board[$new_square->rank][$new_square->file];
+			$is_capture = $this->board[$new_square->rank][$new_square->file];
 		
-		if ( $moving_piece->type == ChessPiece::PAWN || $is_capture ) {
-			$this->halfmove_clock = 0;
-		} else {
-			$this->halfmove_clock++;
+			if ( $moving_piece->type == ChessPiece::KNIGHT) {
+			$ttt=1;
+			}
+			if ( $moving_piece->type == ChessPiece::PAWN || $is_capture ) {
+				$this->halfmove_clock = 0;
+			} else {
+				$this->halfmove_clock++;
+			}
+
+			//if ($this->board[$new_square->rank][$new_square->file]!=null)
+			if(($this->board[$new_square->rank][$new_square->file]!=null)&&(($this->board[$new_square->rank][$new_square->file]->selfpushedsquare!=null)))	
+				$pushedsquare = $this->board[$new_square->rank][$new_square->file]->selfpushedsquare;
+
+			if($moving_piece!=null)	
+				$this->board[$new_square->rank][$new_square->file] =clone $moving_piece;
+			else 
+				$this->board[$new_square->rank][$new_square->file]= null; 	
+
+			//if(($this->board[$new_square->rank][$new_square->file]->selfpushed == true) && ($pushedsquare )){
+			if(($sitting_piece!=null) &&($capture==false) && ($sitting_piece->selfpushed != null) && ($sitting_piece->selfpushed == true) && ($pushedsquare )){
+				$this->board[$new_square->rank][$new_square->file]->selfpushedsquare= $pushedsquare;
+				$this->board[ $new_square->rank][ $new_square->file]->selfpushed=true;
+				$this->board[ $new_square->rank][ $new_square->file]->selfpushersquare=array ("rank"=>$old_square->rank, "file"=>$old_square->file);
+				$this->board[ $new_square->rank][ $new_square->file]->selfpusherpiece=clone $this->board[$old_square->rank][$old_square->file];
+				if($sitting_piece!=null)
+					$this->board[ $new_square->rank][ $new_square->file]->selfpushedpiece=clone $sitting_piece;
+				$movetype=2;
+			}
+			else if(($sitting_piece!=null) &&($capture==true) && ($sitting_piece->selfpushed != null) && ($sitting_piece->selfpushed == true) && ($pushedsquare )){
+				$this->board[$new_square->rank][$new_square->file]->selfpushedsquare= $pushedsquare;
+				$this->board[ $new_square->rank][ $new_square->file]->selfpushed=false;
+				$this->board[ $new_square->rank][ $new_square->file]->selfpushersquare=null;
+				$this->board[ $new_square->rank][ $new_square->file]->selfpusherpiece=null;
+				$this->board[ $new_square->rank][ $new_square->file]->selfpushedpiece=null;
+				$movetype=1;
+			}
+			// Update $moving_piece->square too to avoid errors.
+
+			$moving_piece->square = $new_square;
 		}
+		else 
+			{
+			$ttt=1;
+//			return 1;
+			}			
+			if($sameplace==FALSE)
+				$this->board[$old_square->rank][$old_square->file] = NULL;
 		
-		$this->board[$new_square->rank][$new_square->file] = $moving_piece;
+			if ( $this->color_to_move == ChessPiece::BLACK ) {
+				$this->fullmove_number++;
+			}
 		
-		// Update $moving_piece->square too to avoid errors.
-		$moving_piece->square = $new_square;
-		
-		if($sameplace==FALSE)
-		$this->board[$old_square->rank][$old_square->file] = NULL;
-		
-		if ( $this->color_to_move == ChessPiece::BLACK ) {
-			$this->fullmove_number++;
+			$this->flip_color_to_move();
+			return 	$movetype;
+
 		}
-		
-		$this->flip_color_to_move();
-	}
 	
 	// Used to move the rook during castling.
 	// Can't use make_move because it messes up color_to_move, halfmove, and fullmove.
@@ -1269,11 +1806,11 @@ class ChessBoard {
 	}
 	
 	function get_king_square($color): ?ChessSquare {
-		foreach ( $this->board as $rank ) {
-			foreach ( $rank as $piece ) {
+		foreach ( $this->board as $rowblock ) {
+			foreach ( $rowblock as $piece ) {
 				if ( $piece ) {
 					if($piece->group=='ROYAL'){
-						if ((($piece->type == ChessPiece::SIMPLEKING)||($piece->type == ChessPiece::VIKRAMADITYA)||($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::INVERTEDKING)||($piece->type == ChessPiece::ANGRYKING)||($piece->type == ChessPiece::ANGRYINVERTEDKING)) && ($piece->color == $color )) {
+						if ((($piece->type == ChessPiece::SIMPLEKING)||($piece->type == ChessPiece::VIKRAMADITYA)||($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::INVERTEDKING)||($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::INVERTEDKING)) && ($piece->color == $color )) {
 							return $piece->square;
 						}
 					}
@@ -1300,7 +1837,7 @@ class ChessBoard {
 		foreach ( $this->board as $rank ) {
 			foreach ( $rank as $piece ) {
 				if ( $piece ) {
-					if ((($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::ANGRYARTHSHASTRI)||($piece->type == ChessPiece::RAJYAPAALARTHSHASTRI)) && ($piece->color == $color )) {
+					if ((($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::RAJYAPAALARTHSHASTRI)) && ($piece->color == $color )) {
 						return $piece->square;
 					}
 				}
@@ -1364,8 +1901,8 @@ class ChessBoard {
 			foreach ( $RankData as $piece ) {
 				if ( $piece ) {
 					//Kings are sitting on Scepters or TRUCE Borders
-                    if (((($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::ANGRYKING))&&((($piece->square->file==4)||($piece->square->file==5))&&(($piece->square->rank==0)||($piece->square->rank==9))))||
-					(($piece->type == ChessPiece::ANGRYKING)&&((($piece->square->rank==4)||($piece->square->rank==5))&&(($piece->square->file==0)||($piece->square->file==9))))){
+                    if (((($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::KING))&&((($piece->square->file==4)||($piece->square->file==5))&&(($piece->square->rank==0)||($piece->square->rank==9))))||
+					(($piece->type == ChessPiece::KING)&&((($piece->square->rank==4)||($piece->square->rank==5))&&(($piece->square->file==0)||($piece->square->file==9))))){
                         //if (($piece->color == $color)) {
 							if(($piece->color==1)&& ($this->whitecankill == 1)){
 								$this->whitecankill = 0; //Cannot kill
@@ -1532,33 +2069,37 @@ class ChessBoard {
 		return FALSE;
 	}
 
-	function get_general_on_warZone_for_full_move($color): bool {
+	function get_general_on_warZone_for_full_move($movetype): bool {
 		//$blackcanfullmove = 1;
 		//$whitecanfullmove = 1;
 		$count=0;
-		$color=1;
+		$generalsquare=$this->wssquare;
+		if(($generalsquare==null) &&($this->whitecanfullmove != 1) && ($movetype==1)) {	$this->whitecanfullmove = 0; }
+
+		$generalsquare=$this->bssquare;
+		if(($generalsquare==null) && ($this->blackcanfullmove != 1 ) && ($movetype==1)){ $this->blackcanfullmove = 0; }
 
 		foreach ( $this->board as $RankData ) {
 			foreach ( $RankData as $piece ) {
 				if ( $piece ) {
                     if (($piece->square->file>0)&&($piece->square->file<9)&&($piece->square->rank>0)&&($piece->square->rank<9)) {
                         if ((($piece->group == 'OFFICER') && ($piece->type== ChessPiece::GENERAL))) {
-							if(($piece->color==1) && ( $this->whitecanfullmove == 1)){
+							if(($piece->color==1) && ( $this->whitecanfullmove == 1) && ($movetype==1)){
 								$this->whitecanfullmove = 1; //Can move fully
 								$count=$count+1;
 								}
-							elseif(($piece->color==1)&& ($this->whitecanfullmove == 0)){
+							elseif(($piece->color==1) && ($movetype==0)){
 									$this->whitecanfullmove = 1; //Can move fully
 									$count=$count+1;
-									}								
-							if(($piece->color==2)&& ($this->blackcanfullmove == 1)){
+									}
+							if(($piece->color==2)&& ($this->blackcanfullmove == 1)  && ($movetype==1) ){
 									$this->blackcanfullmove = 1; //Can move fully
 									$count=$count+1;
 								}
-							elseif(($piece->color==2)&& ($this->blackcanfullmove == 0)){
+							elseif(($piece->color==2)&& ($movetype==0)){
 									$count=$count+1;
 									$this->blackcanfullmove = 1; //Can move fully
-								}								
+								}
 							if($count==2) break;
                         }
                     }
@@ -1579,10 +2120,10 @@ class ChessBoard {
 				if ( $piece ) {
                     if (($piece->square->file>0)&&($piece->square->file<9)&&($piece->square->rank>0)&&($piece->square->rank<9)) {
                         ////echo ' Actual = '.$piece->type.' Expected = '.ChessPiece::KING;
-                        if ((($piece->type == ChessPiece::KING) || ($piece->type == ChessPiece::INVERTEDKING) ||($piece->type == ChessPiece::ANGRYKING)||
-                        ($piece->type == ChessPiece::ANGRYINVERTEDKING)||($piece->type == ChessPiece::SPY)||($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::ANGRYARTHSHASTRI)/*||
+                        if ((($piece->type == ChessPiece::KING) || ($piece->type == ChessPiece::INVERTEDKING) ||($piece->type == ChessPiece::KING)||
+                        ($piece->type == ChessPiece::INVERTEDKING)||($piece->type == ChessPiece::SPY)||($piece->type == ChessPiece::ARTHSHASTRI)||($piece->type == ChessPiece::ARTHSHASTRI)/*||
                         ($piece->type == ChessPiece::SPY)||($piece->type == ChessPiece::SPYWRAAJDAND)||($piece->type == ChessPiece::SPYWARTHDAND)||
-                        ($piece->type == ChessPiece::ANGRYKINGWARTHDAND)||($piece->type == ChessPiece::ANGRYARTHSHASTRIWRAAJDAND)||($piece->type == ChessPiece::ANGRYINVERTEDKINGWARTHDAND)*/)
+                        ($piece->type == ChessPiece::KINGWARTHDAND)||($piece->type == ChessPiece::ARTHSHASTRIWRAAJDAND)||($piece->type == ChessPiece::INVERTEDKINGWARTHDAND)*/)
                         && ($piece->color == $color)) {
                             return $piece->square; // Royal is in War Zone.. So, we can return
                         }

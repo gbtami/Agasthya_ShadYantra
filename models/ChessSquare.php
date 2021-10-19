@@ -32,7 +32,9 @@ class ChessSquare {
 	// it's actually slower than calculating them in the constructor!
 	public $rank;
 	public $file;
-	
+	public $mediatorrank;
+	public $mediatorfile;
+
 	function __construct() {
 		$args = func_get_args();
 		
@@ -43,6 +45,8 @@ class ChessSquare {
 		} else {
 			$this->rank = $args[0];
 			$this->file = $args[1];
+			$this->mediatorrank = $args[0];
+			$this->mediatorfile = $args[1];
 		}
 	}
 	
@@ -67,6 +71,12 @@ class ChessSquare {
 		return $this->calculate_alphanumeric_using_rankfile($this->rank, $this->file);
 	}
 	
+	function set_square(int $file,int $rank): void {
+		//Echo '<li> ChessSquare.php 4# function get_alphanumeric called </li>';	
+		$this->rank = $rank;
+		$this->file = $file;
+	}
+
 	function get_int(): int {
 		// Primitive type int is faster than alphanumeric or ChessSquare for storing the
 		// chess square in a list.

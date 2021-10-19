@@ -1,11 +1,88 @@
-//debugger
+////debugger
+
+
+var tabLinks = new Array();
+var contentDivs = new Array();
+var tabListItems =null;
+
+function init() {
+
+ for (var j = 0; j<=1;j++){
+  // Grab the tab links and content divs from the page
+  if (j == 0) tabListItems = document.getElementById('tabs').childNodes;
+  if (j == 1) tabListItems = document.getElementById('tabs2').childNodes;
+  for (var i = 0; i < tabListItems.length; i++) {
+    if (tabListItems[i].nodeName == "LI") {
+      var tabLink = getFirstChildWithTagName(tabListItems[i], 'A');
+      var id = getHash(tabLink.getAttribute('href'));
+      tabLinks[id] = tabLink;
+      contentDivs[id] = document.getElementById(id);
+    }
+  }
+
+  // Assign onclick events to the tab links, and
+  // highlight the first tab
+  var i = 0;
+
+  for (var id in tabLinks) {
+    tabLinks[id].onclick = showTab;
+    tabLinks[id].onfocus = function() {
+      this.blur()
+    };
+    if (i == 0) tabLinks[id].className = 'selected';
+    i++;
+  }
+
+  // Hide all content divs except the first
+  var i = 0;
+
+  for (var id in contentDivs) {
+    if (i != 0) contentDivs[id].className = 'tabContent hide';
+    i++;
+  }
+}
+
+}
+
+function showTab() {
+  var selectedId = getHash(this.getAttribute('href'));
+
+  // Highlight the selected tab, and dim all others.
+  // Also show the selected content div, and hide all others.
+  for (var id in contentDivs) {
+    if (id == selectedId) {
+      tabLinks[id].className = 'selected';
+      contentDivs[id].className = 'tabContent';
+    } else {
+      tabLinks[id].className = '';
+      contentDivs[id].className = 'tabContent hide';
+    }
+  }
+
+  // Stop the browser following the link
+  return false;
+}
+
+function getFirstChildWithTagName(element, tagName) {
+  for (var i = 0; i < element.childNodes.length; i++) {
+    if (element.childNodes[i].nodeName == tagName) return element.childNodes[i];
+  }
+}
+
+function getHash(url) {
+  var hashPos = url.lastIndexOf('#');
+  return url.substring(hashPos + 1);
+}
+
+init();
+
 //$('select#move').change(function(){
-	var category = null;
+		var category = null;
 	var cookiecategory = null;
 	//if thereiks no selection then use White as default
 
 function createCookieAction() {
-	var nameEQ = "StepType" + "=";
+	var nameEQ = "LiveStepType" + "=";
 	var ca = document.cookie.split(';');
 	for(var i=0;i < ca.length;i++) {
 		var c = ca[i];
@@ -18,7 +95,7 @@ function createCookieAction() {
 			//console.log (c.substring(nameEQ.length,c.length));
 	}
 	console.log (cookiecategory);
-	debugger
+	//debugger
 	var buttonvalue = document.getElementById("Invert").name;
 	if((buttonvalue==null) ||(buttonvalue=="")){
 		if((cookiecategory==null) ||(cookiecategory=="")){
@@ -33,8 +110,8 @@ function createCookieAction() {
 		else {
 			document.getElementById("Invert").name=cookiecategory;
 			category=cookiecategory;
-		}
-	}
+		}		
+	}	
 	else if((category==null) ||(category=="")){
 		if((cookiecategory==null) ||(cookiecategory=="")){
 			document.getElementById("Invert").name="white"
@@ -63,7 +140,7 @@ function createCookieAction() {
 			document.getElementById("Invert").name=buttonvalue;		
 			category=buttonvalue;
 		}
-	}
+	}	
 
 	console.log (buttonvalue);
 
@@ -79,7 +156,8 @@ function createCookieAction() {
 	$("input[name='blackrdo']").attr("checked",true);
 	console.log ("   -----------------------  ");
 
-	document.cookie = "StepType"+"="+category+expires+"; path=/"+";";
+	document.cookie = "LiveStepType"+"="+category+expires+"; path=/"+";";
+
 }
 
 /*
@@ -116,45 +194,69 @@ function reversegrid(){
 	function createDefaultCookie() {
 		category=null;
 		createCookieAction();
-		//debugger
+		////debugger
 		if (category=="white") { category = "black"; document.getElementById("boardtype").value=category;
-			document.getElementById("import_boardtype").value=category;document.getElementById("Invert").name="black";  //reversegrid(); 
-			$('#import_fen').submit();
+		document.getElementById("import_boardtype").value=category;document.getElementById("Invert").name="black";  //reversegrid(); 
+		$('#import_fen').submit(); 
+
 		}
 		else if (category=="black") {  category = "white"; document.getElementById("boardtype").value=category;
-			document.getElementById("import_boardtype").value=category; document.getElementById("Invert").name="white";  //reversegrid(); 
-			$('#import_fen').submit();	
-			document.getElementById("boardtype").value=category;
-			document.getElementById("import_boardtype").value=category;
-		}		
+		document.getElementById("import_boardtype").value=category; document.getElementById("Invert").name="white";  //reversegrid(); 
+		$('#import_fen').submit();
+	
+		document.getElementById("boardtype").value=category;
+		document.getElementById("import_boardtype").value=category;}
+		
 		createCookieAction();
+
 	}
 	$(document).ready(function(){
-		category=null;
+	category=null;
 		createCookieAction();
-		debugger
+		//debugger
 		var piece=document.getElementsByClassName('draggable_piece');
-		var bt1 = document.createElement('input'), bt2 = document.createElement('input'), bt3 = document.createElement('input');
-		var bt4 = document.createElement('input'), bt5 = document.createElement('input'), bt6 = document.createElement('input');
-		var bt7 = document.createElement('input'), bt8 = document.createElement('input');
+		var bt1 = document.createElement('input');
+		var bt2 = document.createElement('input');
+		var bt3 = document.createElement('input');
+		var bt4 = document.createElement('input');
+		var bt5 = document.createElement('input');
+		var bt6 = document.createElement('input');
+		var bt7 = document.createElement('input');
 
-		bt1.setAttribute("name","import_boardtype");bt2.setAttribute("name","import_boardtype");bt3.setAttribute("name","import_boardtype");
-		bt4.setAttribute("name","import_boardtype");bt5.setAttribute("name","import_boardtype");bt6.setAttribute("name","import_boardtype");
-		bt7.setAttribute("name","import_boardtype");bt8.setAttribute("name","import_boardtype");
+		bt1.setAttribute("name","import_boardtype");
+		bt2.setAttribute("name","import_boardtype");
+		bt3.setAttribute("name","import_boardtype");
+		bt4.setAttribute("name","import_boardtype");
+		bt5.setAttribute("name","import_boardtype");
+		bt6.setAttribute("name","import_boardtype");
+		bt7.setAttribute("name","import_boardtype");
 
-		bt1.setAttribute("type","hidden"), bt1.setAttribute("type","hidden"), bt2.setAttribute("type","hidden");
-		bt3.setAttribute("type","hidden"), bt4.setAttribute("type","hidden"), bt5.setAttribute("type","hidden");
-		bt6.setAttribute("type","hidden"), bt7.setAttribute("type","hidden"), bt8.setAttribute("type","hidden");
+		bt1.setAttribute("type","hidden");
+		bt1.setAttribute("type","hidden");
+		bt2.setAttribute("type","hidden");
+		bt3.setAttribute("type","hidden");
+		bt4.setAttribute("type","hidden");
+		bt5.setAttribute("type","hidden");
+		bt6.setAttribute("type","hidden");
+		bt7.setAttribute("type","hidden");	
 
-		bt1.setAttribute("value",category), bt1.setAttribute("value",category), bt2.setAttribute("value",category), bt3.setAttribute("value",category);
-		bt4.setAttribute("value",category), bt5.setAttribute("value",category), bt6.setAttribute("value",category);
-		bt7.setAttribute("value",category), bt8.setAttribute("value",category);
+		bt1.setAttribute("value",category);
+		bt1.setAttribute("value",category);
+		bt2.setAttribute("value",category);
+		bt3.setAttribute("value",category);
+		bt4.setAttribute("value",category);
+		bt5.setAttribute("value",category);
+		bt6.setAttribute("value",category);
+		bt7.setAttribute("value",category);	
 
-		document.getElementById('king_surrender').appendChild(bt1), document.getElementById('all_moves').appendChild(bt2);
-		document.getElementById('winninggame').appendChild(bt3), document.getElementById('recall').appendChild(bt4);
-		document.getElementById('king_Shanti').appendChild(bt5), document.getElementById('king_endgame').appendChild(bt6);
-		document.getElementById('make_move').appendChild(bt7), document.getElementById('naarad_cmove').appendChild(bt8);
 
+		document.getElementById('king_surrender').appendChild(bt1);
+		document.getElementById('all_moves').appendChild(bt2);
+		document.getElementById('winninggame').appendChild(bt3);
+		document.getElementById('recall').appendChild(bt4);
+		document.getElementById('king_Shanti').appendChild(bt5);
+		document.getElementById('king_endgame').appendChild(bt6);
+		document.getElementById('make_move').appendChild(bt7);
 		var color_to_move='',opp_color_to_move='';
 		var p1name='',p2name='',mname="";
 		var kingmove=false,arthshastrimove=false,naaradmove=false,knightmove=false,bishopmove=false,rookmove=false,generalmove=false,officermove=false;
@@ -168,14 +270,14 @@ function reversegrid(){
 		var lastsquare;
 		var lastcolor;
 		var history='';
-		var item = {};
+        var item = {};
 		var oldsquare = null, newsquare = null;
 		var coordinate_notation = '';
 		var option_tag_in_select_tag = null;
 
 		var myAudio = document.createElement('audio');
 		myAudio.controls = true;
-		myAudio.src = 'assets/move.mp3';
+		myAudio.src = '../assets/move.mp3';
 		//var failedAudio = document.createElement('audio');
 		//failedAudio.controls = true;
 		//failedAudio.src = 'Your File';
@@ -187,12 +289,15 @@ function reversegrid(){
 		$('form#winninggame').hide();	$('form#king_endgame').hide(); $('form#king_surrender').hide();
 			
 		if ($('select#moves option').length == 0) {
-			$('form#all_moves').hide(); $('form#winninggame').hide(); $('form#history_move').hide(); $('form#make_move').hide(); $('form#naarad_cmove').hide(); 
+			$('form#all_moves').hide(); $('form#winninggame').hide(); $('form#history_move').hide();	$('form#make_move').hide();
 		}
-		//debugger
-		$("textarea#playerta").val("");	$("textarea#opponentta").val("");
-		$("textarea#player1ta").val(""); $("textarea#player2ta").val("");
+		////debugger
+		$("textarea#playerta").val("");
+		$("textarea#opponentta").val("");
+		$("textarea#player1ta").val("");
+		$("textarea#player2ta").val("");
 		$("div#textAreasRules").hide();
+					
 
 	if(($("div.status_box").attr('id')=='1')){
 	color_to_move='white';opp_color_to_move='black';
@@ -200,6 +305,7 @@ function reversegrid(){
 	else if(($("div.status_box").attr('id')=='2')){
 	color_to_move='black';opp_color_to_move='white';
 	}
+	 
 
 	if(color_to_move!=''){
 		if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
@@ -226,14 +332,14 @@ function reversegrid(){
 	function getinitServerData(){
 		jsonObj = [];
 
-		// Add JSON to localStorage under serverData
-		localStorage.setItem("serverData", JSON.stringify(jsonObj));
+        // Add JSON to localStorage under serverData
+        localStorage.setItem("serverData", JSON.stringify(jsonObj));
 		history = '';		
 		$("#history").val(function() {
 				return history;
 		});
 			history='';
-			coordinate_notation='';
+			coordinate_notation='';				
 		}
 
 	function retrieveAndSetinitData(){
@@ -249,23 +355,27 @@ function reversegrid(){
 				return history;
 		});
 			history='';
-			coordinate_notation='';
-	}	
+			coordinate_notation='';						
+	}
+	
 
-	function getServerData(){
+		function getServerData(){
 		jsonObj = [];
 
-		var val = option_tag_in_select_tag.val();
-		var html = option_tag_in_select_tag.html();
+        var val = option_tag_in_select_tag.val();
+        var html = option_tag_in_select_tag.html();
 		var data = option_tag_in_select_tag.attr('data-coordinate-notation');
 
-		item = {}; item ["val"] = val; item ["html"] = html; item ["data"] = data;
+        item = {}
+        item ["val"] = val;
+        item ["html"] = html;
+        item ["data"] = data;
 
-		jsonObj.push(item);
+        jsonObj.push(item);
 		console.log(jsonObj);
 	
-		// Add JSON to localStorage under serverData
-		localStorage.setItem("serverData", JSON.stringify(jsonObj));
+        // Add JSON to localStorage under serverData
+        localStorage.setItem("serverData", JSON.stringify(jsonObj));
 		history = '';
 		$.each(temp, function(key,value) {
 			history = history+ ' '+value.data;
@@ -275,18 +385,21 @@ function reversegrid(){
 				return history;
 		});
 			history='';
-			coordinate_notation='';
+			coordinate_notation='';				
 		}
 
 	function retrieveAndSetData(){
 		var temp = JSON.parse(localStorage.getItem("serverData"));
 		// Do stuff with JSON data
 	
-		var val = option_tag_in_select_tag.val();
-		var html = option_tag_in_select_tag.html();
+        var val = option_tag_in_select_tag.val();
+        var html = option_tag_in_select_tag.html();
 		var data = option_tag_in_select_tag.attr('data-coordinate-notation');
 
-		item = {}; item ["val"] = val; item ["html"] = html; item ["data"] = data;
+        item = {}
+        item ["val"] = val;
+        item ["html"] = html;
+        item ["data"] = data;
 	
 		temp.push(item);
 		localStorage.setItem("serverData", JSON.stringify(temp));
@@ -301,7 +414,7 @@ function reversegrid(){
 				return history;
 		});
 			history='';
-			coordinate_notation='';
+			coordinate_notation='';						
 	}
 
 
@@ -320,21 +433,21 @@ function reversegrid(){
 					alert("localStorage unavailable!");
 					}
 			
-	$('select#move').dblclick(function(){
-		$('#make_move').submit(); myAudio.play();
+	$('select#livemove').dblclick(function(){
+		$('#make_move').submit();
+		myAudio.play();
 	});
 
-	$('select#cmove').dblclick(function(){
-		$('#naarad_cmove').submit(); myAudio.play();
-	});
-	
 	$('select#surrendermove').dblclick(function(){
-		$('#king_surrender').submit(); myAudio.play();
+		$('#king_surrender').submit();
+		myAudio.play();
 	});
 	
 	$('select#endgamemove').dblclick(function(){
-		$('#king_endgame').submit(); myAudio.play();
-	});	
+		$('#king_endgame').submit();
+		myAudio.play();
+	});
+	
 	
 	function simple(event){
 		var i =0;var oop;	var tempi=0;
@@ -351,27 +464,26 @@ function reversegrid(){
 			lastsquare=$(this).closest('td');
 		}
 
-		$("#move").empty();
+		$("#livemove").empty();
 		$("#moves option").each(function() {
-			
+			////debugger
 			var val = $(this).val();
-			var txt = $(this).html();
+				var txt = $(this).html();
 			var dataa = $(this).data('coordinate-notation');
 			txt=txt.trim();
 			if(txt.substr(0,1)==p1name){
-				if ($( "#move" ).length) {
-   					 $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+				if ($( "#livemove" ).length) {
+   					 $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 				}
 				tempi=tempi+1;
 				}
 			i=i+1;
 			});
-		$("#move_count").html(tempi);
+		$("#move_count").html(tempi);			
 		}
-
 	$('.draggable_piece').on("click", function(event) {
-		//debugger
-		var i =0;var oop;var tempi=0;var tname='';var mname='';var dname='';
+		
+		var i =0;var oop;var tempi=0;var tname='';var mname="";var dname='';
 		p1name = $(this).attr('name');
 		if(lastsquare!=null){
 			lastsquare.css('background-color',lastcolor);
@@ -379,10 +491,9 @@ function reversegrid(){
 		}
 
 			$('form#winninggame').hide();$('form#king_endgame').hide(); $('form#king_surrender').hide();	kingmove=false;
-			$('form#make_move').hide(); $("#winninggamemove").empty();	$("#move").empty();
-			$('form#naarad_cmove').hide();	$('cmove').empty();
+			$('form#make_move').hide(); $("#winninggamemove").empty();	$("#livemove").empty();
 
-				naaradmove=false;
+				naaradmove=false;					
 				kingmove=false; arthshastrimove=false;spymove=false;
 				soldiermove=false;bishopmove=false;knightmove=false;rookmove=false;generalmove=false;officermove=false;
 
@@ -412,18 +523,23 @@ function reversegrid(){
 			
 			if((p1name.toLowerCase()=='g')||(p1name.toLowerCase()=='h')||(p1name.toLowerCase()=='m')||(p1name.toLowerCase()=='s')){
 				officermove=true;
-				}
+				}				
+				
 	
 		if ($('select#recallmove option').length == 0) {
-			$('form#recall').hide(); $("#recallmove").empty();
+			$('form#recall').hide();
+			$("#recallmove").empty();	
 		}
+				
 
 		if ($('select#Shantimove option').length == 0) {
-			$('form#king_Shanti').hide(); $("#Shantimove").empty();
+			$('form#king_Shanti').hide();
+			$("#Shantimove").empty();	
 		}
 		
 		if ($('select#winninggamemove option').length == 0) {
-			$('form#winninggame').hide();$("#winninggamemove").empty();
+			$('form#winninggame').hide();
+			$("#winninggamemove").empty();	
 		}
 		
 		if ($('select#endgamemove option').length == 0) {
@@ -432,11 +548,8 @@ function reversegrid(){
 		
 		if ($('select#surrendermove option').length == 0) {
 			$('form#king_surrender').hide();
-		}
-
-		if ($('select#cmove option').length == 0) {
-			$('form#naarad_cmove').hide();
-		}
+		}					
+		
 		
 		if(lastsquare==null){
 			lastcolor=$(this).closest('td').css('background-color');
@@ -448,13 +561,16 @@ function reversegrid(){
 		p2name=$(this).closest('td').attr('id').substr(0,2);
 		//alert (p2name);
 		
-		$("#move").empty(); $("#winninggamemove").empty(); $("#endgamemove").empty(); $("#surrendermove").empty();$("#Shantimove").empty();$("#recallmove").empty();
-		$('select#cmove option').empty();
-		$("textarea#player1ta").val(""); $("textarea#player2ta").val("");
-		$("div#textAreasRules").hide();
+		$("#livemove").empty(); $("#winninggamemove").empty(); $("#endgamemove").empty(); $("#surrendermove").empty();$("#Shantimove").empty();$("#recallmove").empty();
+
+	$("textarea#player1ta").val("");
+	$("textarea#player2ta").val("");
+	$("div#textAreasRules").hide();
 		
+			
 	if ((($("div.status_box").attr('id')=='1')&& (p1name.match(/^[A-ZÁ]*$/))) || (($("div.status_box").attr('id')=='2')&& (p1name.match(/^[a-zá]*$/)))) {
 		$("div#textAreasRules").show();
+
 		$("#moves option").each(function() {
 			var val = $(this).val();
 			var txt = $(this).html();
@@ -462,28 +578,36 @@ function reversegrid(){
 			txt=txt.trim();
 			if(txt.substr(1,1)=='^') {
 				tname=txt.substr(2,2); mname=txt.substr(4,2); dname=txt.substr(6,2)}
-			else if(txt.substr(1,1)=='*') { tname=txt.substr(2,2); dname=txt.substr(4,2)}
+			else if(txt.substr(1,1)=='*'){ tname=txt.substr(2,2); dname=txt.substr(4,2)}
 			else if(txt.substr(1,1)!='*') {
-				//debugger
+			//debugger
 				tname=txt.substr(1,2); dname=txt.substr(3,2)}
-
 				if((txt.substr(0,1)==p1name)&&(p2name==tname)){
+
 					$("textarea#player1ta").val("");
 					$("textarea#player2ta").val("");
 					//ArthShastri is in CASTLE or opponent CASTLE. If General is in Truce then it means Army will have to retreat. If King or Arsthshastri is in War then retreat will not happen.
 					//if(kingmove==true)
-					//debugger
+					////debugger
 					if((officermove==true)&& (/[a-h09]{2,2}/.test(dname))){
 						if ((txt.indexOf("Ö") >= 0)){
 							$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							$('form#winninggame').show();
 							}
 						else{
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-								}
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							
 							}
+							}						
 						}
+					//General move from WAR to CASTLE
+					else if((generalmove==true)&& ((/[a-h09]{2,2}/.test(dname)))){
+						if ($("#livemove").length) {
+							$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						
+						}
+					}
 					//General move from WAR to Truce
 					else if((generalmove==true)&& ((/[xy1-8]{2,2}/.test(dname)) &&(/[a-h1-8]{2,2}/.test(p2name)))){
 							$("#recallmove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
@@ -498,7 +622,7 @@ function reversegrid(){
 							$('form#king_surrender').show();
 							}
 						else {
-							$("#recallmove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							$("#recallmove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));	
 							document.getElementById('lblSandhi').innerHTML="Viraam Sandhi";
 							$('form#recall').show();
 							}
@@ -513,24 +637,25 @@ function reversegrid(){
 							$("#Shantimove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							document.getElementById('lblShanti').innerHTML="Shanti";
 							$('form#king_Shanti').show();
-							}
+							}							
 						else{
 							
-								if ($("#move").length) {
- 									$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));							
-								}
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							
 							}
+							}						
 						}
 					//ArthShashtri moving to Truce Borders
 					else if((arthshastrimove==true)&& (/[xy45]{2,2}/.test(dname))){
 						if ((txt.indexOf("=Ä") >= 0)){
-								$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-								$('form#winninggame').show();
+							$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							$('form#winninggame').show();
 							}
 						else if ((txt.indexOf("=A") >= 0)||(txt.indexOf("=") >= -1)){
-								$("#Shantimove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-								document.getElementById('lblShanti').innerHTML="Shanti";
-								$('form#king_Shanti').show();
+							$("#Shantimove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							document.getElementById('lblShanti').innerHTML="Shanti";
+							$('form#king_Shanti').show();								
 							}
 						}
 					//Officers	winning the scepters
@@ -540,10 +665,10 @@ function reversegrid(){
 							$('form#winninggame').show();
 							}
 						else{
-								if ($("#move").length) {
- 									$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-								}
-							}
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							
+							}							}
 						}
 					//TRUCE to No Mans
 					else if((kingmove==true)&& ((((/[x0]{2,2}/.test(p2name))||(/[y0]{2,2}/.test(p2name)))&&(/[xy09]{2,2}/.test(dname)))|| (((/[x9]{2,2}/.test(p2name))||(/[y9]{2,2}/.test(p2name)))&&(/[xy09]{2,2}/.test(dname))))){
@@ -553,7 +678,7 @@ function reversegrid(){
 							$('form#king_surrender').show();
 							}
 						else if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=I") >= 0)||(txt.indexOf("=") >= -1)){
-							$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							}
 						else if ((txt.indexOf("=V") >= 0)||(txt.indexOf("#") >= 0)){
 							$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
@@ -567,9 +692,10 @@ function reversegrid(){
 							$('form#king_surrender').show();
 							}
 						else if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=") >= -1)){
-							if ($("#move").length) {
- 								$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-								}
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							
+							}
 							}
 						}
 					//TRUCE to WAR
@@ -580,13 +706,13 @@ function reversegrid(){
 							}
 						else if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=") >= -1)){
 							
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							
 							}
 							}
 						}
-					//TRUCE to CASTLE
+					//TRUCE to CASTLE	
 					else if((kingmove==true)&& ((((/[x0]{2,2}/.test(p2name))||(/[y0]{2,2}/.test(p2name)))&&(/[ah0]{2,2}/.test(dname)))|| (((/[x9]{2,2}/.test(p2name))||(/[y9]{2,2}/.test(p2name)))&&(/[ah0]{2,2}/.test(dname))))){
 						//No Inversion in TRUCE
 						if ((txt.indexOf("=Y") >= 0)){
@@ -594,8 +720,8 @@ function reversegrid(){
 							$('form#king_surrender').show();
 							}
 						else if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=") >= -1)){
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							
 							}
 							}
@@ -620,7 +746,7 @@ function reversegrid(){
 							//debugger;
 							$('form#king_Shanti').show();
 							}
-						}
+						}						
 					//kingmove War to Non-Border Truce	
 					else if((kingmove==true)&& ((/[xy1-8]{2,2}/.test(dname)) &&(/[a-h1-8]{2,2}/.test(p2name)))){
 						if ((txt.indexOf("=Y") >= 0)){
@@ -641,10 +767,10 @@ function reversegrid(){
 							}
 						else if ((txt.indexOf("=I") >= 0)){
 							$("#Shantimove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-							$('form#king_Shanti').show();
+							$('form#king_Shanti').show();							
 							}
 						else if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=") >= -1)){
-							$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							}
 						else if ((txt.indexOf("=V") >= 0)||(txt.indexOf("#")>=0)){
 							$("#winninggamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
@@ -658,7 +784,7 @@ function reversegrid(){
 							$('form#king_surrender').show();
 							}
 						else if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=I") >= 0)||(txt.indexOf("=V")>=0)||(txt.indexOf("#")>=0)||(txt.indexOf("=") >= -1)){
-							$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							}
 						}
 					//CASTLE to WAR
@@ -668,8 +794,8 @@ function reversegrid(){
 							$('form#king_endgame').show();
 							}
 						else if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=") >= -1)){
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							
 							}
 							}
@@ -686,14 +812,14 @@ function reversegrid(){
 							}
 						else if ((txt.indexOf("=I") >= 0)){
 							$("#Shantimove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-							$('form#king_Shanti').show();
-							}
+							$('form#king_Shanti').show();							
+							}							
 						else if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=") >= -1)){
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							
 							}
-							}
+							}							
 						}
 					//WAR to WAR
 					else if((kingmove==true)&& ((/[a-h1-8]{2,2}/.test(dname)&&(/[a-h1-8]{2,2}/.test(p2name))))){
@@ -707,26 +833,26 @@ function reversegrid(){
 							$('form#winninggame').show();
 							}							
 						else if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=") >= -1)){
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							
 							}
 							}
 						}
 					//CASTLE to No Mans
 					else if((kingmove==true)&& ((((/[x]{1}/.test(dname)))&&(((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname)))|| ((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname))))) ||(((/[y]{1}/.test(dname)))&&(((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname)))|| ((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname))))))){
-						//debugger
+						////debugger					
 						if ((txt.indexOf("=Y") >= 0)){
 							$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-							document.getElementById('lblViraam').innerHTML="Viraam";
+							document.getElementById('lblViraam').innerHTML="Viraam";							
 							$('form#king_endgame').show();
 							}
 						else if ((txt.indexOf("=U") >= 0)){
-							$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							}
 						else{
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							
 							}
 							}
@@ -743,15 +869,14 @@ function reversegrid(){
 							$('form#king_endgame').show();
 							}
 						}
-					else if((kingmove==true)&& (/[1-8]{1}/.test(p2name))){
-						//(p2name.indexOf('1')||(p2name.indexOf('2')>=0)||(p2name.indexOf('3')>=0)||(p2name.indexOf('4')>=0)||(p2name.indexOf('5')>=0)||(p2name.indexOf('6')>=0)||(p2name.indexOf('7')>=0)||(p2name.indexOf('8')>=0))){
+					else if((kingmove==true)&& (/[1-8]{1}/.test(p2name))){						//(p2name.indexOf('1')||(p2name.indexOf('2')>=0)||(p2name.indexOf('3')>=0)||(p2name.indexOf('4')>=0)||(p2name.indexOf('5')>=0)||(p2name.indexOf('6')>=0)||(p2name.indexOf('7')>=0)||(p2name.indexOf('8')>=0))){
 						if ((txt.indexOf("=Y") >= 0)){
 							$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							$('form#king_endgame').show();
 							}
 						else{
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							
 							}
 							}
@@ -762,17 +887,17 @@ function reversegrid(){
 							$('form#winninggame').show();
 							}
 						else{
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							
 							}
 							}
 						}
 					else{
-							if ($("#move").length) {
- 							   $("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+							if ($("#livemove").length) {
+ 							   $("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							
-							}
+							}		
 						tempi=tempi+1;
 						}
 				}
@@ -813,7 +938,7 @@ function reversegrid(){
 				$("div#player2 label").html("Exceptions in Rules for RaajRishi (RaajRishi Code is too complex. Will take more than month to code");	
 				//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
 				$("textarea#player2ta").val($("textarea#player2ta").val()+"* Not Coded Yet. So Rules are complex for Naarad. For now. Made this piece as immovable");
-				}
+				}				
 				
 			if(kingmove==true){
 				$("div#player1 label").html("Rules for King (#I Means Indra or King)");	
@@ -869,7 +994,8 @@ function reversegrid(){
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~'A' if is idle then make the Soldiers and Army Strikeless. *A06#");
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~'A' if dies then make the Soldiers and Army and permanently Strikeless. *A06#");
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~Army can Strike only if 'I' and 'A' both are not idle.");	
-				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~'A' can promote the neighbour Army Ranks in same zone as per parity of Ranks.");
+				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~'A' can promote the neighbour Army Ranks in same zone as per parity of Ranks.");				
+				
 				
 				$("div#player2 label").html("Exceptions in Rules for ArthShastri (ArthShashtri Code has to many bugs");	
 				//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
@@ -983,9 +1109,10 @@ function reversegrid(){
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'H' CAN only change Zones with the help of General/Royal/Semi-Royals.*H01#.");
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'H' are directly controlled by Opponent's Naarad. (Not Coded Yet)");
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'H' are indirectly controlled by 'I' and can be promoted by any Royal or Semi Royal.");
-				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'H' when are promoted becomes 'M' (Rook).");				
+				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'H' when are promoted becomes 'M' (Rook).");
 				
-				$("div#player2 label").html("Exceptions in Rules for Knight");
+				
+				$("div#player2 label").html("Exceptions in Rules for Knight");	
 				//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
 				
 				$("textarea#player2ta").val($("textarea#player2ta").val()+"* H01# When 'I'  or 'S' recalls the Army (Is in Truce&Recall Zone), 'H' cannot march forward but can march backward.");
@@ -1035,22 +1162,29 @@ function reversegrid(){
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'P' CANNOT kill opponents, if 'A' is Killed.");
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'P' CANNOT change Zones. *P02#.");
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'P' are indirectly controlled by Opponent's Naarad. (Not Coded Yet)");
+
+				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'P' can be pushed backwards by opponent Senior Officer or Royal.");
+				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'P' can only push opponent Senior Officers or Full-Royals to Backward.*P03#");
+				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'P' can Kill or push opponent opponent 'P'.");
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'P' are not controlled by King. (Not Coded Yet)");
 				
 				$("textarea#player1ta").val($("textarea#player1ta").val()+"\n~ 'P' are never promoted");
 				
 				$("div#player2 label").html("Exceptions in Rules for Pawns");	
 				//if($("input#"+color_to_move+"officerscanmovefull").val()=='0')
-				$("textarea#player2ta").val($("textarea#player2ta").val()+"*P01# When 'I' or 'S' recalls the Army (Is in Truce&Recall Zone), 'P' cannot march forward but can march backward.");
+				$("textarea#player2ta").val($("textarea#player2ta").val()+"*P01# When 'I' or 'S' recalls the Army (I is in Truce&Recall Zone), 'P' cannot march forward but can march backward.");
 				$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*P01# When 'I' signs Truce and Recall Both, then entire Army cannot Kill in any direction.");
 				$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*P02# When the CASTLEs are compromised then everyone including Pawns can enter provided 'I'/'S' have not recalled the army.");
-				$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*P02# 'P' CANNOT Enter Truce or No Mans Land. Can enter compromised CASTLE because it becomes Royal-War Zone. However, in Kautilya ShadYantra, only Senapati or General can push the Soldiers to change Zone. It is out of scope in the Classic version.");
+				$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*P02# 'P' CANNOT Enter Truce or No Mans Land with the help of normal officers or Royal/Semi-Royals. Can enter compromised CASTLE because it becomes Royal-War Zone. However, in Kautilya ShadYantra, only non-elevated General(Senapati) can also push the Soldiers to change Zone. It is out of scope in the Classic version.");
+				$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*P02# 'P' CAN Enter Truce or No Mans Land with the help of elevated General(S).");
+				$("textarea#player2ta").val($("textarea#player2ta").val()+"\n*P03# If opponent is trapped in backwards direction then opponent can be killed by P.");
+												
 				}
 			}
 		}
-		else {	$('form#winninggame').hide();$('form#King_endgame').hide();$('form#King_surrender').hide(); $('form#make_move').hide();	$('form#naarad_cmove').hide(); }
+		else {	$('form#winninggame').hide();$('form#King_endgame').hide();$('form#King_surrender').hide(); $('form#make_move').hide();}
 	 
-		//debugger
+		////debugger
 		if ($('select#winninggamemove option').length > 0) {
 			$('form#winninggame').show();
 		}
@@ -1065,14 +1199,10 @@ function reversegrid(){
 			$('form#King_surrender').show();	
 		}	else $('form#King_surrender').hide();
 		
-		if ($('select#move option').length > 0) {
+		if ($('select#livemove option').length > 0) {
 			$('form#make_move').show();	
 		}	else $('form#make_move').hide();
 		
-		if ($('select#cmove option').length > 0) {
-			$('form#naarad_cmove').show();	
-		}	else $('form#naarad_cmove').hide();
-
 		$("#move_count").html(tempi);
 	});
 	
@@ -1090,13 +1220,54 @@ function reversegrid(){
 			lastsquare=$(this).closest('td');
 		}
 
+/*
+	$("#livemove").empty();	$("#endgamemove").empty(); $("#surrendermove").empty();
+
+		$("#moves option").each(function() {
+			var piece=''; piece=$(this).html().trim();
+			if(((p1name.toLowerCase()=='i')||(p1name.toLowerCase()=='j')||(p1name.toLowerCase()=='u')||(p1name.toLowerCase()=='y')) &&((piece.substr(0,1)==p1name)) ){
+				$('form#King_endgame').show(); $('form#King_surrender').show();	kingmove=true;	}	
+				
+			if((piece.substr(0,1)==p1name)){ $("#livemove").empty(); $('form#make_move').show(); }			
+			});
+			
+		if ($('select#endgamemove option').length == 0) { $('form#King_endgame').hide();  }
+		if ($('select#surrendermove option').length == 0) { $('form#King_surrender').hide(); }	
+
+		$("#livemove").empty();
+		$("#moves option").each(function() {
+			var val = $(this).val(); var txt = $(this).html(); var dataa = $(this).data('coordinate-notation');
+			txt=txt.trim();
+			if(txt.substr(0,1)==p1name){
+				$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+				tempi=tempi+1;
+			}
+		i=i+1;
+		});
+		$("#move_count").html(tempi);		
+		var dt = event.originalEvent.dataTransfer; dt.setData('Text', $(this).closest('td').attr('id'));
+		p1name = $(this).attr('name');
+
+		$("#livemove").empty();
+		$("#moves option").each(function() {
+			var val = $(this).val(); var txt = $(this).html(); 	var dataa = $(this).data('coordinate-notation');
+			txt=txt.trim();
+			if(txt.substr(0,1)==p1name){
+				$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+				tempi=tempi+1;
+			}
+		i=i+1;
+		});
+
+		$("#move_count").html(tempi);
+	*/	
 		$('form#King_endgame').hide(); $('form#King_surrender').hide();	kingmove=false;	$('form#make_move').hide();
 		$("#moves option").each(function() {
 			var piece=''; piece=$(this).html().trim();
 			if(((p1name.toLowerCase()=='i')||(p1name.toLowerCase()=='j')||(p1name.toLowerCase()=='u')||(p1name.toLowerCase()=='y')) &&((piece.substr(0,1)==p1name)) ){
 				$('form#King_endgame').show(); $('form#King_surrender').show();	kingmove=true; }	
 				
-			if((piece.substr(0,1)==p1name)){ $("#move").empty();$('form#make_move').show();	}
+			if((piece.substr(0,1)==p1name)){ $("#livemove").empty();$('form#make_move').show();	}
 			});
 			
 		if ($('select#endgamemove option').length == 0) { $('form#King_endgame').hide(); }
@@ -1107,20 +1278,20 @@ function reversegrid(){
 		p2name=$(this).closest('td').attr('id').substr(0,2);
 		//alert (p2name);
 		
-		$("#move").empty();$("#endgamemove").empty(); $("#surrendermove").empty();
+		$("#livemove").empty();$("#endgamemove").empty(); $("#surrendermove").empty();
 
 		$("#moves option").each(function() {
 			var val = $(this).val(); var txt = $(this).html(); var dataa = $(this).data('coordinate-notation');
 			txt=txt.trim();
 			if(txt.substr(1,1)=='^') {
-				tname=txt.substr(2,2); mname=txt.substr(4,2); dname=txt.substr(6,2)}		
-			else if(txt.substr(1,1)=='*') { 
-				tname=txt.substr(2,2); dname=txt.substr(4,2)}
+				tname=txt.substr(2,2); mname=txt.substr(4,2); dname=txt.substr(6,2)}
+			else if(txt.substr(1,1)=='*') 
+				{ tname=txt.substr(2,2); dname=txt.substr(4,2)}
 			else if(txt.substr(1,1)!='*') { tname=txt.substr(1,2); dname=txt.substr(3,2)}
 			
 			//alert('txt ='+txt+' txt.substr(1,1) = '+txt.substr(1,1)+ ' txt.substr(2,2)= '+txt.substr(2,2)+ ' txt.substr(0,1)='+txt.substr(0,1)+ ' p1name= '+p1name+ ' p2name= '+ p2name+ ' tname='+tname);
 			if (kingmove==true)
-				//debugger
+				////debugger
 			if((txt.substr(0,1)==p1name)&&(p2name==tname)){
 				//Within Same CASTLE
 				if((kingmove==true)&& (((/[a-h9]{2,2}/.test(p2name))&&(/[d-e9]{2,2}/.test(dname)))|| ((/[a-h0]{2,2}/.test(p2name)&&(/[d-e0]{2,2}/.test(dname)))))){
@@ -1131,7 +1302,7 @@ function reversegrid(){
 						}
 					else
 					if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=I") >= 0)||(txt.indexOf("=") >= -1)){
-						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
 					else	
 					if ((txt.indexOf("=V") >= 0)||(txt.indexOf("#")>=0)){
@@ -1148,8 +1319,8 @@ function reversegrid(){
 						}
 					else
 					if ((txt.indexOf("=U") >= 0)||(txt.indexOf("=I") >= 0)||(txt.indexOf("=") >= -1)){
-						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-						}
+						$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						}							
 					}
 				else	
 				if((kingmove==true)&& ((/[a-h]{2,2}/.test(dname)))&&(((/[9]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))|| ((/[0]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname))))){
@@ -1160,27 +1331,27 @@ function reversegrid(){
 						}
 					else
 					if ((txt.indexOf("=U") >= 0)){
-						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
 					else{
-						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
 					}
 				else				
 				if((kingmove==true)&& ((((/[x]{2,2}/.test(dname)))&&(((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname)))|| ((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname))))) ||(((/[y]{2,2}/.test(dname)))&&(((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname)))|| ((/[09]{2,2}/.test(p2name))&&(/[089]{2,2}/.test(dname))))))){
 					//CASTLE to No Mans				
-					//debugger					
+					////debugger					
 					if ((txt.indexOf("=Y") >= 0)){
 						$("#endgamemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 							$('form#King_endgame').show();
 						}
 					else
 					if ((txt.indexOf("=U") >= 0)){
-						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
 					else{
-						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
-						}
+						$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						}						
 					}
 				else
 				if((kingmove==true)&& ((((/[x]{2,2}/.test(dname)))&&(((/[9]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))|| ((/[0]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))))||(((/[y]{2,2}/.test(dname)))&&(((/[9]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname)))|| ((/[0]{2,2}/.test(p2name))&&(/[1-8]{2,2}/.test(dname))))))){
@@ -1195,7 +1366,7 @@ function reversegrid(){
 							$('form#King_endgame').show();
 						}
 					}
-				else
+				else				
 				if((kingmove==true)&& (/[1-8]{2,2}/.test(p2name))){
 				//(p2name.indexOf('1')||(p2name.indexOf('2')>=0)||(p2name.indexOf('3')>=0)||(p2name.indexOf('4')>=0)||(p2name.indexOf('5')>=0)||(p2name.indexOf('6')>=0)||(p2name.indexOf('7')>=0)||(p2name.indexOf('8')>=0))){
 					if ((txt.indexOf("=Y") >= 0)){
@@ -1203,13 +1374,13 @@ function reversegrid(){
 							$('form#King_endgame').show();
 						}
 					else{
-						$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+						$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 						}
-					}
+					}					
 				else{
-					$("#move").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
+					$("#livemove").append($('<option></option>').val(val).html(txt).attr('data-coordinate-notation',dataa));
 					tempi=tempi+1;
-					}
+					}					
 				}
 			i=i+1;
 		
@@ -1224,18 +1395,18 @@ function reversegrid(){
 		if (event.type === 'drop') {
 			
 			oldsquare = event.originalEvent.dataTransfer.getData('Text', $(this).attr('id'));
-			newsquare = $(this).attr('id');
+		    newsquare = $(this).attr('id');
 			optioncount=0;
 			coordinate_notation = p1name+oldsquare + newsquare;
 			console.log(coordinate_notation);			
-			tempvalue=$("form[name='all_moves'] select[name='move'] option[data-coordinate-notation^='" + coordinate_notation + "']");
+			tempvalue=$("form[name='all_moves'] select[name='livemove'] option[data-coordinate-notation^='" + coordinate_notation + "']");
 			
 			//optioncount=optioncount+tempvalue.length;
 			option_tag_in_select_tag = tempvalue;
 			optioncount=optioncount+tempvalue.length;		
 			coordinate_notation = p1name+'*'+oldsquare + newsquare;
 			console.log(coordinate_notation);
-			tempvalue=$("form[name='all_moves'] select[name='move'] option[data-coordinate-notation^='" + coordinate_notation + "']");
+			tempvalue=$("form[name='all_moves'] select[name='livemove'] option[data-coordinate-notation^='" + coordinate_notation + "']");
 			
 			if(option_tag_in_select_tag.length == 0){
 				option_tag_in_select_tag = tempvalue;
@@ -1245,7 +1416,7 @@ function reversegrid(){
 			optioncount=optioncount+tempvalue.length;
 			coordinate_notation = p1name+oldsquare + newsquare+'=';
 			console.log(coordinate_notation);
-			tempvalue=$("form[name='all_moves'] select[name='move'] option[data-coordinate-notation^='" + coordinate_notation + "']");
+			tempvalue=$("form[name='all_moves'] select[name='livemove'] option[data-coordinate-notation^='" + coordinate_notation + "']");
 
 			if(option_tag_in_select_tag.length == 0){ //check the demotion piece
 				option_tag_in_select_tag = tempvalue;
@@ -1255,7 +1426,7 @@ function reversegrid(){
 			optioncount=optioncount+tempvalue.length;
 			coordinate_notation = p1name+oldsquare + newsquare+'+';
 			console.log(coordinate_notation);
-			tempvalue=$("form[name='all_moves'] select[name='move'] option[data-coordinate-notation^='" + coordinate_notation + "']");
+			tempvalue=$("form[name='all_moves'] select[name='livemove'] option[data-coordinate-notation^='" + coordinate_notation + "']");
 			
 			if(option_tag_in_select_tag.length == 0){
 				option_tag_in_select_tag = tempvalue;
@@ -1265,7 +1436,7 @@ function reversegrid(){
 			optioncount=optioncount+tempvalue.length;
 			coordinate_notation = p1name+'*'+oldsquare + newsquare+'+';
 			console.log(coordinate_notation);
-			tempvalue=$("form[name='all_moves'] select[name='move'] option[data-coordinate-notation^='" + coordinate_notation + "']");
+			tempvalue=$("form[name='all_moves'] select[name='livemove'] option[data-coordinate-notation^='" + coordinate_notation + "']");
 
 			if(option_tag_in_select_tag.length == 0){
 				option_tag_in_select_tag = tempvalue;
@@ -1275,12 +1446,13 @@ function reversegrid(){
 			optioncount=optioncount+tempvalue.length;
 			//coordinate_notation = p1name+'*'+oldsquare + newsquare+'+';
 			//console.log(coordinate_notation);
-			//tempvalue=$("form[name='all_moves'] select[name='move'] option[data-coordinate-notation='" + coordinate_notation + "']");
-			//debugger			
+			//tempvalue=$("form[name='all_moves'] select[name='livemove'] option[data-coordinate-notation='" + coordinate_notation + "']");
+			////debugger			
 			if ( option_tag_in_select_tag.length != 0 ) {				
 
 				option_tag_in_select_tag.attr('selected','selected');
 				$(this).find('span').attr('name',p1name);
+
 								
 				if (typeof (Storage) != "undefined"){
 					if (!localStorage.getItem("serverData")){
@@ -1298,158 +1470,151 @@ function reversegrid(){
 					}
 				//$('#make_move').submit();
 				if(optioncount==1){
-					//debugger
+					////debugger
 					$('#all_moves').submit();
 					myAudio.play();
 					}
 				};
 		}	
-	});
+    });
 	
-$('#submitmove').attr('disabled','disabled'); 
+        $('#submitmove').attr('disabled','disabled'); 
 		$('#submitmove').attr('hidden','hidden');
-		$('#submitendgamemove').attr('disabled','disabled');
-		$('#submitendgamemove').attr('hidden','hidden'); 
-		$('#submitwinninggamemove').attr('disabled','disabled');
-		$('#submitwinninggamemove').attr('hidden','hidden');
-		$('#submitsurrendermove').attr('disabled','disabled');
-		$('#submitsurrendermove').attr('hidden','hidden');
-		$('#submitcmove').attr('disabled','disabled');
-		$('#submitcmove').attr('hidden','hidden');
+        $('#submitendgamemove').attr('disabled','disabled');        
+        $('#submitendgamemove').attr('hidden','hidden'); 
+        $('#submitwinninggamemove').attr('disabled','disabled');        
+        $('#submitwinninggamemove').attr('hidden','hidden'); 	
+        $('#submitsurrendermove').attr('disabled','disabled');        
+        $('#submitsurrendermove').attr('hidden','hidden'); 
+		
 
-		$('select#move').css("background-color", "");
+		$('select#livemove').css("background-color", "");
 		$('select#endgamemove').css("background-color", "");
 		$('select#surrendermove').css("background-color", "");
-		$('select#winninggamemove').css("background-color", "");
-		$('select#cmove').css("background-color", "");
+		$('select#winninggamemove').css("background-color", "");		
 		
-$('select#move').change(function(){
-	//debugger
-	var $empty=$('select#move').filter(function() { return this.value == ""; });
-	if ( $('select#move').filter(function() { return this.value == ""; }).length == $('select#move').length ){
-			$('#make_move #submitmove').attr('disabled','disabled');
-			$('select#move').css("background-color", "");
+$('select#livemove').change(function(){
+  //debugger
+  var $empty=$('select#livemove').filter(function() { return this.value == ""; });
+    if ( $('select#livemove').filter(function() { return this.value == ""; }).length == $('select#livemove').length ){
+             $('#make_move #submitmove').attr('disabled','disabled');     
+			$('select#livemove').css("background-color", "");
 			 
-	} else {
-		$('#submitmove').removeAttr('disabled');
+    } else
+    {
+        $('#submitmove').removeAttr('disabled');
 		$('#submitmove').removeAttr('hidden');
 		
-		$('select#move').css("background-color", "yellow");
+		$('select#livemove').css("background-color", "yellow");
 		$('select#endgamemove').css("background-color", "");
 		$('select#surrendermove').css("background-color", "");
 		$('select#winninggamemove').css("background-color", "");
-		$('select#cmove').css("background-color", "");
 
-		$('#submitendgamemove').attr('disabled','disabled');
-		$('#submitendgamemove').attr('hidden','hidden');
-		$('#submitsurrendermove').attr('disabled','disabled');
-		$('#submitsurrendermove').attr('hidden','hidden'); 
-		$('#submitwinninggamemove').attr('disabled','disabled');
-		$('#submitwinninggamemove').attr('hidden','hidden'); 
-		$('#submitcmove').attr('disabled','disabled');
-		$('#submitcmove').attr('hidden','hidden');			
-	}
+
+        $('#submitendgamemove').attr('disabled','disabled');        
+        $('#submitendgamemove').attr('hidden','hidden');
+        $('#submitsurrendermove').attr('disabled','disabled');        
+        $('#submitsurrendermove').attr('hidden','hidden'); 
+        $('#submitwinninggamemove').attr('disabled','disabled');        
+        $('#submitwinninggamemove').attr('hidden','hidden'); 		
+    }
 });
 
 $('select#winninggamemove').change(function(){
-	var $empty=$('select#winninggamemove').filter(function() { return this.value == ""; });
-	if ( $('select#winninggamemove').filter(function() { return this.value == ""; }).length == $('select#winninggamemove').length ){
-			$('#submitendgamemove').attr('disabled','disabled');
-		} else
-		{
-		$('#submitwinninggamemove').removeAttr('disabled');
-		$('#submitwinninggamemove').removeAttr('hidden');
+  var $empty=$('select#winninggamemove').filter(function() { return this.value == ""; });
+    if ( $('select#winninggamemove').filter(function() { return this.value == ""; }).length == $('select#winninggamemove').length ){
+             $('#submitendgamemove').attr('disabled','disabled');        
+    } else
+    {
+             $('#submitwinninggamemove').removeAttr('disabled');        
+             $('#submitwinninggamemove').removeAttr('hidden');
 			 
-		$('#submitmove').attr('disabled','disabled'); 
+        $('#submitmove').attr('disabled','disabled'); 
 		$('#submitmove').attr('hidden','hidden');
-		$('#submitsurrendermove').attr('disabled','disabled');
-		$('#submitsurrendermove').attr('hidden','hidden'); 
-		$('#submitendgamemove').attr('disabled','disabled');
-		$('#submitendgamemove').attr('hidden','hidden');
-		$('#submitcmove').attr('disabled','disabled');
-		$('#submitcmove').attr('hidden','hidden');
-
-		$('select#move').css("background-color", "");
+        $('#submitsurrendermove').attr('disabled','disabled');        
+        $('#submitsurrendermove').attr('hidden','hidden'); 
+        $('#submitendgamemove').attr('disabled','disabled');        
+        $('#submitendgamemove').attr('hidden','hidden'); 				 
+		
+		$('select#livemove').css("background-color", "");
 		$('select#endgamemove').css("background-color", "");
 		$('select#surrendermove').css("background-color", "");
 		$('select#winninggamemove').css("background-color", "yellow");
-		$('select#cmove').css("background-color", "");
-	}
+
+		
+    }
 });
 
 $('select#endgamemove').change(function(){
-  	var $empty=$('select#endgamemove').filter(function() { return this.value == ""; });
-	if ( $('select#endgamemove').filter(function() { return this.value == ""; }).length == $('select#endgamemove').length ){
-			$('#submitendgamemove').attr('disabled','disabled');
+  var $empty=$('select#endgamemove').filter(function() { return this.value == ""; });
+    if ( $('select#endgamemove').filter(function() { return this.value == ""; }).length == $('select#endgamemove').length ){
+             $('#submitendgamemove').attr('disabled','disabled');        
 			$('select#endgamemove').css("background-color", "");
 
     } else
     {
-		$('#submitendgamemove').removeAttr('disabled');
-		$('#submitendgamemove').removeAttr('hidden');
-		$('#submitmove').attr('disabled','disabled'); 
+             $('#submitendgamemove').removeAttr('disabled');        
+             $('#submitendgamemove').removeAttr('hidden');
+			 
+        $('#submitmove').attr('disabled','disabled'); 
 		$('#submitmove').attr('hidden','hidden');
-		$('#submitsurrendermove').attr('disabled','disabled');
-		$('#submitsurrendermove').attr('hidden','hidden'); 
-		$('#submitwinninggamemove').attr('disabled','disabled');
-		$('#submitwinninggamemove').attr('hidden','hidden'); 
-		$('#submitcmove').attr('disabled','disabled');
-		$('#submitcmove').attr('hidden','hidden');
+        $('#submitsurrendermove').attr('disabled','disabled');        
+        $('#submitsurrendermove').attr('hidden','hidden'); 
+        $('#submitwinninggamemove').attr('disabled','disabled');        
+        $('#submitwinninggamemove').attr('hidden','hidden'); 
 
-		$('select#move').css("background-color", "");
+		$('select#livemove').css("background-color", "");
 		$('select#endgamemove').css("background-color", "yellow");
 		$('select#surrendermove').css("background-color", "");
 		$('select#winninggamemove').css("background-color", "");
-		$('select#cmove').css("background-color", "");
-	}
+
+		
+    }
 });
 
 $('select#surrendermove').change(function(){
-	var $empty=$('select#surrendermove').filter(function() { return this.value == ""; });
-	if ( $('select#surrendermove').filter(function() { return this.value == ""; }).length == $('select#surrendermove').length ){
-			$('#submitsurrendermove').attr('disabled','disabled');
+  var $empty=$('select#surrendermove').filter(function() { return this.value == ""; });
+    if ( $('select#surrendermove').filter(function() { return this.value == ""; }).length == $('select#surrendermove').length ){
+             $('#submitsurrendermove').attr('disabled','disabled');        
 	 		$('select#surrendermove').css("background-color", "");
 
-	} else
-	{
-		$('#submitsurrendermove').removeAttr('disabled');
-		$('#submitsurrendermove').removeAttr('hidden');
+    } else
+    {
+             $('#submitsurrendermove').removeAttr('disabled');        
+             $('#submitsurrendermove').removeAttr('hidden');
 			 
-		$('#submitmove').attr('disabled','disabled'); 
+        $('#submitmove').attr('disabled','disabled'); 
 		$('#submitmove').attr('hidden','hidden');
-		$('#submitendgamemove').attr('disabled','disabled');
-		$('#submitendgamemove').attr('hidden','hidden'); 
-		$('#submitwinninggamemove').attr('disabled','disabled');
-		$('#submitwinninggamemove').attr('hidden','hidden');
-		$('#submitcmove').attr('disabled','disabled');
-		$('#submitcmove').attr('hidden','hidden');		
+        $('#submitendgamemove').attr('disabled','disabled');        
+        $('#submitendgamemove').attr('hidden','hidden'); 
+        $('#submitwinninggamemove').attr('disabled','disabled');        
+        $('#submitwinninggamemove').attr('hidden','hidden'); 		
 
-		$('select#move').css("background-color", "");
+		$('select#livemove').css("background-color", "");
 		$('select#endgamemove').css("background-color", "");
 		$('select#surrendermove').css("background-color", "yellow");
 		$('select#winninggamemove').css("background-color", "");
-		$('select#cmove').css("background-color", "");
-	}
+		
+    }
 });
 
+
 $('select#winninggamemove').change(function(){
-	var $empty=$('select#winninggamemove').filter(function() { return this.value == ""; });
-	if ( $('select#winninggamemove').filter(function() { return this.value == ""; }).length == $('select#winninggamemove').length ){
-		$('#submitwinninggamemove').attr('disabled','disabled');
-	} else
-	{
-		$('#submitwinninggamemove').removeAttr('disabled');
-		$('#submitwinninggamemove').removeAttr('hidden');
+  var $empty=$('select#winninggamemove').filter(function() { return this.value == ""; });
+    if ( $('select#winninggamemove').filter(function() { return this.value == ""; }).length == $('select#winninggamemove').length ){
+             $('#submitwinninggamemove').attr('disabled','disabled');        
+    } else
+    {
+             $('#submitwinninggamemove').removeAttr('disabled');        
+             $('#submitwinninggamemove').removeAttr('hidden');
 			 
-		$('#submitmove').attr('disabled','disabled');
+        $('#submitmove').attr('disabled','disabled'); 
 		$('#submitmove').attr('hidden','hidden');
-		$('#submitendgamemove').attr('disabled','disabled');
-		$('#submitendgamemove').attr('hidden','hidden');
-		$('#submitwinninggamemove').attr('disabled','disabled');
-		$('#submitwinninggamemove').attr('hidden','hidden');
-		$('#submitcmove').attr('disabled','disabled');
-		$('#submitcmove').attr('hidden','hidden');
-	}
+        $('#submitendgamemove').attr('disabled','disabled');        
+        $('#submitendgamemove').attr('hidden','hidden'); 
+        $('#submitwinninggamemove').attr('disabled','disabled');        
+        $('#submitwinninggamemove').attr('hidden','hidden'); 				 
+    }
 });
 		
 	$('#perft').click(function(){
@@ -1459,10 +1624,9 @@ $('select#winninggamemove').change(function(){
 
 $('#submitmove').attr('disabled','disabled'); 
 $('#submitmove').attr('hidden','hidden');
-$('#submitendgamemove').attr('disabled','disabled');
+$('#submitendgamemove').attr('disabled','disabled');        
 $('#submitendgamemove').attr('hidden','hidden'); 
-$('#submitwinninggamemove').attr('disabled','disabled');
+$('#submitwinninggamemove').attr('disabled','disabled');        
 $('#submitwinninggamemove').attr('hidden','hidden');
-$('#submitcmove').attr('disabled','disabled');
-$('#submitcmove').attr('hidden','hidden');
 });
+

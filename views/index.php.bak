@@ -39,7 +39,7 @@ $gamemode="move";
 				</div>
 				
 				<div class="status_box"> <?php echo $who_is_winning; $boardtypeflag=$board->boardtype;echo "</div>";if ($boardtypeflag==1) {
-				define('whiteboard', true);	$boardtypeflag="white";
+				define('whiteboard', true);	$boardtypeflag="white";	
 				require_once('views/whiteboard.php');
 				} 
 				if ($boardtypeflag==2) { define('blackboard', true);
@@ -89,15 +89,6 @@ $gamemode="move";
 				</form>
 			</div>
 
-			<div style="float:left;width:18%;">
-				<form id="naarad_cmove" name="naarad_cmove" hidden disabled readonly style="display:none;"  method="POST">
-				<label >Controlled:<br/></label>
-					<select id="cmove" name="<?php echo $gamemode; ?>" size="10"></select>	
-					<!--br><span id="move_count"></span> 	Moves : <br-->
-					<input id="submitcmove" type="submit" value="Make Move">
-				</form>
-			</div>
-
 				<div style="float:left;width:19%;">
 					<form id="king_endgame" name="king_endgame" hidden disabled readonly style="display:none;">
 					<label id="lblViraam">Viraam: <br/></label>
@@ -125,7 +116,7 @@ $gamemode="move";
 						<input id="submitShantimove" type="submit" value="Make Move">
 
 					</form>
-				</div>
+				</div>				
 				<div style="float:left;width:16%;">
 					<form id="winninggame" name="winninggame" hidden disabled readonly>
 					<label >Winning: <br/></label>
@@ -147,7 +138,7 @@ $gamemode="move";
 				</div>
 			</div>
 			</div>
-			</div>
+			</div>	
 			</div>
 			<div >
 			<div>
@@ -157,7 +148,7 @@ $gamemode="move";
 					<label> Self Rule </label>
 						<div>
 							<textarea style="top:0; left:0; z-index: 2;" disabled readonly id="player1ta" rows = "12" cols="50	"> </textarea> 
-						</div>
+						</div>	
 					</div>
 					<div id="player2" class="layer2" style="position: relative;top:30px;padding:10px;">
 					<label> Common Rule </label>
@@ -178,56 +169,25 @@ $gamemode="move";
 				</div>
 				<form id="all_moves" name="all_moves" hidden disabled readonly style="display:none;" method="post" > 	All Legal Moves:<br>
 					<select id="moves" name="move" size="19">
-					<?php $Naraad_Mcount=0;foreach ( $legal_moves as $key => $move ): 
-						if (($move->controlled_moves!=null)&&(( $move->starting_square->rank ) &&  ( $move->ending_square->rank )
-						&& ( $move->starting_square->file) &&  ( $move->ending_square->file) &&
-						( count($move->controlled_moves)>0)))
-							{ 
-								$Naraad_Mcount=count($move->controlled_moves);
-							foreach ( $move->controlled_moves as $key1 => $nmove ):
-							?>
-							<option
-								value="<?php $notationvalue=""; $ending_square=$nmove->ending_square;
-									$Ntype="";
-								echo $move->board->export_fen_moves($nmove->starting_square,$nmove->ending_square); 
-								$nmove->ending_square=$ending_square;
-								if(3-$nmove->color==$board->color_to_move)
-									{ $Ntype=">";}
-								$notationvalue=$Ntype.$nmove->get_notation();?>"
-								data-coordinate-notation="<?php echo $notationvalue.'"';
-								if($Ntype==">")
-									{ echo  "CMove='Yes'";}
-								else { echo  "CMove='No'";}
-								echo  " pushed-value='".$notationvalue."'>";
-								echo $notationvalue; ?>
-							</option>
-							<?php endforeach;
-							} else { ?>
+					<?php foreach ( $legal_moves as $key => $move ): ?>							
 							<option
 								value="<?php $notationvalue=""; $ending_square=$move->ending_square;
 								if(($move->starting_square->rank==5)&&($move->starting_square->file==4))
 									$ttt=1;
-									$Ntype="";
 								if($move->pushedending_square!=null)
 									$ending_square=$move->pushedending_square;
-								echo $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
-								$move->ending_square=$ending_square;
-								//if($move->board->color_to_move==$board->color_to_move)
-									//{ $Ntype=">";}
-								$notationvalue=$Ntype.$move->get_notation();?>"
-								data-coordinate-notation="<?php echo $notationvalue.'"';
-								//if($Ntype==">")
-									//{ echo  "CMove='Yes'";}
-								//else 
-								{ echo  "CMove='No'";}
-								echo  " pushed-value='".$notationvalue."'>";
-								echo $notationvalue; ?>
+									echo $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
+									$move->ending_square=$ending_square;
+									$notationvalue=$move->get_notation();?>"
+								data-coordinate-notation="<?php echo  $notationvalue;?>" pushed-value="<?php echo  $notationvalue;?>"
+							>
+								<?php echo $notationvalue; ?>
 							</option>
-						<?php } endforeach; ?>
+						<?php endforeach; ?>
 
 					</select><br>
 
-					Move Count: <?php echo count($legal_moves)+$Naraad_Mcount; ?><br>
+					Move Count: <?php echo count($legal_moves); ?><br>
 					<!--input type="submit" display='none' hidden value="Make Move"-->
 					<input id="boardtype" name="boardtype" hidden value="">
 					<?php
@@ -242,10 +202,11 @@ $gamemode="move";
 					?>
 					
 					Load Time: <?php echo $total_time; ?> ms<br>
-				</form>
+				</form>				
 			</div>
 		</div>
 		<div><br/><p> FEN:
+
 		<form id="import_fen" method="post">
 				<input id="fen" type="text" name="fen" value="<?php echo $fen; ?>"></br>
 				<input type="submit" value="Import FEN"></br>

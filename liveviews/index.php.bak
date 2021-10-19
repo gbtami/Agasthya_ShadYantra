@@ -3,7 +3,7 @@
 if (! defined('VIEWER')) {
     die("This file needs to be included into a viewer.");
 }
-$gamemode="move";
+$gamemode="livemove";
 
 ?>
 
@@ -12,9 +12,9 @@ $gamemode="move";
 	<head>
 		<meta charset="utf-8">
 		<title>	ShadYantra </title>
-		<link rel="stylesheet" href="assets/style.css">
+		<link rel="stylesheet" href="../assets/style.css">
 		<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script-->
-		<script src="assets/jquery-3.3.1.min.js"></script>
+		<script src="../assets/jquery-3.3.1.min.js"></script>
 		<style> 
 			span[name="J"]{ -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
@@ -39,17 +39,16 @@ $gamemode="move";
 				</div>
 				
 				<div class="status_box"> <?php echo $who_is_winning; $boardtypeflag=$board->boardtype;echo "</div>";if ($boardtypeflag==1) {
-				define('whiteboard', true);	$boardtypeflag="white";
-				require_once('views/whiteboard.php');
+				define('livewhiteboard', true);	$boardtypeflag="white";	
+				require_once('../liveviews/livewhiteboard.php');
 				} 
-				if ($boardtypeflag==2) { define('blackboard', true);
+				if ($boardtypeflag==2) { define('liveblackboard', true);
 					$boardtypeflag="black"; 
-					require_once('views/blackboard.php');
-					}?>
+					require_once('../liveviews/liveblackboard.php');
+					}?>				
 				
 				<!-- <input type="submit" name="flip" value="Flip The Board"> -->
-				<input type="button" onclick="window.location='.'" value="Reset The Board">
-				<input type="button" onclick="window.location='livemove\\'" value="Live Game">
+				<input type="button" onclick="window.location='../.'" value="Local Game">
 				
 			</div>
 
@@ -89,22 +88,12 @@ $gamemode="move";
 				</form>
 			</div>
 
-			<div style="float:left;width:18%;">
-				<form id="naarad_cmove" name="naarad_cmove" hidden disabled readonly style="display:none;"  method="POST">
-				<label >Controlled:<br/></label>
-					<select id="cmove" name="<?php echo $gamemode; ?>" size="10"></select>	
-					<!--br><span id="move_count"></span> 	Moves : <br-->
-					<input id="submitcmove" type="submit" value="Make Move">
-				</form>
-			</div>
-
 				<div style="float:left;width:19%;">
 					<form id="king_endgame" name="king_endgame" hidden disabled readonly style="display:none;">
 					<label id="lblViraam">Viraam: <br/></label>
 						<select id="endgamemove" name="<?php echo $gamemode; ?>" size="10"></select>
 							<!--br><span id="endgamemove_count"></span>Moves : <br-->
 						<input id="submitendgamemove" type="submit" value="Make Move">
-
 					</form>
 				</div>
 
@@ -114,40 +103,36 @@ $gamemode="move";
 						<select id="recallmove" name="<?php echo $gamemode; ?>" size="5"></select>
 							<!--br><span id="ReCallmove_count"></span>Moves Count: <br-->
 						<input id="submitrecallmove" type="submit" value="Make Move">
-
 					</form>
 				</div>
 				<div style="float:left;width:17%;">
 					<form id="king_Shanti" name="king_Shanti" hidden disabled readonly style="display:none;">
 					<label id="lblShanti">	</label>
-						<select id="Shantimove" name="move" size="5"></select>
+						<select id="Shantimove" name="livemove" size="5"></select>
 							<!--br><span id="ReCallmove_count"></span>Moves Count: <br-->
 						<input id="submitShantimove" type="submit" value="Make Move">
-
 					</form>
-				</div>
+				</div>				
 				<div style="float:left;width:16%;">
 					<form id="winninggame" name="winninggame" hidden disabled readonly>
 					<label >Winning: <br/></label>
-						<select id="winninggamemove" name="move" size="8"></select>
+						<select id="winninggamemove" name="livemove" size="8"></select>
 							<!--br><span id="winninggamemove_count"></span>Moves : <br-->
 						<input type="submit" id="	" value="Make Move">
-
 					</form>
 				</div>
 				
 				<div style="float:right;width:18%;;padding-right:10px;">
 					<form id="king_surrender" name="king_surrender" hidden disabled readonly style="display:none;">
 					<label >Surrender: <br/></label>
-						<select id="surrendermove" name="move" size="10"></select>
+						<select id="surrendermove" name="livemove" size="10"></select>
 							<!--br><span id="surrendermove_count"></span>Moves : <br-->	
 						<input type="submit" id="submitsurrendermove" value="Make Move">
-
 					</form>
 				</div>
 			</div>
 			</div>
-			</div>
+			</div>	
 			</div>
 			<div >
 			<div>
@@ -157,7 +142,7 @@ $gamemode="move";
 					<label> Self Rule </label>
 						<div>
 							<textarea style="top:0; left:0; z-index: 2;" disabled readonly id="player1ta" rows = "12" cols="50	"> </textarea> 
-						</div>
+						</div>	
 					</div>
 					<div id="player2" class="layer2" style="position: relative;top:30px;padding:10px;">
 					<label> Common Rule </label>
@@ -173,63 +158,129 @@ $gamemode="move";
 			</div>
 			<div style="display:none;">
 				<div id="history_move" name="history_move" style="display:none;"> 	Historical Moves:<br>
-					<input id="history" name="history" size="19">
+					<input id="history" name="history" size="19"></input>
 					<br><span id="steps_count"></span> Moves Count: <br>
 				</div>
+				<?php $matched=0; $exportedfen= $fen; $gametype="old";
+				?>
 				<form id="all_moves" name="all_moves" hidden disabled readonly style="display:none;" method="post" > 	All Legal Moves:<br>
-					<select id="moves" name="move" size="19">
-					<?php $Naraad_Mcount=0;foreach ( $legal_moves as $key => $move ): 
-						if (($move->controlled_moves!=null)&&(( $move->starting_square->rank ) &&  ( $move->ending_square->rank )
-						&& ( $move->starting_square->file) &&  ( $move->ending_square->file) &&
-						( count($move->controlled_moves)>0)))
-							{ 
-								$Naraad_Mcount=count($move->controlled_moves);
-							foreach ( $move->controlled_moves as $key1 => $nmove ):
-							?>
-							<option
-								value="<?php $notationvalue=""; $ending_square=$nmove->ending_square;
-									$Ntype="";
-								echo $move->board->export_fen_moves($nmove->starting_square,$nmove->ending_square); 
-								$nmove->ending_square=$ending_square;
-								if(3-$nmove->color==$board->color_to_move)
-									{ $Ntype=">";}
-								$notationvalue=$Ntype.$nmove->get_notation();?>"
-								data-coordinate-notation="<?php echo $notationvalue.'"';
-								if($Ntype==">")
-									{ echo  "CMove='Yes'";}
-								else { echo  "CMove='No'";}
-								echo  " pushed-value='".$notationvalue."'>";
-								echo $notationvalue; ?>
-							</option>
-							<?php endforeach;
-							} else { ?>
-							<option
-								value="<?php $notationvalue=""; $ending_square=$move->ending_square;
-								if(($move->starting_square->rank==5)&&($move->starting_square->file==4))
-									$ttt=1;
-									$Ntype="";
+					<select id="moves" name="livemove" size="19">
+
+				<?php if((file_exists("livegame.txt"))){
+							$file = fopen("livegame.txt","r");
+
+							while(!feof($file) && $matched<2) {
+								$line = fgets($file);
+			
+								if (strpos($line, '$newfen=') !== false) {
+									$gametype="new";
+									}					
+							   	else if (strpos($line, '$currentfen=') !== false) {
+									$splitted = explode( '$currentfen=',$line);
+									$fen = $splitted[1];
+									$stringposition=strpos($fen,$exportedfen);
+									if (strpos($exportedfen.PHP_EOL, $fen) !== false) {
+										$matched=$matched+1; //New request
+										$gametype="old";
+									}
+									else if ((strpos($line, 'Moved_FEN=Good')!==false)) {
+										$matched=$matched+1; //New request
+										$gametype="old";
+									}									
+								}
+							   	else if (strpos($line, '$gameid=') !== false) {
+									$splitted = explode( '$gameid=',$line);
+									$gameid = $splitted[1];
+								}
+			
+								if (strpos($line, '_Move=') !== false) {
+									$splittedfen_notation = explode( '=',$line);
+									$oldfennotation = $splittedfen_notation[1]; 
+									$matchedfen =  explode( ';',$oldfennotation)[0];
+									//if (strpos($matchedfen.PHP_EOL, $fen) !== false){
+										//$fen=$matchedfen;
+										$matched=$matched+1;
+									//}
+								}
+							}
+							fclose($file);
+
+							if(($gametype=="old"))  {
+								$data = file('livegame.txt'); // reads an array of lines
+			
+								$reading = fopen('livegame.txt', 'r');
+								$writing = fopen('livegame.tmp.txt', 'w');
+			
+								$replaced = false;
+								$importedmatched=false;
+								while (!feof($reading)&&($importedmatched==false)) {
+									$line = fgets($reading);
+								if(($matched==1)	&&(stristr($line,'$currentfen='))){
+									$line = '$currentfen='.explode(';', explode( '$currentfen=',$line)[1])[0].PHP_EOL;
+									$replaced=true;$importedmatched=true;}
+								else if ((stristr($line,'$currentfen='))) {
+									$replaced = true;
+									$importedmatched=true;
+						 	 	}
+						  		fputs($writing, $line);
+							}
+
+							$movecount=0;
+							foreach ( $legal_moves as $key => $move ): 	?>
+								<option value="<?php $notationvalue=""; $ending_square=$move->ending_square; $movecount=$movecount+1;
+
 								if($move->pushedending_square!=null)
 									$ending_square=$move->pushedending_square;
-								echo $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
+								$move_FEN= $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
+								echo $move_FEN;
 								$move->ending_square=$ending_square;
-								//if($move->board->color_to_move==$board->color_to_move)
-									//{ $Ntype=">";}
-								$notationvalue=$Ntype.$move->get_notation();?>"
-								data-coordinate-notation="<?php echo $notationvalue.'"';
-								//if($Ntype==">")
-									//{ echo  "CMove='Yes'";}
-								//else 
-								{ echo  "CMove='No'";}
-								echo  " pushed-value='".$notationvalue."'>";
-								echo $notationvalue; ?>
-							</option>
-						<?php } endforeach; ?>
+								$notationvalue=$move->get_notation();							
+								fputs($writing, $movecount.'_Move='.$move_FEN.';'.$movecount.'_Notation='.$notationvalue.PHP_EOL); ?>"
+								data-coordinate-notation="<?php echo  $notationvalue;?>" >
+								<?php echo $notationvalue;							
+							endforeach; 
 
+							fclose($reading); fclose($writing);
+							chmod("livegame.tmp.txt", 0755);
+
+							// might as well not overwrite the file if we didn't replace anything
+						if ($replaced)
+							{
+							  rename('livegame.tmp.txt', 'livegame.txt');
+							} else {
+							  unlink('livegame.tmp.txt');
+							}
+						}
+					}
+		
+				if($gametype=="new") {
+					$file = fopen("livegame.txt","w");
+					fwrite($file,'$gameid='.'livemove'.str_shuffle("acdefhijkmnprtuvwxyz0123456789").PHP_EOL);
+					fwrite($file,'$currentfen='.$exportedfen.PHP_EOL);
+					$movecount=0;
+					foreach ( $legal_moves as $key => $move ):?> 
+						<option value="<?php $notationvalue=""; $ending_square=$move->ending_square; $movecount=$movecount+1;
+
+									if($move->pushedending_square!=null)
+										$ending_square=$move->pushedending_square;
+									$move_FEN= $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
+									echo $move_FEN;
+									$move->ending_square=$ending_square;
+									$notationvalue=$move->get_notation();							
+									fwrite($file, $movecount.'_Move='.$move_FEN.';'); 
+									fwrite($file,$movecount.'_Notation='.$notationvalue.PHP_EOL); ?>"
+									data-coordinate-notation="<?php echo  $notationvalue;?>" >
+									<?php echo $notationvalue;
+								echo "</option>"; 
+					endforeach;
+					fclose($file);
+					chmod("livegame.txt", 0755);
+				}?>
+		
 					</select><br>
-
-					Move Count: <?php echo count($legal_moves)+$Naraad_Mcount; ?><br>
-					<!--input type="submit" display='none' hidden value="Make Move"-->
+					Move Count: <?php echo count($legal_moves); ?><br>
 					<input id="boardtype" name="boardtype" hidden value="">
+					
 					<?php
 					
 					$time = microtime();
@@ -242,12 +293,12 @@ $gamemode="move";
 					?>
 					
 					Load Time: <?php echo $total_time; ?> ms<br>
-				</form>
+				</form>				
 			</div>
 		</div>
 		<div><br/><p> FEN:
 		<form id="import_fen" method="post">
-				<input id="fen" type="text" name="fen" value="<?php echo $fen; ?>"></br>
+				<input id="fen" type="text" name="fen" value="<?php echo explode( ';',$fen)[0]); ?>"></br>
 				<input type="submit" value="Import FEN"></br>
 				<input type="button" value="Invert" name="" id="Invert" onclick="createDefaultCookie();"/> </br>
 				<input id="import_boardtype" name="import_boardtype" hidden>
@@ -255,7 +306,6 @@ $gamemode="move";
 			</p>
 		</form>
 		</div>
-		</div>
 	</body>
-	<script src="assets/scripts.js"></script>
+	<script src="../assets/livescripts.js"></script>
 </html>

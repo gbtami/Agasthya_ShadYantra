@@ -11,15 +11,11 @@ class ChessMove {
 		ChessPiece::SIMPLEKING => 'r',
 
 		ChessPiece::INVERTEDKING => 'j',
-		ChessPiece::ANGRYKING => 'u', //without rajdand
-		ChessPiece::ANGRYINVERTEDKING => 'y', //without rajdand
-		ChessPiece::ARTHSHASTRI => 'á' ,
-		ChessPiece::ANGRYARTHSHASTRI => 'a' ,
+		ChessPiece::ARTHSHASTRI => 'a' ,
 		ChessPiece::CAPTUREDSCEPTRE =>'ö',
 		ChessPiece::RAJYAPAALARTHSHASTRI => 'ä',
-
 		ChessPiece::SPY => 'c' ,
-		ChessPiece::GODMAN => 'n',
+		ChessPiece::GODMAN => 'n'
 		//self::RAAJDAND=>'°',
 		//self::ARTHDAND=>'´',
 
@@ -27,6 +23,7 @@ class ChessMove {
 	
 	public $starting_square;
 	public $ending_square;
+	public $pushedending_square;
 	public $ending_square_piecetype;
 	public $capturedking=FALSE;
 	public $color;
@@ -39,12 +36,14 @@ class ChessMove {
 	public $en_passant = FALSE;
 	public $disambiguation = '';
 	public $castling = FALSE;
-	
+	public $controlled_moves=null;
+	public $controlled_move=False;
 	public $board;
 	
 	function __construct(		
 		ChessSquare $starting_square,
 		ChessSquare $ending_square,
+		ChessSquare $pushedending_square,
 		//$ending_square_type,
 		int $ranking, /* 0 Nothing, 1 = Promotion -1 = Demotion*/		
 		$color,
@@ -52,21 +51,36 @@ class ChessMove {
 		bool $capture,
 		ChessBoard $old_board,
 		bool $store_board = TRUE,
-		bool $sameplace
+		bool $sameplace,
+		bool $controlled_move
 	) {
 		$this->starting_square = $starting_square;
+		if($piece_type==9)
+			$ttt=1;
+		//Add the Selfpushed logic here
+		//if($this->board)
 		$this->ending_square = $ending_square;
 		$this->color = $color;
 		$this->piece_type = $piece_type;
 		$this->capture = $capture;
 		
 		// Adding $store_board sped up the code by 300ms
+		if($controlled_move==true)
+			$store_board=false;
+		$this->controlled_move = $controlled_move;
+
 		if ( $store_board ) {
 			$this->board = clone $old_board;
-			
+
 			// Perft uses an empty move to store a board. If not empty move, modify the board.
 			if ( $this->starting_square ) {
-				$this->board->make_move($starting_square, $ending_square, $sameplace);
+				$movetype=$this->board->make_move($starting_square, $ending_square,$capture, $sameplace);
+				if(($movetype==2) && ($this->board->board[$ending_square->rank][$ending_square->file])!=null){
+					$this->pushedending_square=clone $this->board->board[$ending_square->rank][$ending_square->file]->selfpushedpiece->square;
+				}
+				if($movetype==1){
+					$this->pushedending_square=null;//clone $this->board->board[$starting_square][$ending_square]->selfpushedpiece;
+				}			
 			}
 		}
 	}
@@ -80,7 +94,6 @@ class ChessMove {
 		}
 	}
 
-	
 
 function set_killed_king($killedKing):void{
 	//Echo '<li> ChessMove.php #1 function set_promotion_piece called </li>';	
@@ -198,26 +211,44 @@ function set_killed_king($killedKing):void{
 			}
 			
 			//$string .= $this->disambiguation;  // Disabled because extra Square name was added
-			
+	
+			if ( $this->piece_type == ChessPiece::GENERAL ) {
+			$string = $string;
+			}	
 			// capture?
 			if ( $this->capture ) {
 				$string .= '*';
 			}
-			
+			else if (($this->capture ==false ) && ($this->board==null)&& ($this->controlled_move==true)  ) {
+				$string .= $this->starting_square->get_alphanumeric();
+				$string .= $this->ending_square->get_alphanumeric();
+				return $string;
+			}			
+			else if (($this->capture ==false ) && ($this->board->board[$this->ending_square->rank][$this->ending_square->file]!=null) && 
+			($this->board->board[$this->ending_square->rank][$this->ending_square->file]->selfpushed==true)  &&
+			($this->board->board[$this->ending_square->rank][$this->ending_square->file]->selfpushedsquare!=null)) {
+				$string .= '^';
+			}
 			// destination square
 			$string .= $this->starting_square->get_alphanumeric();
 			$string .= $this->ending_square->get_alphanumeric();
-			
-			
-			// pawn promotion
 
+			if (($this->capture ==false ) && ($this->board->board[$this->ending_square->rank][$this->ending_square->file]!=null) && 
+			($this->board->board[$this->ending_square->rank][$this->ending_square->file]->selfpushed==true)  &&
+			($this->board->board[$this->ending_square->rank][$this->ending_square->file]->selfpushedsquare!=null)) {
+				//$string .= '^';
+				$getsquare=$this->board->board[$this->ending_square->rank][$this->ending_square->file]->selfpushedsquare;
+				$this->ending_square->set_square($getsquare["file"] ,$getsquare["rank"]);
+				//$this->ending_square->set_square(8 ,8);
+				$string .= $this->ending_square->get_alphanumeric();
+			}
+			
 			//self::CAPTUREDSCEPTRE => 'Ö',
 
 			if($this->color==1)
 			$kingsquare=$this->board->bkingsquare;//opponent square
 			if($this->color==2)
-			$kingsquare=$this->board->wkingsquare;//
-			
+			$kingsquare=$this->board->wkingsquare;//			
 			
 			if($kingsquare!=null){
 				if ($this->board->board[$kingsquare->rank][$kingsquare->file]!=null) {
@@ -242,9 +273,9 @@ function set_killed_king($killedKing):void{
 				$string .= '=I';
 			} elseif ( $this->promotion_piece_type == ChessPiece::INVERTEDKING ) {
 				$string .= '=J';
-			} elseif ( $this->promotion_piece_type == ChessPiece::ANGRYKING ) {
+			} elseif ( $this->promotion_piece_type == ChessPiece::KING ) {
 				$string .= '=U';
-			} elseif ( $this->promotion_piece_type == ChessPiece::ANGRYINVERTEDKING ) {
+			} elseif ( $this->promotion_piece_type == ChessPiece::INVERTEDKING ) {
 
 				if($kingsquare!=null){
 					if ($this->board->board[$kingsquare->rank][$kingsquare->file]!=null) {
@@ -261,22 +292,20 @@ function set_killed_king($killedKing):void{
 				$string .= '=Ä';
 			}elseif ( $this->promotion_piece_type == ChessPiece::ARTHSHASTRI) {
 				$string .= '=Á';
-			}elseif ( $this->promotion_piece_type == ChessPiece::ANGRYARTHSHASTRI) {
+			}elseif ( $this->promotion_piece_type == ChessPiece::ARTHSHASTRI) {
 				$string .= '=A';
 			}
-	
-
 
 
 			if ( $this->demotion_piece_type == ChessPiece::KING ) {
 				$string .= '=I';
 			} elseif ( $this->demotion_piece_type == ChessPiece::INVERTEDKING ) {
 				$string .= '=J';
-			} elseif ( $this->demotion_piece_type == ChessPiece::ANGRYKING ) {
+			} elseif ( $this->demotion_piece_type == ChessPiece::KING ) {
 				$string .= '=U';
-			} elseif ( $this->demotion_piece_type == ChessPiece::ANGRYINVERTEDKING ) {
+			} elseif ( $this->demotion_piece_type == ChessPiece::INVERTEDKING ) {
 				$string .= '=Y';
-			}elseif ( $this->demotion_piece_type == ChessPiece::ANGRYARTHSHASTRI) {
+			}elseif ( $this->demotion_piece_type == ChessPiece::ARTHSHASTRI) {
 				$string .= '=A';
 			}elseif ( $this->demotion_piece_type == ChessPiece::ARTHSHASTRI) {
 				$string .= '=Á';
@@ -318,7 +347,6 @@ function set_killed_king($killedKing):void{
 			} elseif ( $this->demotion_piece_type == ChessPiece::SPY ) {
 			$string .= '=C';			
 			}
-
 		}
 		
 		// check or checkmate
