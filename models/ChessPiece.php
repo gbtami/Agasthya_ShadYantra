@@ -5,9 +5,10 @@ class ChessPiece
 	public $color;
 	public $state='R'; //real or virtual
 	public $type;
-	public $mortal;	
+	public $mortal;
 	public $square;
 	public $striker;
+	public $elevatedofficer=null;
 	public $controlledpiece=false;
 	public $group;/*royal*/
 	public $selftrapped = false;
@@ -41,20 +42,8 @@ class ChessPiece
 	const SEMIROYAL = 5;
 	const SOLDIER = 4;
 
-	const VALID_GROUPS = array(
-		self::ROYAL,
-		self::OFFICER,
-		self::NOBLE,
-		self::SOLDIER,
-		self::SEMIROYAL
-
-	);
-	
-
-	const VALID_COLORS = array(
-		self::WHITE,
-		self::BLACK
-	);
+	const VALID_GROUPS = array( self::ROYAL, self::OFFICER, self::NOBLE, self::SOLDIER, self::SEMIROYAL );	
+	const VALID_COLORS = array( self::WHITE, self::BLACK );
 	const VALID_TYPES = array(
 		self::VIKRAMADITYA,
 		self::SIMPLEKING,
@@ -114,8 +103,6 @@ class ChessPiece
 			self::BISHOP => '&#9821;',
 			self::KNIGHT => '&#9822;',
 			self::PAWN => '&#9823;'
-
-
 		)
 	);
 	const FEN_CHESS_PIECES = array(
@@ -176,8 +163,7 @@ class ChessPiece
 		self::SPY => 9
 	);
 	const SIDE_VALUES = array(
-		self::WHITE => 1,
-		self::BLACK => -1
+		self::WHITE => 1, self::BLACK => -1
 	);
 	
 	function __construct($color, string $square_string, $type, $group,$mortal,$Striker) {
@@ -211,21 +197,16 @@ class ChessPiece
 	
 	function get_unicode_symbol(): string
 	{
-		//Echo '<li> ChessPiece.php #1 function get_unicode_symbol called </li>';	
 		return self::UNICODE_CHESS_PIECES[$this->color][$this->type];
 	}
 	//self::PIECE_LETTERS[$this->piece_type]
 	function get_fen_symbol(): string
 	{
-		//Echo '<li> ChessPiece.php #2 function get_fen_symbol called </li>';	
-		
 		return self::FEN_CHESS_PIECES[$this->color][$this->type];
 	}
 	
 	function on_rank(int $rank): bool
 	{
-		//Echo '<li> ChessPiece.php #3 function on_rank called </li>';	
-		
 		if ( $rank == $this->square->rank )	{
 			return TRUE;
 		} else {
@@ -234,8 +215,6 @@ class ChessPiece
 	}
 	
 	function get_value(): int {
-		//Echo '<li> ChessPiece.php #4 function get_value called </li>';	
-
 		return self::PIECE_VALUES[$this->type] * self::SIDE_VALUES[$this->color];
 	}
 }

@@ -35,10 +35,10 @@ $gamemode="livemove";
 		
 		<div class="two_columns">
 			<div name="<?php $boardtypeflag;$boardtype; ?>">
-				<div class="status_box" id='<?php echo $board->	color_to_move; ?>'> <?php echo $side_to_move; ?>
+				<div class="status_box" id='<?php echo $board->	color_to_move; ?>'><?php echo $side_to_move; ?>
 				</div>
 				
-				<div class="status_box"> <?php echo $who_is_winning; $boardtypeflag=$board->boardtype;echo "</div>";if ($boardtypeflag==1) {
+				<div class="status_box"><?php echo $who_is_winning; $boardtypeflag=$board->boardtype;echo "</div>";if ($boardtypeflag==1) {
 				define('livewhiteboard', true);	$boardtypeflag="white";	
 				require_once('../liveviews/livewhiteboard.php');
 				} 
@@ -49,9 +49,17 @@ $gamemode="livemove";
 				
 				<!-- <input type="submit" name="flip" value="Flip The Board"> -->
 				<input type="button" onclick="window.location='../.'" value="Local Game">
-				
-			</div>
 
+			</div>
+			<div class="center hideform">
+    <button id="close" style="float: right;">X</button>
+    <form action="/blackgamepairing.php">
+        Game ID:<br>
+        <input type="text" name="BlackGameID" value="">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
 			<div>
 			<input type="hidden" display='none' hidden  id="blackofficerscankill" value="<?php echo $board->blackcankill ?>" disabled readonly>
 			<input type="hidden" display='none' hidden  id="whiteofficerscankill" value="<?php echo $board->whitecankill ?>" disabled readonly>
@@ -154,6 +162,12 @@ $gamemode="livemove";
 
 			</div>
 			</div>
+			<?php if ($legal_moves==null) {?>
+			<div id="lookformoves" name="lookformoves" class= "lookformoves" style="display:none;">
+				</div>
+			<?php } ?>
+	
+			<?php if ($legal_moves!=null){ ?>
 			<div style="display:none;">
 				<div id="history_move" name="history_move" style="display:none;"> 	Historical Moves:<br>
 					<input id="history" name="history" size="19"></input>
@@ -161,34 +175,63 @@ $gamemode="livemove";
 				</div>
 				<?php $matched=0; $exportedfen= $fen; $gametype="old";
 				?>
+				
 				<form id="all_moves" name="all_moves" hidden disabled readonly style="display:none;" method="post" > 	All Legal Moves:<br>
 					<select id="moves" name="livemove" size="19">
 
-				<?php if((file_exists("livegame.txt"))){
-							$file = fopen("livegame.txt","r");
+				<?php if((file_exists($systemgameid))){
+					//consider the white and black moves
+							$file = fopen($systemgameid,"r");
 
 							while(!feof($file) && $matched<2) {
-								$line = fgets($file);
+								$line = rtrim(fgets($file),"\r\n");
 			
 								if (strpos($line, '$newfen=') !== false) {
 									$gametype="new";
-									}					
+									}
 							   	else if (strpos($line, '$currentfen=') !== false) {
 									$splitted = explode( '$currentfen=',$line);
 									$fen = $splitted[1];
 									$stringposition=strpos($fen,$exportedfen);
-									if (strpos($exportedfen.PHP_EOL, $fen) !== false) {
+									if (strpos($fen,$exportedfen) !== false) {
 										$matched=$matched+1; //New request
 										$gametype="old";
 									}
 									else if ((strpos($line, 'Moved_FEN=Good')!==false)) {
 										$matched=$matched+1; //New request
 										$gametype="old";
-									}									
+									}
 								}
 							   	else if (strpos($line, '$gameid=') !== false) {
 									$splitted = explode( '$gameid=',$line);
 									$gameid = $splitted[1];
+									$onlygameid =  explode( ';',$gameid)[0];
+
+									if (isset($_COOKIE['gameid'])) ///check if user already had some pending game // play invitation game if no pending game
+									{
+										$filewhitecookie=explode(';', explode( ';whitemover=',$gameid)[1])[0];
+										$fileblackcookie=explode(';',explode(';blackmover=', $gameid)[1])[0];
+										$filewhitegamecookie='$gameid='.$onlygameid.';whitemover='.$filewhitecookie.';';
+										$fileblackgamecookie='$gameid='.$onlygameid.';blackmover='.$fileblackcookie.';';
+
+										/*if((isset($_COOKIE['LiveStepType'])==true) &&($_COOKIE['LiveStepType']!="")&&
+										((isset($_COOKIE['LiveStepType'])=="white"))) {
+											if(strpos($whitegamecookie,$filewhitegamecookie)!== false)
+											{
+											$ttt=1;
+											}
+										}
+										elseif((isset($_COOKIE['LiveStepType'])!=true) &&($_COOKIE['LiveStepType']!="")&&
+										(($_COOKIE['LiveStepType']=="black"))) {
+											if(strpos($blackgamecookie,$fileblackgamecookie)!== false)
+											{
+
+											}
+										}
+										else {
+
+										}*/
+									}
 								}
 			
 								if (strpos($line, '_Move=') !== false) {
@@ -204,59 +247,78 @@ $gamemode="livemove";
 							fclose($file);
 
 							if(($gametype=="old"))  {
-								$data = file('livegame.txt'); // reads an array of lines
+								$data = file($systemgameid); // reads an array of lines
 			
-								$reading = fopen('livegame.txt', 'r');
-								$writing = fopen('livegame.tmp.txt', 'w');
+								$reading = fopen($systemgameid, 'r');
+								if($newmove==1)
+								$writing = fopen($systemgameid.'.tmp.txt', 'w');
 			
 								$replaced = false;
 								$importedmatched=false;
 								while (!feof($reading)&&($importedmatched==false)) {
-									$line = fgets($reading);
-								if(($matched==1)	&&(stristr($line,'$currentfen='))){
-									$line = '$currentfen='.explode(';', explode( '$currentfen=',$line)[1])[0].PHP_EOL;
-									$replaced=true;$importedmatched=true;}
-								else if ((stristr($line,'$currentfen='))) {
-									$replaced = true;
-									$importedmatched=true;
-						 	 	}
-						  		fputs($writing, $line);
+									$line = rtrim(fgets($reading),"\r\n");
+									if(($matched==1)	&&(stristr($line,'$currentfen='))){
+										$line = '$currentfen='.explode(';', explode( '$currentfen=',$line)[1])[0];
+										$replaced=true;$importedmatched=true;}
+									else if ((stristr($line,'$currentfen='))) {
+										$replaced = true;
+										$importedmatched=true;
+									}
+									if($newmove==1)
+						  				fputs($writing, $line.PHP_EOL);
+
+									  if($importedmatched==true){
+										$line = rtrim(fgets($reading),"\r\n");
+
+										if($newmove==1)
+										if (stristr($line,'$blackplayer='))
+											fputs($writing, $line.PHP_EOL);
+									}
+								}
+
+								$movecount=0;
+								foreach ( $legal_moves as $key => $move ): 	?>
+									<option value="<?php $notationvalue=""; $ending_square=$move->ending_square; $movecount=$movecount+1;
+
+									if($move->pushedending_square!=null)
+										$ending_square=$move->pushedending_square;
+									$move_FEN= $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
+									echo $move_FEN;
+									$move->ending_square=$ending_square;
+									$notationvalue=$move->get_notation();
+									if($newmove==1)
+									fputs($writing, $movecount.'_Move='.$move_FEN.';'.$movecount.'_Notation='.$notationvalue.PHP_EOL); ?>"
+									data-coordinate-notation="<?php echo  $notationvalue;?>" >
+									<?php echo $notationvalue;
+								endforeach;
+
+								fclose($reading); 
+								if($newmove==1)
+								fclose($writing);
+								if($newmove==1)
+								chmod($systemgameid.".tmp.txt", 0755);
+
+								// might as well not overwrite the file if we didn't replace anything
+								if($newmove==1){
+								if ($replaced)
+									{
+								 	 rename($systemgameid.".tmp.txt", $systemgameid);
+								} else {
+									  unlink($systemgameid.'.tmp.txt');
+								}
 							}
-
-							$movecount=0;
-							foreach ( $legal_moves as $key => $move ): 	?>
-								<option value="<?php $notationvalue=""; $ending_square=$move->ending_square; $movecount=$movecount+1;
-
-								if($move->pushedending_square!=null)
-									$ending_square=$move->pushedending_square;
-								$move_FEN= $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
-								echo $move_FEN;
-								$move->ending_square=$ending_square;
-								$notationvalue=$move->get_notation();							
-								fputs($writing, $movecount.'_Move='.$move_FEN.';'.$movecount.'_Notation='.$notationvalue.PHP_EOL); ?>"
-								data-coordinate-notation="<?php echo  $notationvalue;?>" >
-								<?php echo $notationvalue;							
-							endforeach; 
-
-							fclose($reading); fclose($writing);
-							chmod("livegame.tmp.txt", 0755);
-
-							// might as well not overwrite the file if we didn't replace anything
-						if ($replaced)
-							{
-							  rename('livegame.tmp.txt', 'livegame.txt');
-							} else {
-							  unlink('livegame.tmp.txt');
 							}
 						}
-					}
 		
 				if($gametype=="new") {
-					$file = fopen("livegame.txt","w");
-					fwrite($file,'$gameid='.'livemove'.str_shuffle("acdefhijkmnprtuvwxyz0123456789").PHP_EOL);
+					$file = fopen($systemgameid,"w");
+					//$systemgameid;
+					//fwrite($file,'$gameid='.'livemove'.str_shuffle("acdefhijkmnprtuvwxyz0123456789").PHP_EOL);
+					fwrite($file,'$gameid='.$gameid.PHP_EOL);
 					fwrite($file,'$currentfen='.$exportedfen.PHP_EOL);
+					fwrite($file,'$blackplayer=0'.PHP_EOL);
 					$movecount=0;
-					foreach ( $legal_moves as $key => $move ):?> 
+					foreach ( $legal_moves as $key => $move ):?>
 						<option value="<?php $notationvalue=""; $ending_square=$move->ending_square; $movecount=$movecount+1;
 
 									if($move->pushedending_square!=null)
@@ -264,19 +326,19 @@ $gamemode="livemove";
 									$move_FEN= $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
 									echo $move_FEN;
 									$move->ending_square=$ending_square;
-									$notationvalue=$move->get_notation();							
+									$notationvalue=$move->get_notation();
 									fwrite($file, $movecount.'_Move='.$move_FEN.';'); 
 									fwrite($file,$movecount.'_Notation='.$notationvalue.PHP_EOL); ?>"
-									data-coordinate-notation="<?php echo  $notationvalue;?>" >
+									data-coordinate-notation="<?php echo  $notationvalue;?>">
 									<?php echo $notationvalue;
 								echo "</option>"; 
 					endforeach;
 					fclose($file);
-					chmod("livegame.txt", 0755);
+					chmod($systemgameid, 0755);
 				}?>
 		
 					</select><br>
-					Move Count: <?php echo count($legal_moves); ?><br>
+					Move Count:<?php echo count($legal_moves); ?><br>
 					<input id="boardtype" name="boardtype" hidden value="">
 					
 					<?php
@@ -290,10 +352,12 @@ $gamemode="livemove";
 					$total_time = round($total_time);
 					?>
 					
-					Load Time: <?php echo $total_time; ?> ms<br>
-				</form>				
+					Load Time:<?php echo $total_time; ?>ms<br>
+				</form>
 			</div>
+			<?php }?>
 		</div>
+	
 		<div><br/><p> FEN:
 		<form id="import_fen" method="post">
 				<input id="fen" type="text" name="fen" value="<?php echo explode( ';',$fen)[0]; ?>"></br>
@@ -303,6 +367,22 @@ $gamemode="livemove";
 				<!--input type="button" id="perft" value="Perft"-->
 			</p>
 		</form>
+
+<?php if(($blackplayerassigned==false) && ($playertype==2))
+ {?>
+
+<button id="show" >Enter GameID</button>
+<?php }
+ if(($blackplayerassigned==false) && ($playertype==0)) // White or Black Game
+ {?>
+
+<button id="show" >Enter GameID</button>
+<?php }
+ if(($blackplayerassigned==false) && ($playertype==1))
+ {?>
+<button id="WhiteGameID" >Copy GameID to play with Black</button>
+<?php } ?>
+
 		</div>
 	</body>
 	<script src="../assets/livescripts.js"></script>

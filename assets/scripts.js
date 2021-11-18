@@ -4,6 +4,23 @@
 	var cookiecategory = null;
 	//if thereiks no selection then use White as default
 
+	function fetchdata(){
+		$.ajax({
+			url: 'liveviews/mover_details.php',
+			type: 'post',
+			data: "moverdata_request=1234",
+			success: function(responsedata){
+				//check the black vs white turn. If same turn then update the clock with correct value
+				//in case of refresh page reload the counter etc
+				// Perform operation on return value
+				//alert(responsedata);
+				},
+			complete:function(responsedata){
+				setTimeout(fetchdata,500);
+				}
+			});
+		}
+
 function createCookieAction() {
 	var nameEQ = "StepType" + "=";
 	var ca = document.cookie.split(';');
@@ -1465,4 +1482,6 @@ $('#submitwinninggamemove').attr('disabled','disabled');
 $('#submitwinninggamemove').attr('hidden','hidden');
 $('#submitcmove').attr('disabled','disabled');
 $('#submitcmove').attr('hidden','hidden');
+ 
+	setTimeout(fetchdata,500);
 });

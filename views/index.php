@@ -49,10 +49,18 @@ $gamemode="move";
 				
 				<!-- <input type="submit" name="flip" value="Flip The Board"> -->
 				<input type="button" onclick="window.location='.'" value="Reset The Board">
-				<input type="button" onclick="window.location='livemove\\'" value="Live Game">
-				
+				<input type="button" onclick="window.location='livemove/'" value="Live Game">
+				<input type="button" id="livepairing"  name="livepairing" value="Live Paired Game">				
 			</div>
-
+			<div class="center hideform">
+    <button id="close" style="float: right;">X</button>
+    <form method="post" action="livemove/">
+        Game ID:<br>
+        <input type="text" name="BlackGameID" value="">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
 			<div>
 			<input type="hidden" display='none' hidden  id="blackofficerscankill" value="<?php echo $board->blackcankill ?>" disabled readonly>
 			<input type="hidden" display='none' hidden  id="whiteofficerscankill" value="<?php echo $board->whitecankill ?>" disabled readonly>
@@ -189,7 +197,7 @@ $gamemode="move";
 							<option
 								value="<?php $notationvalue=""; $ending_square=$nmove->ending_square;
 									$Ntype="";
-								echo $move->board->export_fen_moves($nmove->starting_square,$nmove->ending_square); 
+								echo $move->board->export_fen_moves($nmove->starting_square,$nmove->ending_square,true); 
 								$nmove->ending_square=$ending_square;
 								if(3-$nmove->color==$board->color_to_move)
 									{ $Ntype=">";}
@@ -210,7 +218,7 @@ $gamemode="move";
 									$Ntype="";
 								if($move->pushedending_square!=null)
 									$ending_square=$move->pushedending_square;
-								echo $move->board->export_fen_moves($move->starting_square,$move->ending_square); 
+								echo $move->board->export_fen_moves($move->starting_square,$move->ending_square,false); 
 								$move->ending_square=$ending_square;
 								//if($move->board->color_to_move==$board->color_to_move)
 									//{ $Ntype=">";}
@@ -258,4 +266,20 @@ $gamemode="move";
 		</div>
 	</body>
 	<script src="assets/scripts.js"></script>
+	<script>
+
+$('#livepairing').on('click', function () {
+	//alert("hello");
+	//this.window.location='livemove\\index.php?paired=yes';
+	//$('#show').on('click', function () {
+    	$('.center').show();
+    	$(this).hide();
+	//});
+
+	$('#close').on('click', function () {
+    	$('.center').hide();
+   	 $('#show').show();
+	});
+});
+	</script>
 </html>

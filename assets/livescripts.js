@@ -74,11 +74,69 @@ function getHash(url) {
   return url.substring(hashPos + 1);
 }
 
+$('#show').on('click', function () {
+    $('.center').show();
+    $(this).hide();
+});
+
+$('#close').on('click', function () {
+    $('.center').hide();
+    $('#show').show();
+});
+
 init();
 
 //$('select#move').change(function(){
 		var category = null;
 	var cookiecategory = null;
+
+	function fetchdata(){
+					//url: '../liveviews/mover_details.php',
+					//data: "moverdata_request=1234",
+					var nameEQ = "LiveStepType" + "=";
+					var ca = document.cookie.split(';');
+					for(var i=0;i < ca.length;i++) {
+						var c = ca[i];
+						while (c.charAt(0)==' ') 
+							c = c.substring(1,c.length);
+						if (c.indexOf(nameEQ) == 0){
+							cookiecategory=c.substring(nameEQ.length,c.length);
+							break;
+						}
+					}
+					console.log (" cookiecategory = "+ cookiecategory);
+	
+		$.ajax({
+			url: '../livemove/',
+			type: 'post',
+			data: "lookformoves=yes",
+			success: function(responsedata){
+				//check the black vs white turn. If same turn then update the clock with correct value
+				//in case of refresh page reload the counter etc
+				// Perform operation on return value
+				//alert(responsedata);
+				
+				//if($("#" + "lookformoves").length == 0) {
+					if((responsedata=="1") &&(cookiecategory=="white") ){
+						//load the 	window. enable the moves. delete the lookformoves tag.
+						console.log(responsedata+" "+window.location+" "+cookiecategory);
+						//window.location.reload(true);
+						window.location=window.location;
+					}
+					else if((responsedata=="2") &&(cookiecategory=="black")){
+						console.log(responsedata+" "+window.location+" "+cookiecategory);		
+						//window.location=window.location;
+						window.location=window.location;
+					}
+					else
+						setTimeout(fetchdata,1000);
+				 // }
+				//else setTimeout(fetchdata,1000);
+				},
+			complete:function(responsedata){
+				}
+			});
+		}
 	//if thereiks no selection then use White as default
 
 function createCookieAction() {
@@ -215,6 +273,7 @@ function reversegrid(){
 		createCookieAction();
 		//debugger
 		var piece=document.getElementsByClassName('draggable_piece');
+
 		var bt1 = document.createElement('input');
 		var bt2 = document.createElement('input');
 		var bt3 = document.createElement('input');
@@ -223,6 +282,9 @@ function reversegrid(){
 		var bt6 = document.createElement('input');
 		var bt7 = document.createElement('input');
 
+	
+		if($("#" + "lookformoves").length == 0) {
+			
 		bt1.setAttribute("name","import_boardtype");
 		bt2.setAttribute("name","import_boardtype");
 		bt3.setAttribute("name","import_boardtype");
@@ -257,6 +319,7 @@ function reversegrid(){
 		document.getElementById('king_Shanti').appendChild(bt5);
 		document.getElementById('king_endgame').appendChild(bt6);
 		document.getElementById('make_move').appendChild(bt7);
+		
 		var color_to_move='',opp_color_to_move='';
 		var p1name='',p2name='',mname="";
 		var kingmove=false,arthshastrimove=false,naaradmove=false,knightmove=false,bishopmove=false,rookmove=false,generalmove=false,officermove=false;
@@ -1628,5 +1691,9 @@ $('#submitendgamemove').attr('disabled','disabled');
 $('#submitendgamemove').attr('hidden','hidden'); 
 $('#submitwinninggamemove').attr('disabled','disabled');        
 $('#submitwinninggamemove').attr('hidden','hidden');
+
+}
+else setTimeout(fetchdata,1000);
+
 });
 

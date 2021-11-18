@@ -7,7 +7,12 @@ $start = $time;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+$systemgameid=null;
+			//$filewhitecookie=explode(';', explode( ';whitemover=',$gameid)[1])[0];
+			//$fileblackcookie=explode(';',explode(';blackmover=', $gameid)[1])[0];
+			//$filewhitegamecookie='$gameid='.$onlygameid.';whitemover='.$filewhitecookie.';';
+			//$fileblackgamecookie='$gameid='.$onlygameid.';blackmover='.$fileblackcookie.';';
+			
 require_once('helpers/helper_functions.php');
 require_once('models/ChessRulebook.php');
 require_once('models/ChessBoard.php');
@@ -16,20 +21,6 @@ require_once('models/ChessMove.php');
 require_once('models/ChessSquare.php');
 
 $board = new ChessBoard();
-
-/*
-if ( isset($_GET['reset']) ) {
-	// Skip this conditional. ChessGame's FEN is the default, new game FEN and doesn't need to be set again.
-} elseif ( isset($_GET['move']) ) {
-	$board->import_fen($_GET['move']);
-} elseif ( isset($_GET['surrendermove']) ) {
-	$board->import_fen($_GET['surrendermove']);
-} elseif ( isset($_GET['endgamemove']) ) {
-	$board->import_fen($_GET['endgamemove']);
-} elseif ( isset($_GET['fen']) ) {
-	$board->import_fen($_GET['fen']);
-}
-*/
 
 if ( isset($_REQUEST['reset']) ) {
 	// Skip this conditional. ChessGame's FEN is the default, new game FEN and doesn't need to be set again.
@@ -40,7 +31,7 @@ if ( isset($_REQUEST['reset']) ) {
 } elseif ( isset($_REQUEST['move']) ) {
 	$board->import_fen($_REQUEST['move']);
 	if(isset($_REQUEST['import_boardtype']))
-	$board->setboard($_REQUEST['import_boardtype']);	
+	$board->setboard($_REQUEST['import_boardtype']);
 } elseif ( isset($_REQUEST['surrendermove']) ) {
 	$board->import_fen($_REQUEST['surrendermove']);
 } elseif ( isset($_REQUEST['endgamemove']) ) {
@@ -50,7 +41,6 @@ if ( isset($_REQUEST['reset']) ) {
 	if(isset($_REQUEST['import_boardtype']))
 	$board->setboard($_REQUEST['import_boardtype']);
 }
-
 
 $fen = $board->export_fen();
 $side_to_move = $board->get_side_to_move_string();

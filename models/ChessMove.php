@@ -55,8 +55,8 @@ class ChessMove {
 		bool $controlled_move
 	) {
 		$this->starting_square = $starting_square;
-		if($piece_type==9)
-			$ttt=1;
+		/*if($piece_type==9)
+			$ttt=1;*/
 		//Add the Selfpushed logic here
 		//if($this->board)
 		$this->ending_square = $ending_square;
@@ -94,17 +94,12 @@ class ChessMove {
 		}
 	}
 
-
 function set_killed_king($killedKing):void{
-	//Echo '<li> ChessMove.php #1 function set_promotion_piece called </li>';	
 		$this->capturedking = $killedKing;   
 
 }
 
 	function set_demotion_piece($piece_type): void {
-		//Echo '<li> ChessMove.php #1 function set_promotion_piece called </li>';	
-		
-		// update the piece
 		$rank = $this->ending_square->rank;
 		$file = $this->ending_square->file;
 		if ( $this->board ) {
@@ -116,8 +111,7 @@ function set_killed_king($killedKing):void{
 	}
 
 	function set_promotion_piece($piece_type): void {
-		//Echo '<li> ChessMove.php #1 function set_promotion_piece called </li>';	
-		
+	
 		// update the piece
 		$rank = $this->ending_square->rank;
 		$file = $this->ending_square->file;
@@ -130,31 +124,14 @@ function set_killed_king($killedKing):void{
 	}
 
 	function get_notation(): string {
-		//Echo '<li> ChessMove.php #2 function get_notation called </li>';	
 		$pcolor = NULL;
 		$string = '';
 		$char = self::PIECE_LETTERS[$this->piece_type];
 		$kingsquare = NULL;
-		if(((preg_match('/[çúýåá]/', $char)) &&($this->color == ChessPiece::BLACK))){
-			$pcolor = $char	;
-		}
-		elseif ($this->color == ChessPiece::WHITE)
+		if ($this->color == ChessPiece::WHITE)
 		{
 			if (($char=='a')|| ($char=='i')||($char=='c')|| ($char=='u')|| ($char=='y')||($char=='j')) {
 				$pcolor = strtoupper($char);
-			} 
-			//elseif (($char=='á')|| ($char=='ç')|| ($char=='ú')|| ($char=='ý')||($char=='å')) {
-			elseif((preg_match('/[çúýåá]/', $char))){
-				if($char=='á')
-				{	$pcolor='Á';	}
-				elseif($char=='ç')
-				{	$pcolor='Ç';	}					
-				elseif($char=='ú')
-				{	$pcolor='Ú';	}
-				elseif($char=='ý')	
-				{	$pcolor='Ý';	}
-				elseif($char=='å')
-				{	$pcolor='Å';	}
 			}
 			else
 				$pcolor =	strtoupper(self::PIECE_LETTERS[$this->piece_type]);
@@ -163,57 +140,15 @@ function set_killed_king($killedKing):void{
 			$pcolor = strtolower($char)	;
 		}
 
-		/*
-		if ($this->color == ChessPiece::WHITE) {
-		//check for special characters 
-            $pcolor =	strtoupper(self::PIECE_LETTERS[$this->piece_type]);
-        }
-		else{
-		$pcolor =	strtolower(self::PIECE_LETTERS[$this->piece_type]);
-		}; 
-		*/
-
-		if (
-			$this->starting_square->get_alphanumeric() == 'e8' &&
-			$this->ending_square->get_alphanumeric() == 'g8' &&
-			$this->piece_type == ChessPiece::KING &&
-			$this->color == ChessPiece::BLACK
-		) {
-			$string .= 'O-O';
-		} elseif (
-			$this->starting_square->get_alphanumeric() == 'e1' &&
-			$this->ending_square->get_alphanumeric() == 'g1' &&
-			$this->piece_type == ChessPiece::KING &&
-			$this->color == ChessPiece::WHITE
-		) {
-			$string .= 'O-O';
-		} elseif (
-			$this->starting_square->get_alphanumeric() == 'e8' &&
-			$this->ending_square->get_alphanumeric() == 'c8' &&
-			$this->piece_type == ChessPiece::KING &&
-			$this->color == ChessPiece::BLACK
-		) {
-			$string .= 'O-O-O';
-		} elseif (
-			$this->starting_square->get_alphanumeric() == 'e1' &&
-			$this->ending_square->get_alphanumeric() == 'c1' &&
-			$this->piece_type == ChessPiece::KING &&
-			$this->color == ChessPiece::WHITE
-		) {
-			$string .= 'O-O-O';
-		} else {
 			// type of piece
 			if ( $this->piece_type == ChessPiece::PAWN){// && $this->capture ) {
 				$string .= $pcolor;
-				//$string .= substr($this->starting_square->get_alphanumeric(), 0, 1);
 			} elseif ( $this->piece_type != ChessPiece::PAWN ) {
 				$string .= $pcolor;
 			}
-			
-			//$string .= $this->disambiguation;  // Disabled because extra Square name was added
-	
+				
 			if ( $this->piece_type == ChessPiece::GENERAL ) {
-			$string = $string;
+				$string = $string;
 			}	
 			// capture?
 			if ( $this->capture ) {
@@ -243,8 +178,6 @@ function set_killed_king($killedKing):void{
 				$string .= $this->ending_square->get_alphanumeric();
 			}
 			
-			//self::CAPTUREDSCEPTRE => 'Ö',
-
 			if($this->color==1)
 			$kingsquare=$this->board->bkingsquare;//opponent square
 			if($this->color==2)
@@ -273,42 +206,20 @@ function set_killed_king($killedKing):void{
 				$string .= '=I';
 			} elseif ( $this->promotion_piece_type == ChessPiece::INVERTEDKING ) {
 				$string .= '=J';
-			} elseif ( $this->promotion_piece_type == ChessPiece::KING ) {
-				$string .= '=U';
-			} elseif ( $this->promotion_piece_type == ChessPiece::INVERTEDKING ) {
-
-				if($kingsquare!=null){
-					if ($this->board->board[$kingsquare->rank][$kingsquare->file]!=null) {
-						if (($this->ending_square->rank == $kingsquare->rank )&&($this->ending_square->file == $kingsquare->file )) {
-							}
-					else		
-						$string .= '=Y';	
-					}
-				}
-
 		 	} elseif ( $this->promotion_piece_type == ChessPiece::VIKRAMADITYA) {
 				$string .= '=V';
 			} elseif ( $this->promotion_piece_type == ChessPiece::RAJYAPAALARTHSHASTRI) {
 				$string .= '=Ä';
 			}elseif ( $this->promotion_piece_type == ChessPiece::ARTHSHASTRI) {
-				$string .= '=Á';
-			}elseif ( $this->promotion_piece_type == ChessPiece::ARTHSHASTRI) {
 				$string .= '=A';
 			}
-
 
 			if ( $this->demotion_piece_type == ChessPiece::KING ) {
 				$string .= '=I';
 			} elseif ( $this->demotion_piece_type == ChessPiece::INVERTEDKING ) {
 				$string .= '=J';
-			} elseif ( $this->demotion_piece_type == ChessPiece::KING ) {
-				$string .= '=U';
-			} elseif ( $this->demotion_piece_type == ChessPiece::INVERTEDKING ) {
-				$string .= '=Y';
 			}elseif ( $this->demotion_piece_type == ChessPiece::ARTHSHASTRI) {
 				$string .= '=A';
-			}elseif ( $this->demotion_piece_type == ChessPiece::ARTHSHASTRI) {
-				$string .= '=Á';
 			}
 			elseif ( $this->demotion_piece_type == ChessPiece::CAPTUREDSCEPTRE) {
 				$string .= '=Ö';
@@ -347,7 +258,6 @@ function set_killed_king($killedKing):void{
 			} elseif ( $this->demotion_piece_type == ChessPiece::SPY ) {
 			$string .= '=C';			
 			}
-		}
 		
 		// check or checkmate
 		if ( $this->checkmate ) {
@@ -389,6 +299,5 @@ function set_killed_king($killedKing):void{
 		};
 		//Echo '<li> ChessMove.php #4 function get_piece_letter called </li>';	
 		return $pcolor;
-
 	}
 }
