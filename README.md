@@ -1,11 +1,11 @@
-# Agasthya Shad Yantra PHPChess
+# Agasthya Shad Yantra 
 
-Credit Goes to 
+Credit Goes to **# PHPChess**
 
    https://github.com/RedDragonWebDesign/php-chess
 
 
-# ShadYantra_Online
+# Vision
 
 Our vision is to promote the dying indoor board game "Shad Yantra" created 8500 by sage Agasthya and then modified by Kautilya 2300 yrs ago and named as "ShatRanjan". (Not to be confused with Shatranj which is Arabic/Persian name.)
 
