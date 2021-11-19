@@ -96,9 +96,79 @@ if ( isset($_REQUEST['BlackGameID']) /*&&(!isset($_COOKIE['gameid']))*/) {
 	}
 	else {
 		die("No such game exists.");
+		// Add the code to show the game progress
 	}
 }
+/*	else if((isset($_COOKIE['gameid'])) &&((isset($_REQUEST['lookformoves']))&&(($_REQUEST['lookformoves']!=null) &&($_REQUEST['lookformoves']!="" ))))
+	{
+		$unknowngamecookie=htmlspecialchars($_COOKIE['gameid']);
+			$splitted = explode( '$gameid=',$unknowngamecookie);
+			$gameid = $splitted[1];
+			$onlygameid =  explode( ';',$gameid)[0];
+			$systemgameid= $onlygameid.';';	
+			$systemcookie=$unknowngamecookie;
+			$whiteblackcookie=explode( ';',$gameid)[1];//'$gameid='.$onlygameid.';whitemover='.$filewhitecookie.';';
+		if(file_exists($systemgameid)){
+			$data = file($systemgameid); // reads an array of lines
+			$reading = fopen($systemgameid, 'r');
+			//$writing = fopen($systemgameid.'.tmp.txt', 'w');
+			$replaced = false;	$importedmatched=false;
+			$newmove=0;	$matched=0;
+	
+			if(strpos($whiteblackcookie,'whitemover')!== false)
+			///check if user already had some pending game // play invitation game if no pending game
+			{
+				while (!feof($reading)) {
+					$line = rtrim(fgets($reading),"\r\n");
+					if(($matched==1)	&&(stristr($line,'$currentfen='))){
+						$line = '$currentfen='.explode(';', explode( '$currentfen=',$line)[1])[0];
+						}
+					else if ((stristr($line,'$currentfen='))) {
+						$replaced = true; $importedmatched=true;
+						$fen=explode(';', explode( '$currentfen=',$line)[1])[0];
+						$currentmover=explode(' ', explode( ' ',$line)[1])[0];
+						}
+					//fputs($writing, $line.PHP_EOL);
+					else if (strpos($line, '$gameid=') !== false) {
+						$splitted = explode( '$gameid=',$line);
+					}
+				}
+			}
+			else if(strpos($whiteblackcookie,'blackmover')!== false)
+			///check if user already had some pending game // play invitation game if no pending game
+			{
+					while (!feof($reading)) {
+						$line = rtrim(fgets($reading),"\r\n");
+						if(($matched==1)	&&(stristr($line,'$currentfen='))){
+							$line = '$currentfen='.explode(';', explode( '$currentfen=',$line)[1])[0];
+							}
+						else if ((stristr($line,'$currentfen='))) {
+							$fen=explode(';', explode( '$currentfen=',$line)[1])[0];
+							$currentmover=explode(' ', explode( ' ',$line)[1])[0];
+						}
+						 // fputs($writing, $line.PHP_EOL);
+	
+						if (strpos($line, '$gameid=') !== false) {
+						}
+					}
+			}
+			fclose($reading);
+			}
+			$result="";
+			if( ((($currentmover=='b0') || ($currentmover=='w1')|| ($currentmover=='b2'))))
+			{
+				$result= "Black To Move";
+				$result= "2";
 
+			}
+			else if(
+			((($currentmover=='w0') || ($currentmover=='b1')|| ($currentmover=='w2')))){
+				$result= "White To Move";
+				$result= "1";
+			}
+			echo $result;
+			return $result;
+	}*/
 else if (!isset($_COOKIE['gameid'])) ///check if user already had some pending game // play invitation game if no pending game
 	{
 		
@@ -113,9 +183,9 @@ else if (!isset($_COOKIE['gameid'])) ///check if user already had some pending g
   			$_COOKIE['gameid']= $whitegamecookie;
 			setcookie('LiveStepType', 'white');
 			$_COOKIE['LiveStepType']='white';
-			echo $systemgameid;
+			/*echo $systemgameid;
 			echo $whitegamer;
-			echo $whitegamecookie;
+			echo $whitegamecookie;*/
 
 			//if file does not exist create....else check if file exists but no cookies matched then set it to black.
 			$file = fopen($systemgameid,"w");

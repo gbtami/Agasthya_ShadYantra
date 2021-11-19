@@ -1187,9 +1187,15 @@ class ChessBoard {
 		else if ($this->color_to_move == ChessPiece::WHITE) {
 			if (($this->board[$starting_square->rank][$starting_square->file]==null))
 				$string .= " w0 "; //it was w0
+			else if (($this->board[$starting_square->rank][$starting_square->file]!=null)&&
+				($ending_square!=null)&&(($starting_square->rank==$ending_square->rank)&&($starting_square->file==$ending_square->file)))
+				$string .= " w0 "; //it was w0					
 			}
 		elseif ($this->color_to_move == ChessPiece::BLACK) {
 			if (($this->board[$starting_square->rank][$starting_square->file]==null))
+				$string .= " b0 "; //it was b0
+			else if (($this->board[$starting_square->rank][$starting_square->file]!=null)&&
+			($ending_square!=null)&&(($starting_square->rank==$ending_square->rank)&&($starting_square->file==$ending_square->file)))
 				$string .= " b0 "; //it was b0
 		}
 

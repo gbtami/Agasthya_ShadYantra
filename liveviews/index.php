@@ -381,6 +381,8 @@ $gamemode="livemove";
  if(($blackplayerassigned==false) && ($playertype==1))
  {?>
 <button id="WhiteGameID" >Copy GameID to play with Black</button>
+<input type="text" size= 42 id="WhiteGameID_Data" readonly value="<?php echo $onlygameid.";"; ?>" style="visibility:hidden;readonly;"></button>
+
 <?php } ?>
 
 		</div>

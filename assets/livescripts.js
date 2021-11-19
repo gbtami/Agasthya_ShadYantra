@@ -1692,6 +1692,11 @@ $('#submitendgamemove').attr('hidden','hidden');
 $('#submitwinninggamemove').attr('disabled','disabled');        
 $('#submitwinninggamemove').attr('hidden','hidden');
 
+$('#WhiteGameID').click(function(){
+	if($('#WhiteGameID').length != 0) {
+		$('#WhiteGameID_Data').css('visibility', 'visible');
+	}
+});
 }
 else setTimeout(fetchdata,1000);
 

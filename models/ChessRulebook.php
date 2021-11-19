@@ -268,7 +268,8 @@ class ChessRulebook {
 					if($get_Killing_Allowed==1) 
 						$get_Killing_Allowed=2;
 					if(($get_CASTLEMover==1) &&	($get_Killing_Allowed==2)){	$get_Killing_Allowed=1;} //knight does not need to mixup in his own castle.
-					$moves = self::add_jump_and_jumpcapture_moves_to_moves_list(1,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
+					if($get_FullMover==true)
+						$moves = self::add_jump_and_jumpcapture_moves_to_moves_list(1,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
 					$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,FALSE,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
 					$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,FALSE,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
 
@@ -290,7 +291,7 @@ class ChessRulebook {
 					}
 					elseif($board->gametype==2){
 						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS,  self::MAX_SLIDING_DISTANCE, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
-					}				
+					}
 				} elseif (($nonnaarad_can_move)&& ($piece->type == ChessPiece::GENERAL)) {
 					$moves = self::add_capture_moves_to_moves_list(self::GENERAL_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,$selfbrokencastle,$foebrokencastle);
 					//$get_Killing_Allowed=1;
@@ -299,22 +300,32 @@ class ChessRulebook {
 					$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::GENERAL_DIRECTIONS, self::MAX_SLIDING_DISTANCE, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
 				} elseif (($nonnaarad_can_move)&&(($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::INVERTEDKING))) {
 					$moves = self::add_capture_moves_to_moves_list(self::GENERAL_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,1,$selfbrokencastle,$foebrokencastle);
-					$moves = self::add_jump_and_jumpcapture_moves_to_moves_list(2,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
-					$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,1,TRUE,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);				
+					$moves = self::add_jump_and_jumpcapture_moves_to_moves_list(2,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,1,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
+					$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, self::MAX_SLIDING_DISTANCE, $moves, $piece, $color_to_move, $board, $store_board_in_moves,1,1,TRUE,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);				
 					 //Set $king here so castling function can use it later.
 					$king = $piece;
 				} elseif (($nonnaarad_can_move)&&(($piece->type == ChessPiece::ARTHSHASTRI))) {
-					$moves = self::add_jump_and_jumpcapture_moves_to_moves_list(2,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
-					$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
-					// Set $king here so castling function can use it later.
+					if($get_FullMover==true)
+						{
+						$moves = self::add_jump_and_jumpcapture_moves_to_moves_list(2,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
+						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, self::MAX_SLIDING_DISTANCE, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
+						}
+					else if($get_FullMover==false)
+						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
+// Set $king here so castling function can use it later.
 					$ARTHSHASTRI = $piece;
 				} elseif (($nonnaarad_can_move)&&($piece->type == ChessPiece::SPY)) {
-					$moves = self::add_jump_and_jumpcapture_moves_to_moves_list(2,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
-					$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
-					// Set $king here so castling function can use it later.
+					if($get_FullMover==true)
+						{
+						$moves = self::add_jump_and_jumpcapture_moves_to_moves_list(2,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
+						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, self::MAX_SLIDING_DISTANCE, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
+						}// Set $king here so castling function can use it later.
+					else if($get_FullMover==false)
+						$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::KING_DIRECTIONS, 1, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,1,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
+					//	
 					$SPY = $piece;
 				} elseif (($piece->type == ChessPiece::GODMAN) &&($naard_can_move ==true)){
-					$moves = self::add_slide_and_slidecontroller_moves_to_moves_list(self::GENERAL_DIRECTIONS, $moves, $piece, $color_to_move, $board, $store_board_in_moves,true,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
+					$moves = self::add_slide_and_slidecontroller_moves_to_moves_list(self::GENERAL_DIRECTIONS,self::MAX_SLIDING_DISTANCE, $moves, $piece, $color_to_move, $board, $store_board_in_moves,true,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,FALSE);
 					$GODMAN = $piece;
 				}
 			}
@@ -2350,6 +2361,7 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 
 		static function add_slide_and_slidecontroller_moves_to_moves_list(
 			array $directions_list,
+			int $spaces,
 			array $moves,
 			ChessPiece $piece,
 			$color_to_move,
@@ -2370,7 +2382,7 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 			$enemytrapped=false;$moves1=[];
 			$controlledpiece=null;$naaradblocks=0;
 	
-			$naarad_royalp=self::has_royal_neighbours( self::KING_DIRECTIONS, $piece->square, $piece->square, 3-$color_to_move, $board );
+			$naarad_Opponent_royalp=self::has_royal_neighbours( self::KING_DIRECTIONS, $piece->square, $piece->square, 3-$color_to_move, $board );
 			$opponent_refuged=self::has_opponent_neighbours( self::KING_DIRECTIONS, $piece, 3-$color_to_move, $board );
 			self::checkpinnedrefugees($color_to_move,$board, $piece->square,$piece->square);
 			
@@ -2379,11 +2391,11 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 			if(($board->controller_color!=null) &(($controlled_move==false)&&($board->controller_color==$color_to_move)&&($board->controller_color==3-$color_to_move))){
 				return $moves;
 			}
-			if($naarad_royalp==false){
-				$spaces=2;
+			if($naarad_Opponent_royalp==false){
+				//$spaces=2;
 				//$board->color=3-$color_to_move;
 				foreach ( $directions_list as $direction ) {
-					for ( $dli = 1; $dli <= 2; $dli++ ) {
+					for ( $dli = 1; $dli <= $spaces; $dli++ ) {
 	
 							$current_xy = self::DIRECTION_OFFSETS[$direction];
 							$current_xy[0] *= $dli;
@@ -2484,7 +2496,10 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 						}*/
 				}
 			}
-
+			if($opponent_refuged==false){
+				$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, $spaces, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,False);
+				$moves = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS,$spaces, $moves, $piece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,False);
+			}
 			//Moving the pinned pieces and then its own pieces
 			//$board->color_to_move=$color_to_move;
 
@@ -5838,7 +5853,33 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 												continue;
 
 										}
-										else { 	continue;}
+										else
+										{
+											if(($capture==true) && ($ending_square->mediatorrank!=null)&&($ending_square->mediatorfile!=null)){
+												$mediatorpiece = clone $piece;
+												$endpiece = clone $board->board[$ending_square->rank][$ending_square->file];
+		
+												if(($piece->square->mediatorrank!=$ending_square->mediatorrank)&&($piece->square->mediatorfile!=$ending_square->mediatorfile)){
+													$mediatorpiece->square->mediatorrank=$ending_square->mediatorrank;
+													$mediatorpiece->square->mediatorfile=$ending_square->mediatorfile;
+													$mediatorpiece->state="V";
+													}
+												$sittingpiece=$board->board[$mediatorpiece->square->rank][$mediatorpiece->square->file];
+												$board1 = clone $board;
+												$board1->board[$mediatorpiece->square->rank][$mediatorpiece->square->file]=$mediatorpiece;
+												if($tempc>=1){
+													$moves = self::add_running_capture_moves_to_moves_list($moves, $mediatorpiece, $endpiece, $color_to_move, $board1, $store_board_in_moves,1,$selfbrokencastle,$foebrokencastle);
+													continue;
+												}
+											}
+											else {
+												$new_move1 = new ChessMove( $piece->square, $ending_square,$ending_square, -1, $piece->color, $piece->type, $capture, $board, $store_board_in_moves, false,$controlled_move);
+												$move2 = clone $new_move1;
+												$moves[] = 	$move2;
+												}
+											//continue;
+										 }
+
 									}
 							elseif(((strpos($piece->group,"ROYAL")!==FALSE))&&(
 								(($piece->square->file==0)&&($piece->square->rank==0))||(($piece->square->file==0)&&($piece->square->rank==9))||
