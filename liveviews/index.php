@@ -53,7 +53,9 @@ $gamemode="livemove";
 			</div>
 			<div class="center hideform">
     <button id="close" style="float: right;">X</button>
-    <form action="/blackgamepairing.php">
+    <!--form action="/blackgamepairing.php"-->
+    <form method="post">
+
         Game ID:<br>
         <input type="text" name="BlackGameID" value="">
         <br>

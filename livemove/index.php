@@ -19,16 +19,23 @@ $currentmover="";
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if((isset($_COOKIE['gameid'])) &&(file_exists(isset($_COOKIE['gameid'])))){
-	$_COOKIE['gameid']="";
-	unset($_COOKIE['gameid']); 
-    setcookie('gameid', "", 1, '/'); 
+//check fake cookie with file name and file 1st line data. Else set as null
+if(isset($_COOKIE['gameid'])){
+	$unknowngamecookie=htmlspecialchars($_COOKIE['gameid']);
+	$splitted = explode( '$gameid=',$unknowngamecookie);
+	$gameid = $splitted[1];
+	$onlygameid =  explode( ';',$gameid)[0];
+	$systemgameid= $onlygameid.';';	
+
+	if(file_exists($systemgameid)==false){
+		$_COOKIE['gameid']="";
+		unset($_COOKIE['gameid']); 
+    	setcookie('gameid', "", 1, '/');
+		}
 }
 
 if ( isset($_REQUEST['BlackGameID']) /*&&(!isset($_COOKIE['gameid']))*/) {
-	// Skip this conditional. ChessGame's FEN is the default, new game FEN and doesn't need to be set again.
-	//DEfect Cookies are not assigned Nov 14, 2021 check
-	$systemgameid=$_REQUEST['BlackGameID'];
+	$systemgameid=$_REQUEST['BlackGameID']; //if blank
 	if(($systemgameid!=null) &&($systemgameid!="") &&(file_exists($systemgameid))){
 		//consider the white and black moves
 				$file = fopen($systemgameid,"r");
@@ -43,6 +50,10 @@ if ( isset($_REQUEST['BlackGameID']) /*&&(!isset($_COOKIE['gameid']))*/) {
 					else if (strpos($line, '$blackplayer=0') !== false) {
 							$blackplayer=1;
 							}
+					else if (strpos($line, '$blackplayer=1') !== false) {
+								$blackplayer=-1;
+							}
+
 					else if (strpos($line, '$currentfen=') !== false) {
 						$splitted = explode( '$currentfen=',$line);
 						$fen = $splitted[1];
@@ -51,20 +62,15 @@ if ( isset($_REQUEST['BlackGameID']) /*&&(!isset($_COOKIE['gameid']))*/) {
 							$currentmover=explode(' ', explode( ' ',$line)[1])[0];
 					}
 					else if (strpos($line, '$gameid=') !== false) {
-						$splitted = explode( '$gameid=',$line);
-						$fullgameid = '$gameid='.$splitted[1];
-						//$onlygameid =  explode( '$gameid=',$fullgameid)[0];
-						$whiteblackcookie='whitemover='.explode( ';whitemover=',$fullgameid)[1];
-						$blackcookie='blackmover='.explode( ';blackmover=',$fullgameid)[1];
-						$blackgameid='$gameid='.$systemgameid.$blackcookie;
-						$_COOKIE['gameid']=$blackgameid;
-						setcookie('gameid', $blackgameid);
-
-					  setcookie('LiveStepType', 'black');
-					  $_COOKIE['LiveStepType']='black';
-
+						$whiteblackcookie="";
 						$blackplayerassigned=true;
 						$playertype=2;
+							$splitted = explode( '$gameid=',$line);
+							$fullgameid = '$gameid='.$splitted[1];
+							//$onlygameid =  explode( '$gameid=',$fullgameid)[0];
+							$whiteblackcookie='whitemover='.explode( ';whitemover=',$fullgameid)[1];
+							$blackcookie='blackmover='.explode( ';blackmover=',$fullgameid)[1];
+							$blackgameid='$gameid='.$systemgameid.$blackcookie;
 
 					$fileblackgamecookie=$blackgameid;
 					}
@@ -79,6 +85,27 @@ if ( isset($_REQUEST['BlackGameID']) /*&&(!isset($_COOKIE['gameid']))*/) {
 						//}
 					}
 				}
+
+				$whiteblackcookie="";
+				$blackplayerassigned=true;
+				$playertype=2;
+				if(($blackplayer==-1)|| ($blackplayer==0)) {
+					$playertype=100;
+					$_COOKIE['gameid']='$gameid='.$systemgameid;
+					setcookie('gameid', '$gameid='.$systemgameid);
+					setcookie('LiveStepType', 'none');
+					$_COOKIE['LiveStepType']='none';					  
+					}
+				else{
+					$_COOKIE['gameid']=$blackgameid;
+					setcookie('gameid', $blackgameid);
+
+					$_COOKIE['gameid']=$blackgameid;
+					setcookie('gameid', $blackgameid);							
+					setcookie('LiveStepType', 'black');
+					$_COOKIE['LiveStepType']='black';
+				}
+
 				fclose($file);
 
 				if(strpos($whiteblackcookie,'whitemover')!== false)
@@ -89,18 +116,18 @@ if ( isset($_REQUEST['BlackGameID']) /*&&(!isset($_COOKIE['gameid']))*/) {
 					$playertype=2;
 					//set cookies
 				}
-				else
+				else if($playertype!=100)
 				{
 					$playertype=2;
 				}
 	}
 	else {
-		die("No such game exists.");
-		// Add the code to show the game progress
+		die("No such game exists. Reviwing the game;");
 	}
 }
-/*	else if((isset($_COOKIE['gameid'])) &&((isset($_REQUEST['lookformoves']))&&(($_REQUEST['lookformoves']!=null) &&($_REQUEST['lookformoves']!="" ))))
+else if((isset($_COOKIE['gameid'])) &&((isset($_REQUEST['lookformoves']))&&(($_REQUEST['lookformoves']!=null) &&($_REQUEST['lookformoves']!="" ))))
 	{
+		$result="";
 		$unknowngamecookie=htmlspecialchars($_COOKIE['gameid']);
 			$splitted = explode( '$gameid=',$unknowngamecookie);
 			$gameid = $splitted[1];
@@ -152,9 +179,13 @@ if ( isset($_REQUEST['BlackGameID']) /*&&(!isset($_COOKIE['gameid']))*/) {
 						}
 					}
 			}
+			else{
+				$result= "Watch";
+				$result= "100";
+			}
 			fclose($reading);
 			}
-			$result="";
+
 			if( ((($currentmover=='b0') || ($currentmover=='w1')|| ($currentmover=='b2'))))
 			{
 				$result= "Black To Move";
@@ -167,11 +198,11 @@ if ( isset($_REQUEST['BlackGameID']) /*&&(!isset($_COOKIE['gameid']))*/) {
 				$result= "1";
 			}
 			echo $result;
-			return $result;
-	}*/
+			if($result!= "100")
+				return $result;
+	}
 else if (!isset($_COOKIE['gameid'])) ///check if user already had some pending game // play invitation game if no pending game
 	{
-		
 			$whitegamer=substr(str_shuffle("aAbBcCdDeEfFgGhHiIjJkLmMnNpPqQrRtTuUvVwWxXyYzZ12346789"), 0, 5).substr(md5(time()),1).";";
 			$blackgamer=substr(str_shuffle("aAbBcCdDeEfFgGhHiIjJkLmMnNpPqQrRtTuUvVwWxXyYzZ12346789"), 0, 5).substr(md5(time()),1).";";
 			$systemgameid='livemove'.str_shuffle("acdefhijkmnprtuvwxyz0123456789").";";
@@ -196,7 +227,7 @@ else if (!isset($_COOKIE['gameid'])) ///check if user already had some pending g
 			fwrite($file,'$newfen='.$fen.PHP_EOL);
 			fwrite($file,'$blackplayer=0;'.PHP_EOL);
 			fclose($file);
-			$newmove=1;		
+			$newmove=1;
 	}
 	else if((isset($_COOKIE['gameid'])) &&((isset($_REQUEST['lookformoves']))&&(($_REQUEST['lookformoves']!=null) &&($_REQUEST['lookformoves']!="" ))))
 	{
@@ -277,9 +308,19 @@ else if((isset($_COOKIE['gameid'])) &&((!isset($_REQUEST['livemove']))||(($_REQU
 		$gameid = $splitted[1];
 		$onlygameid =  explode( ';',$gameid)[0];
 		$systemgameid= $onlygameid.';';
+/*
 
-		$systemcookie=$unknowngamecookie;
-		
+$splitted = explode( '$gameid=',$unknowngamecookie);
+$gameid = $splitted[1];
+$onlygameid =  explode( ';',$gameid)[0];
+$systemgameid= $onlygameid.';';	
+$systemcookie=$unknowngamecookie;
+$whiteblackcookie=explode( ';',$gameid)[1];//'$gameid='.$onlygameid.';whitemover='.$filewhitecookie.';';
+
+*/
+
+
+		$systemcookie=$unknowngamecookie;		
 		$whiteblackcookie=explode( ';',$gameid)[1];//'$gameid='.$onlygameid.';whitemover='.$filewhitecookie.';';
 		if(file_exists($systemgameid)){
 		$data = file($systemgameid); // reads an array of lines
@@ -549,7 +590,7 @@ require_once('../models/ChessMove.php');
 require_once('../models/ChessSquare.php');
 
 $board = new ChessBoard	();
-if( ((($currentmover=='b0') || ($currentmover=='w1')|| ($currentmover=='b2')) && ($playertype==1)) ||
+if( ($playertype==100) || ((($currentmover=='b0') || ($currentmover=='w1')|| ($currentmover=='b2')) && ($playertype==1)) ||
 ((($currentmover=='w0') || ($currentmover=='b1')|| ($currentmover=='w2')) && ($playertype==2))){
 	$board->moveable=false;
 	$newmove=0;
@@ -563,8 +604,8 @@ if ( isset($_REQUEST['reset']) ) {
 } elseif ( isset($_REQUEST['livemove']) ) {
 	if($playertype==2)
 		$board->setboard('black');
-	if($playertype==1)
-		$board->setboard('white');	
+	if(($playertype==1) || ($playertype==100))
+		$board->setboard('white');
 	$board->import_live_fen($_REQUEST['livemove'],$systemgameid,$playertype,$newmove);
 	if(isset($_REQUEST['import_boardtype']))
 	$board->setboard($_REQUEST['import_boardtype']);
@@ -650,7 +691,7 @@ if ( isset($_REQUEST['reset']) ) {
 else {
 	if($playertype==2)
 		$board->setboard('black');
-	if($playertype==1)
+	if(($playertype==1) || ($playertype==100))
 		$board->setboard('white');
 	$board->import_live_fen($fen,$systemgameid,$playertype ,$newmove);
 	if(isset($_REQUEST['import_boardtype']))

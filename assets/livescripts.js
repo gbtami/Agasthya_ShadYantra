@@ -115,7 +115,6 @@ init();
 				//in case of refresh page reload the counter etc
 				// Perform operation on return value
 				//alert(responsedata);
-				
 				//if($("#" + "lookformoves").length == 0) {
 					if((responsedata=="1") &&(cookiecategory=="white") ){
 						//load the 	window. enable the moves. delete the lookformoves tag.
@@ -128,7 +127,12 @@ init();
 						//window.location=window.location;
 						window.location=window.location;
 					}
-					else
+					else if((responsedata=="100")){
+						console.log(responsedata+" "+window.location+" "+cookiecategory);		
+						//window.location=window.location;
+						window.location=window.location;
+					}
+					else					
 						setTimeout(fetchdata,1000);
 				 // }
 				//else setTimeout(fetchdata,1000);
