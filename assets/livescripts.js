@@ -93,6 +93,7 @@ init();
 	function fetchdata(){
 					//url: '../liveviews/mover_details.php',
 					//data: "moverdata_request=1234",
+					debugger
 					var nameEQ = "LiveStepType" + "=";
 					var ca = document.cookie.split(';');
 					for(var i=0;i < ca.length;i++) {
@@ -116,12 +117,12 @@ init();
 				// Perform operation on return value
 				//alert(responsedata);
 				//if($("#" + "lookformoves").length == 0) {
-					debugger
+					
 					if((responsedata=="0")){
 						//load the 	window. enable the moves. delete the lookformoves tag.
 						console.log(responsedata+" "+window.location+" "+cookiecategory);
 						//window.location.reload(true);
-						//window.location=window.location;
+						window.location=window.location;
 					}
 					else if((responsedata=="1") &&(cookiecategory=="white") ){
 						//load the 	window. enable the moves. delete the lookformoves tag.
@@ -139,12 +140,15 @@ init();
 						//window.location=window.location;
 						window.location=window.location;
 					}
-					else					
+					else
+						{ console.log(responsedata+" "+window.location+" "+cookiecategory);				
 						setTimeout(fetchdata,1000);
+						}
 				 // }
 				//else setTimeout(fetchdata,1000);
 				},
 			complete:function(responsedata){
+				//setTimeout(fetchdata,15000);				
 				}
 			});
 		}

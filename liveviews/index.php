@@ -302,13 +302,19 @@ $gamemode="livemove";
 
 								// might as well not overwrite the file if we didn't replace anything
 								if($newmove==1){
-								if ($replaced)
-									{
-								 	 rename($systemgameid.".tmp.txt", $systemgameid);
-								} else {
-									  unlink($systemgameid.'.tmp.txt');
+									try {
+										sleep(3);
+										if (($replaced) && (file_exists($systemgameid.'.tmp.txt')))
+										{
+											rename($systemgameid.'.tmp.txt', $systemgameid);
+										}else {
+											unlink($systemgameid.'.tmp.txt');
+										}
+									  }
+									  //catch exception
+									  catch(Exception $e) {
+									  }
 								}
-							}
 							}
 						}
 		

@@ -115,11 +115,35 @@ if ( isset($_REQUEST['BlackGameID']) /*&&(!isset($_COOKIE['gameid']))*/) {
 				else if(strpos($whiteblackcookie,'blackmover')!== false)
 				{
 					$playertype=2;
+
+					if( ((($currentmover=='b0') || ($currentmover=='w1')|| ($currentmover=='b2'))))
+					{
+					$result= "Black To Move"; $result= "2";
+					$newmove=1;
+					}
+					else if(
+					((($currentmover=='w0') || ($currentmover=='b1')|| ($currentmover=='w2')))){
+					$result= "White To Move"; $result= "1";
+					$newmove=0;
+					$writefile=0;
+					};
+					////					
 					//set cookies
 				}
 				else if($playertype!=100)
 				{
 					$playertype=2;
+					if( ((($currentmover=='b0') || ($currentmover=='w1')|| ($currentmover=='b2'))))
+					{
+					$result= "Black To Move"; $result= "2";
+					$newmove=1;
+					}
+					else if(
+					((($currentmover=='w0') || ($currentmover=='b1')|| ($currentmover=='w2')))){
+					$result= "White To Move"; $result= "1";
+					$newmove=0;
+					$writefile=0;
+					};
 				}
 	}
 	else {
@@ -299,7 +323,6 @@ else if (!isset($_COOKIE['gameid'])) ///check if user already had some pending g
 			{
 				$result= "Black To Move";
 				$result= "2";
-
 			}
 			else if(
 			((($currentmover=='w0') || ($currentmover=='b1')|| ($currentmover=='w2')))){
@@ -318,18 +341,6 @@ else if((isset($_COOKIE['gameid'])) &&((!isset($_REQUEST['livemove']))||(($_REQU
 		$gameid = $splitted[1];
 		$onlygameid =  explode( ';',$gameid)[0];
 		$systemgameid= $onlygameid.';';
-/*
-
-$splitted = explode( '$gameid=',$unknowngamecookie);
-$gameid = $splitted[1];
-$onlygameid =  explode( ';',$gameid)[0];
-$systemgameid= $onlygameid.';';	
-$systemcookie=$unknowngamecookie;
-$whiteblackcookie=explode( ';',$gameid)[1];//'$gameid='.$onlygameid.';whitemover='.$filewhitecookie.';';
-
-*/
-
-
 		$systemcookie=$unknowngamecookie;		
 		$whiteblackcookie=explode( ';',$gameid)[1];//'$gameid='.$onlygameid.';whitemover='.$filewhitecookie.';';
 		if(file_exists($systemgameid)){
@@ -389,8 +400,8 @@ $whiteblackcookie=explode( ';',$gameid)[1];//'$gameid='.$onlygameid.';whitemover
 			$playertype=2;
 			$blackgamecookie=$systemcookie;
 			setcookie('gameid', $blackgamecookie);
-  			$_COOKIE['gameid']= $blackgamecookie;
 			setcookie('LiveStepType', 'black');
+			$_COOKIE['gameid']= $blackgamecookie;
 			$_COOKIE['LiveStepType']='black';
 
 				while (!feof($reading)) {
@@ -676,12 +687,18 @@ if ( isset($_REQUEST['reset']) ) {
 			chmod($systemgameid.".tmp.txt", 0755);
 
 			// might as well not overwrite the file if we didn't replace anything
-			if ($replaced)
+			try {
+				sleep(3);
+				if (($replaced) && (file_exists($systemgameid.'.tmp.txt')))
 				{
-				rename($systemgameid.'.tmp.txt', $systemgameid);
+					rename($systemgameid.'.tmp.txt', $systemgameid);
 				}else {
-				unlink($systemgameid.'.tmp.txt');
+					unlink($systemgameid.'.tmp.txt');
 				}
+			  }
+			  //catch exception
+			  catch(Exception $e) {
+			  }
 			}
 		}
 	$legal_moves=null;
