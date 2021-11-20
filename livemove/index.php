@@ -14,7 +14,8 @@ $filewhitecookie=""; $fileblackcookie="";
 $filewhitegamecookie=""; $fileblackgamecookie="";
 $whitegamecookie=""; $blackamecookie="";
 $newmove=0;
-$currentmover="";
+$currentmover=""; $writefile=1;
+
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -562,6 +563,9 @@ else if((isset($_COOKIE['gameid'])) &&(isset($_REQUEST['livemove']))&&(($_REQUES
 
 					$fileblackgamecookie=$blackgameid;
 					}
+					if (strpos($line, '_Move=') !== false) {
+						$writefile=1;
+						}
 				}
 
 			if((isset($_COOKIE['LiveStepType'])==true) &&($_COOKIE['LiveStepType']!="")&&
@@ -603,6 +607,12 @@ if( ($playertype==100) || ((($currentmover=='b0') || ($currentmover=='w1')|| ($c
 ((($currentmover=='w0') || ($currentmover=='b1')|| ($currentmover=='w2')) && ($playertype==2))){
 	$board->moveable=false;
 	$newmove=0;
+	if($writefile==1) 	$newmove=1;
+}
+else if( ((($currentmover=='b1') || ($currentmover=='w0')|| ($currentmover=='w2')) && ($playertype==1)) ||
+((($currentmover=='b0') || ($currentmover=='w1')|| ($currentmover=='b2')) && ($playertype==2))){
+	$board->moveable=true;
+	if($writefile==1) 	$newmove=1;
 }
 foreach($_GET as $key => $value){
 	//echo $key . " : " . $value . "<br />\r\n";
