@@ -6643,9 +6643,9 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 					}
 					*/
 		
-					if($board->board[$intermediate_square->rank][$intermediate_square->file]){//if intermediate cell has King then jumping now allowed
-						if (($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::KING)||
-						($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::INVERTEDKING)){
+					if(($board->board[$intermediate_square->rank][$intermediate_square->file]) && ($board->board[$starting_square->rank][$starting_square->file]->group!='ROYAL')) {//if intermediate cell has King then jumping now allowed
+						if (($board->board[$intermediate_square->rank][$intermediate_square->file]->group=='ROYAL')||
+						($board->board[$intermediate_square->rank][$intermediate_square->file]->group =='ROYAL')){
 								return null;//
 							}
 						}
@@ -6749,12 +6749,12 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 					if ( ! $intermediate_square ) {
 						return null;
 					}
-					if($board->board[$intermediate_square->rank][$intermediate_square->file]){//if intermediate cell has King then jumping now allowed
-						if (($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::KING)||
-						($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::INVERTEDKING)){
+					if(($board->board[$intermediate_square->rank][$intermediate_square->file]) && ($board->board[$starting_square->rank][$starting_square->file]->group!='ROYAL')) {//if intermediate cell has King then jumping now allowed
+						if (($board->board[$intermediate_square->rank][$intermediate_square->file]->group=='ROYAL')||
+						($board->board[$intermediate_square->rank][$intermediate_square->file]->group =='ROYAL')){
 								return null;//
 							}
-						}					
+						}
 				}
 			else
 			if($type!=0){
@@ -6811,12 +6811,12 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 					if ( ! $intermediate_square ) {
 						return null;
 					}
-					if($board->board[$intermediate_square->rank][$intermediate_square->file]){//if intermediate cell has King then jumping now allowed
-						if (($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::KING)||
-						($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::INVERTEDKING)){
+					if(($board->board[$intermediate_square->rank][$intermediate_square->file]) && ($board->board[$starting_square->rank][$starting_square->file]->group!='ROYAL')) {//if intermediate cell has King then jumping now allowed
+						if (($board->board[$intermediate_square->rank][$intermediate_square->file]->group=='ROYAL')||
+						($board->board[$intermediate_square->rank][$intermediate_square->file]->group =='ROYAL')){
 								return null;//
 							}
-						}					
+						}
 					//No jumping of TRUCE
 					if(($intermediate_square->rank!=$starting_square->rank) && (($intermediate_square->file==0)||($intermediate_square->file==9))){
 						return null;
@@ -6955,12 +6955,14 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 					if ( ! $intermediate_square ) {
 						return null;
 					}
-					if($board->board[$intermediate_square->rank][$intermediate_square->file]){//if intermediate cell has King then jumping now allowed
-						if (($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::KING)||
-						($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::INVERTEDKING)){
+	
+					if(($board->board[$intermediate_square->rank][$intermediate_square->file]) && ($board->board[$starting_square->rank][$starting_square->file]->group!='ROYAL')) {//if intermediate cell has King then jumping now allowed
+						if (($board->board[$intermediate_square->rank][$intermediate_square->file]->group=='ROYAL')||
+						($board->board[$intermediate_square->rank][$intermediate_square->file]->group =='ROYAL')){
 								return null;//
 							}
-						}					
+						}
+						
 					if(  $intermediate_square->rank!=$starting_square->rank ){
 						return null;
 					}
@@ -7104,12 +7106,13 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 			if ( ! $intermediate_square ) {
 				return null;
 			}
-			if($board->board[$intermediate_square->rank][$intermediate_square->file]){//if intermediate cell has King then jumping now allowed
-				if (($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::KING)||
-				($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::INVERTEDKING)){
+
+			if(($board->board[$intermediate_square->rank][$intermediate_square->file]) && ($board->board[$starting_square->rank][$starting_square->file]->group!='ROYAL')) {//if intermediate cell has King then jumping now allowed
+				if (($board->board[$intermediate_square->rank][$intermediate_square->file]->group=='ROYAL')||
+				($board->board[$intermediate_square->rank][$intermediate_square->file]->group =='ROYAL')){
 						return null;//
 					}
-				}
+				}			
 			if($board->board[$intermediate_square->rank][$intermediate_square->file]){//if intermediate cell has data
 				if (/*((($cankill==2) &&($type ==1) ) || ($type==2)) &&*/(abs($board->board[$intermediate_square->rank][$intermediate_square->file]->color - $color_to_move) ==0)) {//Same team-member
 					if(($board->board[$intermediate_square->rank][$intermediate_square->file]->group=='ROYAL')||
@@ -7276,12 +7279,12 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 		}
 
 		if($intermediate_square!=null){ 
-			if($board->board[$intermediate_square->rank][$intermediate_square->file]){//if intermediate cell has King then jumping now allowed
-				if (($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::KING)||
-				($board->board[$intermediate_square->rank][$intermediate_square->file]->type== ChessPiece::INVERTEDKING)){
+			if(($board->board[$intermediate_square->rank][$intermediate_square->file]) && ($board->board[$starting_square->rank][$starting_square->file]->group!='ROYAL')) {//if intermediate cell has King then jumping now allowed
+				if (($board->board[$intermediate_square->rank][$intermediate_square->file]->group=='ROYAL')||
+				($board->board[$intermediate_square->rank][$intermediate_square->file]->group =='ROYAL')){
 						return null;//
 					}
-				}			
+				}		
 			$ending_square->mediatorfile=$intermediate_square->file;
 			$ending_square->mediatorrank=$intermediate_square->rank;
 		}
