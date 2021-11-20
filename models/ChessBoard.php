@@ -315,6 +315,7 @@ class ChessBoard {
 
 	function import_fen(string $fen): void {
 		$fen = trim($fen);
+		$fen = explode( ';',$fen)[0];
 		$valid_fen=null;
 		$valid_fen = preg_match(self::FEN_REGEX_FORMAT, $fen, $matches);
 

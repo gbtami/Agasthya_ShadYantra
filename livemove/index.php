@@ -141,7 +141,7 @@ else if((isset($_COOKIE['gameid'])) &&((isset($_REQUEST['lookformoves']))&&(($_R
 			//$writing = fopen($systemgameid.'.tmp.txt', 'w');
 			$replaced = false;	$importedmatched=false;
 			$newmove=0;	$matched=0;
-	
+			$canmove = 0;
 			if(strpos($whiteblackcookie,'whitemover')!== false)
 			///check if user already had some pending game // play invitation game if no pending game
 			{
@@ -158,6 +158,9 @@ else if((isset($_COOKIE['gameid'])) &&((isset($_REQUEST['lookformoves']))&&(($_R
 					//fputs($writing, $line.PHP_EOL);
 					else if (strpos($line, '$gameid=') !== false) {
 						$splitted = explode( '$gameid=',$line);
+					}
+					else if (strpos($line, '_Move=') !== false) {
+						$canmove = $canmove+1;
 					}
 				}
 			}
@@ -177,6 +180,9 @@ else if((isset($_COOKIE['gameid'])) &&((isset($_REQUEST['lookformoves']))&&(($_R
 	
 						if (strpos($line, '$gameid=') !== false) {
 						}
+						else if (strpos($line, '_Move=') !== false) {
+							$canmove = $canmove+1;
+						}	
 					}
 			}
 			else{
@@ -186,7 +192,10 @@ else if((isset($_COOKIE['gameid'])) &&((isset($_REQUEST['lookformoves']))&&(($_R
 			fclose($reading);
 			}
 
-			if( ((($currentmover=='b0') || ($currentmover=='w1')|| ($currentmover=='b2'))))
+			if($canmove==0)
+				$result= "0";
+
+			else if( ((($currentmover=='b0') || ($currentmover=='w1')|| ($currentmover=='b2'))))
 			{
 				$result= "Black To Move";
 				$result= "2";

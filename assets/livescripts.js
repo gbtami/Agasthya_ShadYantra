@@ -116,7 +116,14 @@ init();
 				// Perform operation on return value
 				//alert(responsedata);
 				//if($("#" + "lookformoves").length == 0) {
-					if((responsedata=="1") &&(cookiecategory=="white") ){
+					debugger
+					if((responsedata=="0")){
+						//load the 	window. enable the moves. delete the lookformoves tag.
+						console.log(responsedata+" "+window.location+" "+cookiecategory);
+						//window.location.reload(true);
+						//window.location=window.location;
+					}
+					else if((responsedata=="1") &&(cookiecategory=="white") ){
 						//load the 	window. enable the moves. delete the lookformoves tag.
 						console.log(responsedata+" "+window.location+" "+cookiecategory);
 						//window.location.reload(true);
