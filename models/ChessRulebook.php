@@ -2546,25 +2546,20 @@ static function check_opponent_neighbours(&$board,int $opponent_colors)
 									}
 
 								if ($controlledpiece->type == ChessPiece::GENERAL) {
-									//$new_move->controlled_moves[] or $moves
-									//$moves = self::add_capture_moves_to_moves_list(self::GENERAL_DIRECTIONS, $moves, $controlledpiece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,$selfbrokencastle,$foebrokencastle);
 									$moves1 = self::add_jump_and_jumpcapture_moves_to_moves_list(1,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 									$moves1 = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, 3, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 									$moves1 = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS, 3, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 								}
 								else if ($controlledpiece->type == ChessPiece::KNIGHT) {
-									//$moves = self::add_capture_moves_to_moves_list(self::GENERAL_DIRECTIONS, $moves, $controlledpiece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,$selfbrokencastle,$foebrokencastle);
 									$moves1 = self::add_jump_and_jumpcapture_moves_to_moves_list(1,$jumpstyle,self::KNIGHT_DIRECTIONS, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 									$moves1 = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, 2, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 									$moves1 = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS, 2, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 								}
 								else if (($controlledpiece->type == ChessPiece::BISHOP) &&($color_to_move==$controlledpiece->color)) {
-									//$moves = self::add_capture_moves_to_moves_list(self::GENERAL_DIRECTIONS, $moves, $controlledpiece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,$selfbrokencastle,$foebrokencastle);
 									$moves1 = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, 2, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 									$moves1 = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS, 2, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 								}
 								else if (($controlledpiece->type == ChessPiece::ROOK) &&($color_to_move==$controlledpiece->color)) {
-									//$moves = self::add_capture_moves_to_moves_list(self::GENERAL_DIRECTIONS, $moves, $controlledpiece, $color_to_move, $board, $store_board_in_moves,$get_Killing_Allowed,$selfbrokencastle,$foebrokencastle);
 									$moves1 = self::add_slide_and_slidecapture_moves_to_moves_list(self::BISHOP_DIRECTIONS, 3, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 									$moves1 = self::add_slide_and_slidecapture_moves_to_moves_list(self::ROOK_DIRECTIONS, 3, $moves1, $controlledpiece, $color_to_move, $board, $store_board_in_moves,0,0,$get_FullMover,$selfbrokencastle,$foebrokencastle,$get_CASTLEMover,TRUE);
 								}

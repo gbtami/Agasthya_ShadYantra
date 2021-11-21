@@ -1843,17 +1843,18 @@ class ChessBoard {
 	}
 	
 	function get_royals_on_Scepters_TruceControl($color): bool {
-		$count=0;
+		$count=0;//Classical Game does not allow killing if  Arthshastri or King are in Scepters.
 		foreach ( $this->board as $RankData ) {
 			////echo '<br/>';
 			if($count==2) break;
 			foreach ( $RankData as $piece ) {
 				if ( $piece ) {
-					//Kings are sitting on Scepters or TRUCE Borders
+					/*Kings are sitting on Scepters or TRUCE Borders
 					if (((($piece->type == ChessPiece::KING)||($piece->type == ChessPiece::KING))&&((($piece->square->file==4)||($piece->square->file==5))&&(($piece->square->rank==0)||($piece->square->rank==9))))||
 					(($piece->type == ChessPiece::KING)&&((($piece->square->rank==4)||($piece->square->rank==5))&&(($piece->square->file==0)||($piece->square->file==9))))){
-						//if (($piece->color == $color)) {
-							if(($piece->color==1)&& ($this->whitecankill == 1)){
+					*/if (((($piece->group == "ROYAL"))&&((($piece->square->file==4)||($piece->square->file==5))&&(($piece->square->rank==0)||($piece->square->rank==9))))||
+						(($piece->group == "ROYAL")&&((($piece->square->rank==4)||($piece->square->rank==5))&&(($piece->square->file==0)||($piece->square->file==9))))){
+								if(($piece->color==1)&& ($this->whitecankill == 1)){
 								$this->whitecankill = 0;//Cannot kill
 								$count=$count+1;
 								}
